@@ -1,5 +1,7 @@
 # Räddamaten-web-app
-[![Build Status](https://travis-ci.org/coptercaps/raddamaten-web-app.svg?branch=master)](https://travis-ci.org/coptercaps/raddamaten-web-app)
+[![Build Status](https://travis-ci.org/copterprojects/raddamaten-web-app.svg?branch=master)](https://travis-ci.org/copterprojects/raddamaten-web-app)
+[![dependencies Status](https://david-dm.org/copterprojects/raddamaten-web-app/status.svg)](https://david-dm.org/copterprojects/raddamaten-web-app)
+[![Coverage Status](https://coveralls.io/repos/github/copterprojects/raddamaten-web-app/badge.svg?branch=master)](https://coveralls.io/github/copterprojects/raddamaten-web-app?branch=master)
 
 <img src="https://hacktoberfest.digitalocean.com/assets/hf_logo-52c2c8901ebacc7c28dc212084389f4d950f89c3599db4e37cd9aa572ed096b3.svg" width="600" height="auto">
 ## Hacktoberfest 2016 (Oct 1 — Oct 31)

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sahat/hackathon-starter.git"
+    "url": "git+https://github.com/copterprojects/raddamaten-web-app.git"
   },
   "scripts": {
     "start": "node app.js",
@@ -67,11 +67,11 @@
     "node": "6.1.0"
   },
   "license": "UNLICENSED",
-  "description": "[![Build Status](https://travis-ci.org/coptercaps/raddamaten-web-app.svg?branch=master)](https://travis-ci.org/coptercaps/raddamaten-web-app)",
+  "description": "Räddamaten",
   "bugs": {
-    "url": "https://github.com/sahat/hackathon-starter/issues"
+    "url": "https://github.com/copterprojects/raddamaten-web-app/issues"
   },
-  "homepage": "https://github.com/sahat/hackathon-starter#readme",
+  "homepage": "https://github.com/copterprojects/raddamaten-web-app#readme",
   "main": "app.js",
   "directories": {
     "test": "test"
