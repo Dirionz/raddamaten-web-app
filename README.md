@@ -1,3 +1,6 @@
+# Räddamaten-web-app
+[![Build Status](https://travis-ci.org/coptercaps/raddamaten-web-app.svg?branch=master)](https://travis-ci.org/coptercaps/raddamaten-web-app)
+
 <img src="https://hacktoberfest.digitalocean.com/assets/hf_logo-52c2c8901ebacc7c28dc212084389f4d950f89c3599db4e37cd9aa572ed096b3.svg" width="600" height="auto">
 ## Hacktoberfest 2016 (Oct 1 — Oct 31)
 
