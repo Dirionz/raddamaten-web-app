@@ -66,7 +66,7 @@
   "engines": {
     "node": "6.1.0"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "description": "Räddamaten",
   "bugs": {
     "url": "https://github.com/copterprojects/raddamaten-web-app/issues"
