@@ -25,6 +25,14 @@ describe('GET /signup', () => {
     });
 });
 
+describe('GET /restaurant', () => {
+    it('should return 200 OK', (done) => {
+        request(app)
+            .get('/restaurant')
+            .expect(200, done);
+    });
+});
+
 describe('GET /signup/restaurant', () => {
     it('should return 200 OK', (done) => {
         request(app)
