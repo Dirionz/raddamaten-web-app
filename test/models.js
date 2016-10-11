@@ -2,6 +2,8 @@ const chai = require('chai');
 const expect = chai.expect;
 const User = require('../models/User');
 const Restaurant = require('../models/Restaurant');
+const Product = require('../models/Product');
+const Order = require('../models/Order');
 
 describe('User Model', () => {
     it('should create a new user', (done) => {
@@ -71,8 +73,8 @@ describe('Restaurant Model', () => {
                 expect(restaurant.name).to.equal('test');
                 expect(restaurant).to.have.property('createdAt');
                 expect(restaurant).to.have.property('updatedAt');
+                done();
             });
-            done();
         });
     });
 
@@ -83,8 +85,8 @@ describe('Restaurant Model', () => {
             Restaurant.findOne({ user: user._id }, (err, restaurant) => {
                 expect(err).to.be.null;
                 expect(restaurant.name).to.equal('test');
+                done();
             });
-            done();
         });
     });
 
@@ -95,6 +97,112 @@ describe('Restaurant Model', () => {
             Restaurant.remove({ user: user._id }, (err) => {
                 expect(err).to.be.null;
                 User.remove({ _id: user._id }, (err) => {
+                    expect(err).to.be.null;
+                    done();
+                });
+            });
+        });
+    });
+});
+
+describe('Product Model', () => {
+
+    const restaurant = new Restaurant({
+        name: "test",
+        aboutUs: "aboutUs",
+        pictureURL: "tets",
+        location: { longiture: 1.234234, latiture: 1.34234234 }
+    });
+
+    const product = new Product({
+        name: "product",
+        description: "description",
+        pictureURL: "",
+        price: "123 Kr",
+        quantity: 2,
+        restaurant: restaurant._id
+    });
+
+    it('should create a new product', (done) => {
+        restaurant.save((err) => {
+            expect(err).to.be.null;
+            expect(restaurant.name).to.equal('test');
+            expect(restaurant).to.have.property('createdAt');
+            expect(restaurant).to.have.property('updatedAt');
+
+            product.save((err) => {
+                expect(err).to.be.null;
+                expect(product.name).to.equal('product');
+                expect(product).to.have.property('createdAt');
+                expect(product).to.have.property('updatedAt');
+                done();
+            });
+        });
+    });
+
+    it('should delete a restaurant and product', (done) => {
+        product.remove((err) => {
+            expect(err).to.be.null;
+            restaurant.remove((err) => {
+                expect(err).to.be.null;
+                done();
+            });
+        });
+    });
+});
+
+
+describe('Order Model', () => {
+
+    const product = new Product({
+        name: "product",
+        description: "description",
+        pictureURL: "",
+        price: "123 Kr",
+        quantity: 2
+    });
+
+    const product2 = new Product({
+        name: "product2",
+        description: "description",
+        pictureURL: "",
+        price: "123 Kr",
+        quantity: 2
+    });
+
+    const order = new Order({
+        email: "test@gmail.com",
+        products: [product._id, product2._id]
+    });
+
+    it('should create a new order', (done) => {
+        product.save((err) => {
+            expect(err).to.be.null;
+            expect(product.name).to.equal('product');
+            expect(product).to.have.property('createdAt');
+            expect(product).to.have.property('updatedAt');
+
+            product2.save((err) => {
+                expect(err).to.be.null;
+                expect(product2.name).to.equal('product2');
+                expect(product2).to.have.property('createdAt');
+                expect(product2).to.have.property('updatedAt');
+
+                order.save((err) => {
+                    expect(err).to.be.null;
+                    expect(order.email).to.equal('test@gmail.com');
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should delete a order and products', (done) => {
+        product.remove((err) => {
+            expect(err).to.be.null;
+            product2.remove((err) => {
+                expect(err).to.be.null;
+                order.remove((err) => {
                     expect(err).to.be.null;
                     done();
                 });
