@@ -5,10 +5,9 @@ const restaurantSchema = new mongoose.Schema({
     aboutUs: String,
     pictureURL: String,
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    location: {
-        longitude: Number,
-        latitude: Number
-    },
+    street: String,
+    postalCode: String,
+    city: String,
 }, { timestamps: true });
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);

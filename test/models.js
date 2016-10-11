@@ -66,7 +66,9 @@ describe('Restaurant Model', () => {
                 aboutUs: "aboutUs",
                 pictureURL: "tets",
                 user: user._id,
-                location: { longiture: 1.234234, latiture: 1.34234234 }
+                street: "street",
+                postalCode: "234234",
+                city: "Jönköping"
             })
             restaurant.save((err) => {
                 expect(err).to.be.null;
@@ -111,7 +113,9 @@ describe('Product Model', () => {
         name: "test",
         aboutUs: "aboutUs",
         pictureURL: "tets",
-        location: { longiture: 1.234234, latiture: 1.34234234 }
+        street: "street",
+        postalCode: "234234",
+        city: "Jönköping"
     });
 
     const product = new Product({
