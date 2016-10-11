@@ -144,17 +144,17 @@ exports.postSignupRestaurant = (req, res, next) => {
         return res.redirect('/signup/restaurant');
     }
 
-    const user = new User({
-        email: req.body.email,
-        password: req.body.password
-    });
-
     const restaurant = new Restaurant({
         name: req.body.name,
         street: req.body.street,
         postalCode: req.body.postalcode,
         city: req.body.city,
-        user: user._id
+    });
+
+    const user = new User({
+        email: req.body.email,
+        password: req.body.password,
+        restaurant: restaurant._id
     });
 
     User.findOne({ email: req.body.email }, (err, existingUser) => {

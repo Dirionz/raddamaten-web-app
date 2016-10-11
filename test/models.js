@@ -50,59 +50,29 @@ describe('User Model', () => {
 
 
 describe('Restaurant Model', () => {
+    const restaurant = new Restaurant({
+        name: "test",
+        aboutUs: "aboutUs",
+        pictureURL: "tets",
+        street: "street",
+        postalCode: "234234",
+        city: "Jönköping"
+    })
+
     it('should create a new restaurant', (done) => {
-        const user = new User({
-            email: 'test@gmail.com',
-            password: 'password'
-        });
-        user.save((err) => {
+        restaurant.save((err) => {
             expect(err).to.be.null;
-            expect(user.email).to.equal('test@gmail.com');
-            expect(user).to.have.property('createdAt');
-            expect(user).to.have.property('updatedAt');
-
-            const restaurant = new Restaurant({
-                name: "test",
-                aboutUs: "aboutUs",
-                pictureURL: "tets",
-                user: user._id,
-                street: "street",
-                postalCode: "234234",
-                city: "Jönköping"
-            })
-            restaurant.save((err) => {
-                expect(err).to.be.null;
-                expect(restaurant.name).to.equal('test');
-                expect(restaurant).to.have.property('createdAt');
-                expect(restaurant).to.have.property('updatedAt');
-                done();
-            });
+            expect(restaurant.name).to.equal('test');
+            expect(restaurant).to.have.property('createdAt');
+            expect(restaurant).to.have.property('updatedAt');
+            done();
         });
     });
 
-    it('should find restaurant by user email', (done) => {
-        User.findOne({ email: 'test@gmail.com' }, (err, user) => {
+    it('should delete a restaurant', (done) => {
+        restaurant.remove((err) => {
             expect(err).to.be.null;
-            expect(user.email).to.equal('test@gmail.com');
-            Restaurant.findOne({ user: user._id }, (err, restaurant) => {
-                expect(err).to.be.null;
-                expect(restaurant.name).to.equal('test');
-                done();
-            });
-        });
-    });
-
-    it('should delete a restaurant and user', (done) => {
-        User.findOne({ email: 'test@gmail.com' }, (err, user) => {
-            expect(err).to.be.null;
-            expect(user.email).to.equal('test@gmail.com');
-            Restaurant.remove({ user: user._id }, (err) => {
-                expect(err).to.be.null;
-                User.remove({ _id: user._id }, (err) => {
-                    expect(err).to.be.null;
-                    done();
-                });
-            });
+            done();
         });
     });
 });

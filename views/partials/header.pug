@@ -38,5 +38,9 @@
               li
                 a(href='/account') My Account
               li.divider
+              if user.restaurant
+                li
+                  a(href='/restaurant') Restaurant
+                li.divider
               li
                 a(href='/logout') Logout
