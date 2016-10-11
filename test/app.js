@@ -26,10 +26,26 @@ describe('GET /signup', () => {
 });
 
 describe('GET /restaurant', () => {
-    it('should return 200 OK', (done) => {
+    it('should return 302 Found', (done) => {
         request(app)
             .get('/restaurant')
-            .expect(200, done);
+            .expect(302, done);
+    });
+});
+
+describe('GET /restaurant/addproduct', () => {
+    it('should return 302 Found', (done) => {
+        request(app)
+            .get('/restaurant/addproduct')
+            .expect(302, done);
+    });
+});
+
+describe('GET /restaurant/edit', () => {
+    it('should return 302 Found', (done) => {
+        request(app)
+            .get('/restaurant/edit')
+            .expect(302, done);
     });
 });
 
