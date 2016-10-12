@@ -18,8 +18,22 @@ const passport = require('passport');
 const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
+const crypto = require('crypto');
+const mime = require('mime');
 const multer = require('multer');
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
+//const upload = multer({ dest: path.join(__dirname, 'uploads') });
+
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function(req, file, cb) {
+        crypto.pseudoRandomBytes(16, function(err, raw) {
+            cb(null, raw.toString('hex') + Date.now() + '.' + mime.extension(file.mimetype));
+        });
+    }
+});
+const upload = multer({ storage: storage });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -40,7 +54,7 @@ const restaurantController = require('./controllers/restaurant');
  */
 const passportConfig = require('./config/passport');
 
-/**
+/** 
  * Create Express server.
  */
 const app = express();
@@ -89,6 +103,8 @@ app.use(flash());
 app.use((req, res, next) => {
     if (req.path === '/api/upload') {
         next();
+    } else if (req.path === '/restaurant/addproduct') {
+        next();
     } else {
         lusca.csrf()(req, res, next);
     }
@@ -111,6 +127,7 @@ app.use(function(req, res, next) {
     next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+app.use(express.static('uploads'));
 
 /**
  * Primary app routes.
@@ -130,6 +147,7 @@ app.post('/signup/restaurant', userController.postSignupRestaurant);
 app.get('/contact', contactController.getContact);
 app.get('/restaurant', passportConfig.isAuthenticatedRestaurant, restaurantController.getRestaurant);
 app.get('/restaurant/addproduct', passportConfig.isAuthenticatedRestaurant, restaurantController.getAddProduct);
+app.post('/restaurant/addproduct', passportConfig.isAuthenticatedRestaurant, upload.single('myFile'), restaurantController.postAddProduct);
 app.get('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditRestaurant);
 app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
