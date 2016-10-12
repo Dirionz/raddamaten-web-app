@@ -44,6 +44,7 @@ exports.postAddProduct = (req, res) => { // TODO: Add date
         pictureURL: ((req.file) ? "/uploads/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
         price: req.body.price,
         quantity: parseInt(req.body.quantity),
+        date: new Date(req.body.date),
         restaurant: req.user.restaurant
     });
 
@@ -52,8 +53,8 @@ exports.postAddProduct = (req, res) => { // TODO: Add date
             req.flash('errors', err);
         } else {
             req.flash('success', { msg: 'Product has been added successfully!' });
-            return res.redirect('/restaurant/addproduct');
         }
+        return res.redirect('/restaurant/addproduct');
     });
 
 };
