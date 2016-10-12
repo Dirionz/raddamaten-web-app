@@ -31,5 +31,8 @@ bower_components
 .DS_Store
 Thumbs.db
 
-# VisualStudio Code.
+# VisualStudio Code
 launch.json
+
+# Uploads dir
+uploads
