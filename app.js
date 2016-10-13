@@ -103,7 +103,9 @@ app.use(flash());
 app.use((req, res, next) => {
     if (req.path === '/api/upload') {
         next();
-    } else if (req.path === '/restaurant/addproduct') {
+    } else if (req.path === '/restaurant/product') {
+        next();
+    } else if (req.path === '/restaurant/edit/picture') {
         next();
     } else {
         lusca.csrf()(req, res, next);
@@ -149,6 +151,8 @@ app.get('/restaurant', passportConfig.isAuthenticatedRestaurant, restaurantContr
 app.get('/restaurant/product', passportConfig.isAuthenticatedRestaurant, restaurantController.getAddProduct);
 app.post('/restaurant/product', passportConfig.isAuthenticatedRestaurant, upload.single('myFile'), restaurantController.postAddProduct);
 app.get('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditRestaurant);
+app.post('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.postEditRestaurant);
+app.post('/restaurant/edit/picture', passportConfig.isAuthenticatedRestaurant, upload.single('myFile'), restaurantController.postPictureRestaurant);
 app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);

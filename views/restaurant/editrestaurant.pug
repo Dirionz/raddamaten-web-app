@@ -4,38 +4,45 @@ block content
   .page-header
     h3 Profile Information
 
-  form.form-horizontal(action='/account/profile', method='POST')
+  form.form-horizontal(method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.col-sm-3.control-label(for='name') Name
       .col-sm-7
         input.form-control(type='text', name='name', id='name', value=restaurant.name)
     .form-group
-      label.col-sm-3.control-label Gender
-      .col-sm-6
-        label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender=='male', name='gender', value='male', data-toggle='radio')
-          span Male
-        label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender=='female', name='gender', value='female', data-toggle='radio')
-          span Female
-        label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender=='other', name='gender', value='other', data-toggle='radio')
-          span Other
-    .form-group
-      label.col-sm-3.control-label(for='location') Location
+      label.col-sm-3.control-label(for='aboutUs') About Us
       .col-sm-7
-        input.form-control(type='text', name='location', id='location', value=user.profile.location)
+        input.form-control(type='text', name='aboutUs', id='aboutUs', value=restaurant.aboutUs)
     .form-group
-      label.col-sm-3.control-label(for='website') Website
+      label.col-sm-3.control-label(for='street') Street
       .col-sm-7
-        input.form-control(type='text', name='website', id='website', value=user.profile.website)
+        input.form-control(type='text', name='street', id='street', value=restaurant.street)
     .form-group
-      label.col-sm-3.control-label Gravatar
-      .col-sm-4
-        img(src=user.gravatar(), class='profile', width='100', height='100')
+      label.col-sm-3.control-label(for='postalcode') PostalCode
+      .col-sm-7
+        input.form-control(type='text', name='postalcode', id='postalcode', value=restaurant.postalCode)
+    .form-group
+      label.col-sm-3.control-label(for='city') City
+      .col-sm-7
+        input.form-control(type='text', name='city', id='city', value=restaurant.city)
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
           | Update Profile
+          
+
+  .page-header
+    h3 Change picture
+
+  form.form-horizontal(role='form', enctype='multipart/form-data', action='/restaurant/edit/picture', method='POST')
+    .form-group
+      label(class='col-sm-3 control-label', for='myFile') File
+      .col-sm-7
+        input(type='file', name='myFile')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Update Profile picture

@@ -23,7 +23,7 @@ exports.getAddProduct = (req, res) => {
 };
 
 /**
- * POST /restaurant/addproduct
+ * POST /restaurant/product
  * Create product page.
  */
 exports.postAddProduct = (req, res) => {
@@ -36,7 +36,7 @@ exports.postAddProduct = (req, res) => {
 
     if (errors) {
         req.flash('errors', errors);
-        return res.redirect('/restaurant/addproduct');
+        return res.redirect('/restaurant/product');
     }
 
     const product = new Product({
@@ -55,7 +55,7 @@ exports.postAddProduct = (req, res) => {
         } else {
             req.flash('success', { msg: 'Product has been added successfully!' });
         }
-        return res.redirect('/restaurant/addproduct');
+        return res.redirect('/restaurant/product');
     });
 
 };
@@ -72,14 +72,77 @@ exports.getEditRestaurant = (req, res) => {
         } else {
             res.render('restaurant/editrestaurant', {
                 title: 'Edit restaurant',
-                name: restaurant.name,
-                aboutUs: restaurant.aboutUs,
-                pictureURL: restaurant.pictureURL,
-                street: restaurant.street,
-                postalCode: restaurant.postalCode,
-                city: restaurant.city,
                 restaurant: restaurant
             });
+        }
+    });
+};
+
+/**
+ * POST /restaurant/edit
+ * Edit Restaurant page.
+ */
+exports.postEditRestaurant = (req, res) => {
+    req.assert('name', 'Name cannot be empty').notEmpty();
+    req.assert('street', 'Street cannot be empty').notEmpty();
+    req.assert('postalcode', 'postalCode cannot be empty').notEmpty();
+    req.assert('city', 'City cannot be empty').notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('errors', errors);
+        return res.redirect('/restaurant/edit');
+    }
+
+
+    Restaurant.findById(req.user.restaurantId, (err, restaurant) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/restaurant/edit');
+        } else {
+            restaurant.name = req.body.name;
+            restaurant.aboutUs = req.body.aboutUs || '';
+            restaurant.street = req.body.street;
+            restaurant.postalcode = req.body.postalcode;
+            restaurant.city = req.body.city;
+
+            restaurant.save((err) => {
+                if (err) {
+                    req.flash('errors', err);
+                    return res.redirect('/restaurant/edit');
+                } else {
+                    req.flash('success', { msg: 'Profile information has been updated.' });
+                    return res.redirect('/restaurant');
+                }
+            });
+
+        }
+    });
+};
+
+/**
+ * POST /restaurant/edit/picture
+ * Edit Restaurant page.
+ */
+exports.postPictureRestaurant = (req, res) => {
+    Restaurant.findById(req.user.restaurantId, (err, restaurant) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/restaurant/edit');
+        } else {
+            restaurant.pictureURL = ((req.file) ? "/uploads/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
+
+            restaurant.save((err) => {
+                if (err) {
+                    req.flash('errors', err);
+                    return res.redirect('/restaurant/edit');
+                } else {
+                    req.flash('success', { msg: 'Profile picture has been updated.' });
+                    return res.redirect('/restaurant');
+                }
+            });
+
         }
     });
 };
