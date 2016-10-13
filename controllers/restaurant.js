@@ -25,7 +25,7 @@ exports.getAddProduct = (req, res) => {
  * POST /restaurant/addproduct
  * Create product page.
  */
-exports.postAddProduct = (req, res) => { // TODO: Add date 
+exports.postAddProduct = (req, res) => {
     req.assert('name', 'Name cannot be blank').notEmpty();
     req.assert('price', 'Price cannot be blank').notEmpty();
     req.assert('quantity', 'Quantity cannot be blank').notEmpty();

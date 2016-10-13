@@ -33,10 +33,10 @@ describe('GET /restaurant', () => {
     });
 });
 
-describe('GET /restaurant/addproduct', () => {
+describe('GET /restaurant/product', () => {
     it('should return 302 Found', (done) => {
         request(app)
-            .get('/restaurant/addproduct')
+            .get('/restaurant/product')
             .expect(302, done);
     });
 });
