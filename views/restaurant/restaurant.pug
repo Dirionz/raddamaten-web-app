@@ -1,6 +1,21 @@
 extends ../layout
 
 block content
-    p Restaurant page
-    a(href="/restaurant/product") Add product
-    a(href="/restaurant/edit") Edit Restaurant
+
+    .row
+        .col-sm-2
+            img(src=restaurant.pictureURL class='img-responsive')
+        .col-sm-5
+            h2 #{restaurant.name}
+            p #{restaurant.aboutUs}
+            p
+                a.btn.btn-default(href='/restaurant/product', role='button') Add product
+                a.btn.btn-default(href='/restaurant/edit', role='button') Edit Restaurant
+        .col-sm-5
+            br
+            p <b>Street:</b> #{restaurant.street}
+            p <b>Postal code:</b> #{restaurant.postalCode}
+            p <b>City:</b> #{restaurant.city}
+    hr
+      
+      

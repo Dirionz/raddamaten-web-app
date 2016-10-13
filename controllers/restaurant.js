@@ -6,8 +6,16 @@ const Product = require('../models/Product');
  * Restaurant page.
  */
 exports.getRestaurant = (req, res) => {
-    res.render('restaurant/restaurant', {
-        title: 'Restaurant'
+    Restaurant.findOne({ _id: req.user.restaurantId }, (err, restaurant) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/');
+        } else {
+            res.render('restaurant/restaurant', {
+                title: 'Restaurant',
+                restaurant: restaurant
+            });
+        }
     });
 };
 
@@ -42,7 +50,7 @@ exports.postAddProduct = (req, res) => {
     const product = new Product({
         name: req.body.name,
         description: req.body.description,
-        pictureURL: ((req.file) ? "/uploads/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
+        pictureURL: ((req.file) ? "/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
         price: req.body.price,
         quantity: parseInt(req.body.quantity),
         date: new Date(req.body.date),
@@ -152,7 +160,7 @@ exports.postPictureRestaurant = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/restaurant/edit');
         } else {
-            restaurant.pictureURL = ((req.file) ? "/uploads/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
+            restaurant.pictureURL = ((req.file) ? "/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
 
             restaurant.save((err) => {
                 if (err) {
