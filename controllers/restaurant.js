@@ -69,12 +69,13 @@ exports.postAddProduct = (req, res) => {
 };
 
 /**
- * GET /restaurant/products
+ * GET /restaurant/products/5
  * Products list page.
  */
 exports.getProducts = (req, res) => {
-
-    Product.find({ restaurantId: req.user.restaurantId }, (err, products) => {
+    const limit = 2;
+    const page = req.params.page;
+    Product.find({ restaurantId: req.user.restaurantId }, null, {limit: limit, skip: getSkip(page, limit)}, (err, products) => {
         if (err) {
             //callback function return error
             req.flash('errors', err);
@@ -83,12 +84,15 @@ exports.getProducts = (req, res) => {
             //successfully braunch
             res.render('restaurant/products', {
                 title: 'Products List',
-                restaurantName: restaurantName,
                 products: products
             });
         }
-    }).limit(2);
+    });
 };
+
+function getSkip(page, limit) {
+    return (page*limit)-limit;
+}
 
 /**
  * GET /restaurant/edit

@@ -41,6 +41,14 @@ describe('GET /restaurant/product', () => {
     });
 });
 
+describe('GET /restaurant/products/2', () => {
+    it('should return 302 Found', (done) => {
+        request(app)
+            .get('/restaurant/products/2')
+            .expect(302, done);
+    });
+});
+
 describe('GET /restaurant/edit', () => {
     it('should return 302 Found', (done) => {
         request(app)
