@@ -160,6 +160,8 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
+app.get('/restaurant/products', passportConfig.isAuthenticatedRestaurant, restaurantController.getProducts);
+
 /**
  * API examples routes.
  */

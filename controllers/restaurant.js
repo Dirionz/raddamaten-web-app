@@ -46,7 +46,7 @@ exports.postAddProduct = (req, res) => {
         price: req.body.price,
         quantity: parseInt(req.body.quantity),
         date: new Date(req.body.date),
-        restaurant: req.user.restaurant
+        restaurant: req.user.restaurantId
     });
 
     product.save((err) => {
@@ -58,6 +58,27 @@ exports.postAddProduct = (req, res) => {
         return res.redirect('/restaurant/product');
     });
 
+};
+
+/**
+ * GET /restaurant/products
+ * Products list page.
+ */
+exports.getProducts = (req, res) => {
+
+    Product.find({restaurant: req.user.restaurantId}, (err, products) => {
+        if (err) {
+            //callback function return error
+            req.flash('errors', err);
+            return res.redirect('/restaurant');
+        } else {
+            //successfully braunch
+            res.render('restaurant/products', {
+                title: 'Products List',
+                products: products
+            });
+        }
+    });
 };
 
 /**
