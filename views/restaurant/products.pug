@@ -1,13 +1,15 @@
 extends ../layout
 
 block content
-  h1 #{title}
-  p.lead A boilerplate for Node.js web applications.
+  h1 Hello World!
+  p.lead #{title}
   hr
   .row
     each product in products
         .col-sm-6
             h2 #{product.name}
             p #{product.description}
+            p #{product.quantity}
+            p #{product.price} sek
             p
-              a.btn.btn-default(href='#', role='button') View details »
+              a.btn.btn-default(href='#', role='button') Select »

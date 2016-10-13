@@ -66,7 +66,7 @@ exports.postAddProduct = (req, res) => {
  */
 exports.getProducts = (req, res) => {
 
-    Product.find({restaurantId: req.user.restaurantId}, (err, products) => {
+    Product.find({ restaurantId: req.user.restaurantId }, (err, products) => {
         if (err) {
             //callback function return error
             req.flash('errors', err);
@@ -75,10 +75,11 @@ exports.getProducts = (req, res) => {
             //successfully braunch
             res.render('restaurant/products', {
                 title: 'Products List',
+                restaurantName: restaurantName,
                 products: products
             });
         }
-    });
+    }).limit(2);
 };
 
 /**
