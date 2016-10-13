@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     price: String,
     quantity: Number,
     date: { type: Date, default: '12/10/1990' },
-    restaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }
+    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }
 
 }, { timestamps: true });
 

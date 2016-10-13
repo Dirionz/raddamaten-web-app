@@ -46,7 +46,7 @@ exports.postAddProduct = (req, res) => {
         price: req.body.price,
         quantity: parseInt(req.body.quantity),
         date: new Date(req.body.date),
-        restaurant: req.user.restaurantId
+        restaurantId: req.user.restaurantId
     });
 
     product.save((err) => {
@@ -66,7 +66,7 @@ exports.postAddProduct = (req, res) => {
  */
 exports.getProducts = (req, res) => {
 
-    Product.find({restaurant: req.user.restaurantId}, (err, products) => {
+    Product.find({restaurantId: req.user.restaurantId}, (err, products) => {
         if (err) {
             //callback function return error
             req.flash('errors', err);
