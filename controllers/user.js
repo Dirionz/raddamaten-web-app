@@ -154,7 +154,7 @@ exports.postSignupRestaurant = (req, res, next) => {
     const user = new User({
         email: req.body.email,
         password: req.body.password,
-        restaurant: restaurant._id
+        restaurantId: restaurant._id
     });
 
     User.findOne({ email: req.body.email }, (err, existingUser) => {

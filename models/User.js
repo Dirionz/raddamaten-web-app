@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     password: String,
     passwordResetToken: String,
     passwordResetExpires: Date,
-    restaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
+    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
 
     facebook: String,
     twitter: String,

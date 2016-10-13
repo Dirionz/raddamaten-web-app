@@ -511,7 +511,7 @@ passport.use('pinterest', new OAuth2Strategy({
  * Login Required Restaurant middleware.
  */
 exports.isAuthenticatedRestaurant = (req, res, next) => {
-    if (req.isAuthenticated() && req.user.restaurant) {
+    if (req.isAuthenticated() && req.user.restaurantId) {
         return next();
     }
     res.redirect('/');

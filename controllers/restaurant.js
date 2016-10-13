@@ -1,3 +1,4 @@
+const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
 
 /**
@@ -64,7 +65,21 @@ exports.postAddProduct = (req, res) => {
  * Edit Restaurant page.
  */
 exports.getEditRestaurant = (req, res) => {
-    res.render('restaurant/editrestaurant', {
-        title: 'Edit restaurant'
+    Restaurant.findOne({ _id: req.user.restaurantId }, (err, restaurant) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/');
+        } else {
+            res.render('restaurant/editrestaurant', {
+                title: 'Edit restaurant',
+                name: restaurant.name,
+                aboutUs: restaurant.aboutUs,
+                pictureURL: restaurant.pictureURL,
+                street: restaurant.street,
+                postalCode: restaurant.postalCode,
+                city: restaurant.city,
+                restaurant: restaurant
+            });
+        }
     });
 };
