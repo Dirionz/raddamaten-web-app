@@ -17,5 +17,16 @@ block content
             p <b>Postal code:</b> #{restaurant.postalCode}
             p <b>City:</b> #{restaurant.city}
     hr
-      
-      
+
+    .row
+        each product in products
+            .col-sm-6
+                h2 #{product.name}
+                p #{product.description}
+                p #{product.quantity}
+                p #{product.price} sek
+                p
+                    a.btn.btn-default(href='#', role='button') Select »
+    
+    hr
+    a.btn.btn-default(href='/restaurant/products/2', role='button') See more

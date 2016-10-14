@@ -11,9 +11,19 @@ exports.getRestaurant = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/');
         } else {
-            res.render('restaurant/restaurant', {
-                title: 'Restaurant',
-                restaurant: restaurant
+            Product.find({ restaurantId: req.user.restaurantId }, null, {limit: 2, skip: getSkip(1, 2)}, (err, products) => {
+                if (err) {
+                    //callback function return error
+                    req.flash('errors', err);
+                    return res.redirect('/restaurant');
+                } else {
+                    //successfully braunch
+                    res.render('restaurant/restaurant', {
+                        title: 'Restaurant',
+                        products: products,
+                        restaurant: restaurant
+                    });
+                }
             });
         }
     });
@@ -75,6 +85,7 @@ exports.postAddProduct = (req, res) => {
 exports.getProducts = (req, res) => {
     const limit = 2;
     const page = req.params.page;
+    if (page === 1) { return res.redirect('/restaurant')}
     Product.find({ restaurantId: req.user.restaurantId }, null, {limit: limit, skip: getSkip(page, limit)}, (err, products) => {
         if (err) {
             //callback function return error
