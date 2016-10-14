@@ -3,15 +3,16 @@ extends ../layout
 block content
 
     .row
-        .col-sm-2
-            img(src=restaurant.pictureURL class='img-responsive')
-        .col-sm-5
+        .col-xs-6.col-sm-3.col-md-2
+            //img(src=restaurant.pictureURL class='img-responsive')
+            div(class='product-img' style='background-image: url(' + restaurant.pictureURL + ')')
+        .col-xs-6.col-sm-4.col-md-5
             h2 #{restaurant.name}
             p #{restaurant.aboutUs}
             p
                 a.btn.btn-default(href='/restaurant/product', role='button') Add product
                 a.btn.btn-default(href='/restaurant/edit', role='button') Edit Restaurant
-        .col-sm-5
+        .col-xs-3.col-sm-4.col-md-5
             br
             p <b>Street:</b> #{restaurant.street}
             p <b>Postal code:</b> #{restaurant.postalCode}
@@ -20,13 +21,15 @@ block content
 
     .row
         each product in products
-            .col-sm-6
+            .col-xs-6.col-sm-4.col-md-3
+                div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
                 h2 #{product.name}
-                p #{product.description}
+                p(style='word-wrap: break-word') #{product.description} 
                 p #{product.quantity}
                 p #{product.price} sek
                 p
-                    a.btn.btn-default(href='#', role='button') Select »
+                    a.btn.btn-default(href='/product/edit/' + product._id, role='button') Edit
+                    a.btn.btn-danger(href='/product/delete/'+ product._id, role='button') Delete
     
     hr
     a.btn.btn-default(href='/restaurant/products/2', role='button') See more

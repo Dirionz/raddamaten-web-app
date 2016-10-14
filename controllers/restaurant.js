@@ -11,7 +11,7 @@ exports.getRestaurant = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/');
         } else {
-            Product.find({ restaurantId: req.user.restaurantId }, null, {limit: 2, skip: getSkip(1, 2)}, (err, products) => {
+            Product.find({ restaurantId: req.user.restaurantId }, null, {limit: 10, skip: getSkip(1, 10)}, (err, products) => {
                 if (err) {
                     //callback function return error
                     req.flash('errors', err);
