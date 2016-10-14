@@ -49,6 +49,22 @@ describe('GET /restaurant/products/2', () => {
     });
 });
 
+describe('GET /restaurant/product/edit/5', () => {
+    it('should return 302 Found', (done) => {
+        request(app)
+            .get('/restaurant/product/edit/5')
+            .expect(302, done);
+    });
+});
+
+describe('GET /restaurant/product/delete/5', () => {
+    it('should return 302 Found', (done) => {
+        request(app)
+            .get('/restaurant/product/delete/5')
+            .expect(302, done);
+    });
+});
+
 describe('GET /restaurant/edit', () => {
     it('should return 302 Found', (done) => {
         request(app)

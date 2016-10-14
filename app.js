@@ -107,6 +107,8 @@ app.use((req, res, next) => {
         next();
     } else if (req.path === '/restaurant/edit/picture') {
         next();
+    } else if (req.path.substring(0, req.path.lastIndexOf("/") + 1) === '/restaurant/product/edit/picture/') {
+        next();
     } else {
         lusca.csrf()(req, res, next);
     }
@@ -161,6 +163,12 @@ app.post('/account/delete', passportConfig.isAuthenticated, userController.postD
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
 app.get('/restaurant/products/:page', passportConfig.isAuthenticatedRestaurant, restaurantController.getProducts);
+
+app.get('/restaurant/product/edit/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditProduct);
+app.post('/restaurant/product/edit/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postEditProduct);
+app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedRestaurant, upload.single('myFile'), restaurantController.postEditPictureProduct);
+app.get('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getDeleteProduct);
+app.post('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postDeleteProduct);
 
 /**
  * API examples routes.

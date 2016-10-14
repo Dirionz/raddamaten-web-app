@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+    h2 Are your sure that you want to delete #{product.name}?
+    form.form-horizontal(method='POST')
+        input(type='hidden', name='_csrf', value=_csrf)
+        button.btn.btn.btn-danger(type='submit') Yes Delete

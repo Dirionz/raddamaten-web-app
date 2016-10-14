@@ -1,0 +1,51 @@
+extends ../layout
+
+block content
+    extends ../layout
+
+block content
+  .page-header
+    h3 Product Information
+
+  form.form-horizontal(method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='name') Name
+      .col-sm-7
+        input.form-control(type='text', name='name', id='name', value=product.name)
+    .form-group
+      label.col-sm-3.control-label(for='description') Description
+      .col-sm-7
+        input.form-control(type='text', name='description', id='description', value=product.description)
+    .form-group
+      label.col-sm-3.control-label(for='price') Price
+      .col-sm-7
+        input.form-control(type='text', name='price', id='price', value=product.price)
+    .form-group
+      label.col-sm-3.control-label(for='quantity') Quantity
+      .col-sm-7
+        input.form-control(type='text', name='quantity', id='quantity', value=product.quantity)
+    .form-group
+      label.col-sm-3(class='col-sm-2 control-label', for='date') Date
+      .col-sm-7
+        input.form-control(type='date', name='date', value=product.date.toISOString().split('T')[0], id='date', required)
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Update Product
+          
+
+  .page-header
+    h3 Change picture
+
+  form.form-horizontal(role='form', enctype='multipart/form-data', action='/restaurant/product/edit/picture/' + product._id, method='POST')
+    .form-group
+      label(class='col-sm-3 control-label', for='myFile') File
+      .col-sm-7
+        input(type='file', name='myFile')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Update Product picture
