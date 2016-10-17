@@ -1,0 +1,9 @@
+each product in products
+  .col-xs-6.col-sm-4.col-md-3
+    div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
+    h2 #{product.name}
+    p(style='word-wrap: break-word') #{product.description} 
+    p #{product.quantity}
+    p #{product.price} sek
+    p
+      a.btn.btn-default(href='/restaurant/product/edit/' + product._id, role='button' ) Order

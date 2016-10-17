@@ -1,0 +1,6 @@
+extends ../layout
+
+block content
+    p #{restaurant.name}
+    each product in products
+        p #{product.name}

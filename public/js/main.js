@@ -1,8 +1,10 @@
 $(document).ready(function() {
 
+  // Load more products
   var productsframe = $("div#productsframe").length;
   if (productsframe) {
     nextpage = 2;
+    hideLoadMoreIfLessThanLimit($(this));
     $('#load_more').click(function(event) {
       loadMoreProducts();
     });
@@ -15,6 +17,8 @@ $(document).ready(function() {
 
 function loadMoreProducts() {
 
+  var baseurl = $('div#baseurl').data('internalbaseurl');
+
   const loadmoreBtn = $('#load_more.btn');
   loadmoreBtn.button('loading');
 
@@ -22,8 +26,9 @@ function loadMoreProducts() {
   event.preventDefault()
   var limit = getLimit()
   // Fetch the data
-  $.get('/restaurant/products/' + nextpage + '?limit=' + limit, function(html){
+  $.get(baseurl + nextpage + '?limit=' + limit, function(html){
     if (html) {
+      hideLoadMoreIfLessThanLimit($(html));
       // Put the data where it belongs. I like it more this way
       $("div#productsframe").append(html)
       // Keep the counter up-to-date
@@ -50,4 +55,12 @@ function getLimit() {
     }
   }
   return limit;
+}
+
+function hideLoadMoreIfLessThanLimit(htmlObject) {
+  const loadmoreBtn = $('#load_more.btn');
+  var objectsReturned = htmlObject.find(".product-img").length;
+  if (objectsReturned < getLimit()) {
+    loadmoreBtn.hide();
+  }
 }

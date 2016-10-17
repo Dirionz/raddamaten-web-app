@@ -295,7 +295,7 @@ exports.postDeleteProduct = (req, res) => {
  * Products list page.
  */
 exports.getProducts = (req, res) => {
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 16;
     const page = req.params.page;
     if (page === 1) { return res.redirect('/restaurant')}
     Product.find({ restaurantId: req.user.restaurantId }, null,

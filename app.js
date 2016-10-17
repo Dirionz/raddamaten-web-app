@@ -137,6 +137,8 @@ app.use(express.static('uploads'));
  * Primary app routes.
  */
 app.get('/', homeController.index);
+app.get('/products/:page', homeController.getProducts);
+app.get('/order/:restaurantId', homeController.getOrder);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
