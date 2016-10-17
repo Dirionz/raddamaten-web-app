@@ -4,7 +4,7 @@ const productSchema = new mongoose.Schema({
     name: String,
     description: String,
     pictureURL: String,
-    price: String,
+    price: Number,
     quantity: Number,
     date: { type: Date, default: '12/10/1990' },
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }

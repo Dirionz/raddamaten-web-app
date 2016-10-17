@@ -12,7 +12,7 @@ block content
     .form-group
       label(class='col-sm-2 control-label', for='price') Price
       .col-sm-8
-        input.form-control(type='text', name='price', id='price', required)
+        input.form-control(type='number', name='price', id='price', required)
     .form-group
       label(class='col-sm-2 control-label', for='quantity') Quantity
       .col-sm-8
@@ -24,7 +24,7 @@ block content
     .form-group
       label(class='col-sm-2 control-label', for='date') Date
       .col-sm-8
-        input.form-control(type='date', name='date', value=date, id='date', required)
+        input.form-control(type='datetime-local', name='date', value=date, id='date', required)
     .form-group
       label(class='col-sm-2 control-label', for='myFile') File
       .col-sm-8

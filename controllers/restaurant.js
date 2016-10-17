@@ -148,7 +148,7 @@ exports.postAddProduct = (req, res) => {
         name: req.body.name,
         description: req.body.description,
         pictureURL: ((req.file) ? "/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
-        price: req.body.price,
+        price: parseInt(req.body.price),
         quantity: parseInt(req.body.quantity),
         date: new Date(req.body.date),
         restaurantId: req.user.restaurantId
