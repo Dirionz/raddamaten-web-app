@@ -11,7 +11,8 @@ exports.getRestaurant = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/');
         } else {
-            Product.find({ restaurantId: req.user.restaurantId }, null, {limit: 10, skip: getSkip(1, 10)}, (err, products) => {
+            Product.find({ restaurantId: req.user.restaurantId }, null, 
+            {limit: 16, skip: getSkip(1, 16), sort: { date: -1 }}, (err, products) => {
                 if (err) {
                     //callback function return error
                     req.flash('errors', err);
@@ -292,10 +293,11 @@ exports.postDeleteProduct = (req, res) => {
  * Products list page.
  */
 exports.getProducts = (req, res) => {
-    const limit = 2;
+    const limit = parseInt(req.query.limit) || 10;
     const page = req.params.page;
     if (page === 1) { return res.redirect('/restaurant')}
-    Product.find({ restaurantId: req.user.restaurantId }, null, {limit: limit, skip: getSkip(page, limit)}, (err, products) => {
+    Product.find({ restaurantId: req.user.restaurantId }, null,
+    {limit: limit, skip: getSkip(page, limit), sort: { date: -1 }}, (err, products) => {
         if (err) {
             //callback function return error
             req.flash('errors', err);

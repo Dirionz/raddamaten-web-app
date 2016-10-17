@@ -4,7 +4,6 @@ block content
 
     .row
         .col-xs-6.col-sm-3.col-md-2
-            //img(src=restaurant.pictureURL class='img-responsive')
             div(class='product-img' style='background-image: url(' + restaurant.pictureURL + ')')
         .col-xs-6.col-sm-4.col-md-5
             h2 #{restaurant.name}
@@ -19,7 +18,7 @@ block content
             p <b>City:</b> #{restaurant.city}
     hr
 
-    .row
+    .row(id='productsframe')
         each product in products
             .col-xs-6.col-sm-4.col-md-3
                 div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
@@ -32,4 +31,5 @@ block content
                     a.btn.btn-danger(href='/restaurant/product/delete/'+ product._id, role='button') Delete
     
     hr
-    a.btn.btn-default(href='/restaurant/products/2', role='button') View older products
+    .text-center
+        a.btn.btn-default(id='load_more', role='button' data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading") View older products

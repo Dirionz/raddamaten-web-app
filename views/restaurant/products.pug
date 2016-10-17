@@ -1,15 +1,10 @@
-extends ../layout
-
-block content
-  h1 Hello World!
-  p.lead #{title}
-  hr
-  .row
-    each product in products
-        .col-sm-6
-            h2 #{product.name}
-            p #{product.description}
-            p #{product.quantity}
-            p #{product.price} sek
-            p
-              a.btn.btn-default(href='#', role='button') Select »
+each product in products
+  .col-xs-6.col-sm-4.col-md-3
+    div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
+    h2 #{product.name}
+    p(style='word-wrap: break-word') #{product.description} 
+    p #{product.quantity}
+    p #{product.price} sek
+    p
+      a.btn.btn-default(href='/restaurant/product/edit/' + product._id, role='button') Edit
+      a.btn.btn-danger(href='/restaurant/product/delete/'+ product._id, role='button') Delete
