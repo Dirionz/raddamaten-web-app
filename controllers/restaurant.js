@@ -123,7 +123,7 @@ exports.postPictureRestaurant = (req, res) => {
 exports.getAddProduct = (req, res) => {
     res.render('restaurant/addproduct', {
         title: 'Add product',
-        date: new Date().toISOString().split('T')[0] // Date today
+        date: new Date().toISOString().slice(0, 16).replace('T', ' ') // Date today
     });
 };
 
@@ -150,7 +150,8 @@ exports.postAddProduct = (req, res) => {
         pictureURL: ((req.file) ? "/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
         price: parseInt(req.body.price),
         quantity: parseInt(req.body.quantity),
-        date: new Date(req.body.date),
+        startdate: new Date(req.body.startdate),
+        enddate: new Date(req.body.enddate),
         restaurantId: req.user.restaurantId
     });
 
@@ -212,7 +213,8 @@ exports.postEditProduct = (req, res) => {
             product.description = req.body.description || '';
             product.price = req.body.price;
             product.quantity = parseInt(req.body.quantity);
-            product.date = new Date(req.body.date);
+            product.startdate = new Date(req.body.startdate);
+            product.enddate = new Date(req.body.enddate);
 
             product.save((err) => {
             if (err) {

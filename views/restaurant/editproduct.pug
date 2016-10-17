@@ -26,9 +26,13 @@ block content
       .col-sm-7
         input.form-control(type='text', name='quantity', id='quantity', value=product.quantity)
     .form-group
-      label.col-sm-3(class='col-sm-2 control-label', for='date') Date
+      label.col-sm-3(class='col-sm-2 control-label', for='startdate') Start Date
       .col-sm-7
-        input.form-control(type='date', name='date', value=product.date.toISOString().split('T')[0], id='date', required)
+        input.form-control(type='text', name='startdate', value=product.startdate.toISOString().slice(0, 16).replace('T', ' '), id='date', required)
+    .form-group
+      label.col-sm-3(class='col-sm-2 control-label', for='enddate') End Date
+      .col-sm-7
+        input.form-control(type='text', name='enddate', value=product.enddate.toISOString().slice(0, 16).replace('T', ' '), id='date', required)
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')

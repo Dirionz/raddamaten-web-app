@@ -7,7 +7,9 @@ $(document).ready(function() {
       loadMoreProducts();
     });
   }
-  $('#date');
+
+  // Date inputs
+  $('input#date').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD HH:mm' });
 
 });
 
