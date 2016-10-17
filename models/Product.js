@@ -6,8 +6,8 @@ const productSchema = new mongoose.Schema({
     pictureURL: String,
     price: Number,
     quantity: Number,
-    startdate: { type: Date, default: '12/10/1990' },
-    enddate: { type: Date, default: '12/10/1990' },
+    startdate: { type: Date, default: '2000-10-10T08:00' },
+    enddate: { type: Date, default: '2000-10-10T09:00' },
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }
 
 }, { timestamps: true });

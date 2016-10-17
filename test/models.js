@@ -92,7 +92,7 @@ describe('Product Model', () => {
         name: "product",
         description: "description",
         pictureURL: "",
-        price: "123 Kr",
+        price: 123,
         quantity: 2,
         restaurant: restaurant._id
     });
@@ -132,7 +132,7 @@ describe('Order Model', () => {
         name: "product",
         description: "description",
         pictureURL: "",
-        price: "123 Kr",
+        price: 123,
         quantity: 2
     });
 
@@ -140,7 +140,7 @@ describe('Order Model', () => {
         name: "product2",
         description: "description",
         pictureURL: "",
-        price: "123 Kr",
+        price: 123,
         quantity: 2
     });
 
