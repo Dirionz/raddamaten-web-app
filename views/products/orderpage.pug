@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+    .row.leftright-container.col-xs-12
+        .col-xs-12.col-sm-9.left-side
+            each product in products
+                .col-xs-4.col-sm-3
+                    div(class='product-img-small' style='background-image: url(' + product.pictureURL + ')')
+                .col-xs-8.col-sm-9
+                    .col-xs-6.col-sm-6
+                        h4 #{product.name}
+                        p Quantity #{product.quantity} Price #{product.price} sek
+                    .col-xs-2.col-sm-3
+                        p
+                            a.btn.btn-default(class='add-product-btn' role='button' data-productId=product._id data-productName=product.name data-productQuantity=product.quantity data-productPrice=product.price) Add
+        .col-xs-12.col-sm-3.right-side
+            .order-list
+

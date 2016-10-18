@@ -48,6 +48,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const restaurantController = require('./controllers/restaurant');
+const orderController = require('./controllers/order');
 
 /**
  * API keys and Passport configuration.
@@ -138,7 +139,7 @@ app.use(express.static('uploads'));
  */
 app.get('/', homeController.index);
 app.get('/products/:page', homeController.getProducts);
-app.get('/order/:restaurantId', homeController.getOrder);
+app.get('/order/:restaurantId', orderController.getOrderPage);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);

@@ -57,31 +57,3 @@ exports.getProducts = (req, res) => {
 function getSkip(page, limit) {
     return (page*limit)-limit;
 }
-
-/**
- * GET /
- * Order page.
- */
-exports.getOrder = (req, res) => {
-  Restaurant.find({ _id: req.params.restaurantId }, (err, restaurant) => {
-    if (err) {
-      req.flash('errors', err);
-      res.redirect('/');
-    } else {
-      Product.find({ restaurantId: restaurant._id }, (err, products) => {
-        if (err) {
-          req.flash('errors', err);
-            res.render('home', {
-            title: 'Home'
-          });
-        } else {
-            res.render('products/order', {
-              title: 'Order',
-              restaurant: restaurant,
-              products: products
-            });
-        }
-      });
-    }
-  });
-};

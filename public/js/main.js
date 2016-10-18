@@ -12,9 +12,20 @@ $(document).ready(function() {
 
   // Date inputs
   $('input#date').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD HH:mm' });
+  
+  // Add product on order page.
+  $('.add-product-btn').click(function() {
+    var productId = $(this).data('productid');
+    var productName = $(this).data('productname');
+    var productQuantity = $(this).data('productquantity');
+    var productPrice = $(this).data('productprice');
+    var html = '<p>' + productName + '</p>'
+    $('.order-list').append(html);
+  });
 
 });
 
+// Load more products on restaurant page and on the main page
 function loadMoreProducts() {
 
   var baseurl = $('div#baseurl').data('internalbaseurl');

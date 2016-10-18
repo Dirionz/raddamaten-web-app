@@ -6,4 +6,4 @@ each product in products
     p #{product.quantity}
     p #{product.price} sek
     p
-      a.btn.btn-default(href='/restaurant/product/edit/' + product._id, role='button' ) Order
+      a.btn.btn-default(href='/order/' + product.restaurantId, role='button' ) Order
