@@ -15,17 +15,15 @@ $(document).ready(function() {
   
   // Add product on order page.
   $('.add-product-btn').click(function() {
-    var productName = $(this).data('productname');
-    var productQuantity = $(this).data('productquantity');
-    var productPrice = $(this).data('productprice');
-    var html = '<p>' + productName + '</p>'
-    //$('.order-list').append(html);
-    updateOrder($(this));
+    addToOrder($(this));
   });
-
+  // Remove product on order page.
+  $('div.order-list').on('click', '.delete-product-btn', function() {
+    removeFromOrder($(this));
+  })
 });
 
-function updateOrder(btn) {
+function addToOrder(btn) {
   var orderId = btn.data('orderid') // The order id
   var productId = btn.data('productid'); // The product to be added
   
@@ -35,11 +33,30 @@ function updateOrder(btn) {
   // Retains compatibility for those with no javascript
   event.preventDefault()
 
-  $.get(baseurl+"?productId="+ productId +"&orderId="+ orderId, function(html) {
+  $.get("/order/product/add/?productId="+ productId +"&orderId="+ orderId, function(html) {
     if (html) {
-      alert(html);
-      // Put the data where it belongs. I like it more this way
-      $("div.order-list").html(html);
+      $("div.order-list").html(html); // Replace the html in order-list
+    } else {
+      btn.hide();
+    }
+    btn.button('reset');
+  });
+
+}
+
+function removeFromOrder(btn) {
+  var orderId = btn.data('orderid') // The order id
+  var productId = btn.data('productid'); // The product to be added
+  
+  var baseurl = $('div#baseurl').data('internalbaseurl');
+  btn.button('loading');
+
+  // Retains compatibility for those with no javascript
+  event.preventDefault()
+
+  $.get("/order/product/delete/?productId="+ productId +"&orderId="+ orderId, function(html) {
+    if (html) {
+      $("div.order-list").html(html); // Replace the html in order-list
     } else {
       btn.hide();
     }

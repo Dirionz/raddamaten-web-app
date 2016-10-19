@@ -30,12 +30,15 @@ exports.getOrderPage = (req, res) => {
                                     title: 'Home'
                                 });
                             } else {
+                                const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                                const price = getPrice(fullOrderProducts);
                                 res.render('products/orderpage', {
                                     title: 'Order',
                                     restaurant: restaurant,
                                     products: products,
                                     order: order,
-                                    orderProducts: orderProducts
+                                    orderProducts: fullOrderProducts,
+                                    price: price
                                 });
                             }
                         });
@@ -50,7 +53,7 @@ exports.getOrderPage = (req, res) => {
 
 
 /**
- * POST /order/product/add
+ * GET /order/product/add
  * Add product to Order.
  * This function should get called by ajax or similar
  */
@@ -72,8 +75,12 @@ exports.addToOrder = (req, res) => { // Add product to order
                             req.flash('errors', err)
                             return res.render('partials/flash', {});
                         } else {
+                            const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                            const price = getPrice(fullOrderProducts);
                             return res.render('products/order', {
-                                orderProducts: placeDuplicates(order.products, orderProducts)
+                                orderProducts: fullOrderProducts,
+                                price: price,
+                                order: order
                             });
                         }
                     });
@@ -110,20 +117,71 @@ function search(nameKey, myArray){
 }
 
 /**
+ * Get the sum of the products in array
+ */
+function getPrice(products) {
+    var sum = 0;
+    for (var i=0; i < products.length; i++) {
+        sum += products[i].price;
+    }
+    return sum;
+}
+
+/**
  * POST /order/product/remove
  * Remove product from Order.
+ * This function should get called by ajax or similar
  */
-exports.removeFromOrder = (req, res) => {
-    req.assert('restaurantId', 'RestaurantId cannot be empty').notEmpty();
-    req.assert('productId', 'ProductId cannot be empty').notEmpty();
+exports.deleteFromOrder = (req, res) => {
+    Order.findById(req.query.orderId, (err, order) => { 
+        if(err) {
+            req.flash('errors', err);
+            return res.render('partials/flash', {});
+        } else {
+            order.products = removeProductId(req.query.productId, order.products);
 
-    const errors = req.validationErrors();
-
-    if (errors) {
-        req.flash('errors', errors);
-        return res.redirect('/');// TODO: check of we can redirect to orderpage
-    }
+            order.save((err) => {
+                if (err) {
+                    req.flash('errors', err);
+                    return res.render('partials/flash', {});
+                } else {
+                    Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
+                        if(err) {
+                            req.flash('errors', err)
+                            return res.render('partials/flash', {});
+                        } else {
+                            const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                            const price = getPrice(fullOrderProducts);
+                            return res.render('products/order', {
+                                orderProducts: fullOrderProducts,
+                                price: price,
+                                order: order
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
 };
+
+/**
+ * Remove object from array by searching through the array 
+ * and remove the object then return the array
+ */
+function removeProductId(nameKey, myArray){
+    var count = 0;
+    var newArray = [];
+    for (var i=0; i < myArray.length; i++) {
+        if (String(myArray[i]) === nameKey && count < 1) {
+            count++;
+            // Ignore the object to be removed
+        } else {
+            newArray.push(myArray[i]);
+        }
+    }
+    return newArray;
+}
 
 /**
  * POST /order/
@@ -140,18 +198,26 @@ exports.postNewOrder = (req, res) => {
         return res.redirect('/');
     }
 
-    // Create new order
-    const order = new Order({
-        products: [req.body.productId],
-        restaurantId: req.body.restaurantId
-    });
-
-    order.save((err) => {
+    Product.findById(req.body.productId, (err, product) => { 
         if (err) {
-            req.flash('errors', err);
-            res.redirect('/');
+            req.flash('errors', errors);
+            return res.redirect('/');
         } else {
-            res.redirect('/order/'+order._id);   
-        }
-    });
+
+            // Create new order
+            const order = new Order({
+                products: [req.body.productId],
+                restaurantId: req.body.restaurantId,
+            });
+        
+            order.save((err) => {
+                if (err) {
+                    req.flash('errors', err);
+                    res.redirect('/');
+                } else {
+                    res.redirect('/order/'+order._id);   
+                }
+            });
+         }
+     });
 };
