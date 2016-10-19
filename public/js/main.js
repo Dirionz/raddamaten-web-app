@@ -15,15 +15,38 @@ $(document).ready(function() {
   
   // Add product on order page.
   $('.add-product-btn').click(function() {
-    var productId = $(this).data('productid');
     var productName = $(this).data('productname');
     var productQuantity = $(this).data('productquantity');
     var productPrice = $(this).data('productprice');
     var html = '<p>' + productName + '</p>'
-    $('.order-list').append(html);
+    //$('.order-list').append(html);
+    updateOrder($(this));
   });
 
 });
+
+function updateOrder(btn) {
+  var orderId = btn.data('orderid') // The order id
+  var productId = btn.data('productid'); // The product to be added
+  
+  var baseurl = $('div#baseurl').data('internalbaseurl');
+  btn.button('loading');
+
+  // Retains compatibility for those with no javascript
+  event.preventDefault()
+
+  $.get(baseurl+"?productId="+ productId +"&orderId="+ orderId, function(html) {
+    if (html) {
+      alert(html);
+      // Put the data where it belongs. I like it more this way
+      $("div.order-list").html(html);
+    } else {
+      btn.hide();
+    }
+    btn.button('reset');
+  });
+
+}
 
 // Load more products on restaurant page and on the main page
 function loadMoreProducts() {

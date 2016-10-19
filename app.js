@@ -139,7 +139,10 @@ app.use(express.static('uploads'));
  */
 app.get('/', homeController.index);
 app.get('/products/:page', homeController.getProducts);
-app.get('/order/:restaurantId', orderController.getOrderPage);
+app.get('/order/:orderId', orderController.getOrderPage);
+app.post('/order/', orderController.postNewOrder);
+app.get('/order/product/add', orderController.addToOrder)
+app.get('/order/product/remove', orderController.removeFromOrder)
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);

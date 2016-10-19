@@ -6,4 +6,10 @@ each product in products
     p #{product.quantity}
     p #{product.price} sek
     p
-      a.btn.btn-default(href='/order/' + product.restaurantId, role='button' ) Order
+      form.form-horizontal(method='POST' action='/order/')
+          input(type='hidden', name='_csrf', value=_csrf)
+          input.form-control(type='hidden', name='restaurantId', id='restaurantId', value=product.restaurantId)
+          input.form-control(type='hidden', name='productId', id='productId', value=product._id)
+          .form-group
+            button.btn.btn-primary(type='submit')
+              | Order

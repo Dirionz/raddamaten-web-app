@@ -1,31 +1,157 @@
 const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
+const Order = require('../models/Order');
 
 /**
- * GET /
+ * GET /order/5
  * Order page.
  */
 exports.getOrderPage = (req, res) => {
-  Restaurant.findById(req.params.restaurantId, (err, restaurant) => {
-    if (err) {
-      req.flash('errors', err);
-      res.redirect('/');
-    } else {
-      Product.find({ restaurantId: restaurant._id }, (err, products) => {
-        if (err) {
-          req.flash('errors', err);
-            res.render('home', {
-            title: 'Home'
-          });
-        } else {
-            res.render('products/orderpage', {
-              title: 'Order',
-              restaurant: restaurant,
-              products: products
-            });
-        }
-      });
-    }
+  Order.findById(req.params.orderId, (err, order) => { 
+      if (err) {
+        req.flash('errors', err);
+        res.redirect('/');
+      } else {
+        if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+        Product.find({ _id: { $in: order.products } }, (err, orderProducts) => {
+            if (err) {
+                req.flash('errors', err);
+                res.redirect('/');
+            } else {
+                Restaurant.findById(order.restaurantId, (err, restaurant) => {
+                    if (err) {
+                        req.flash('errors', err);
+                        res.redirect('/');
+                    } else {
+                        Product.find({ restaurantId: restaurant._id }, (err, products) => {
+                            if (err) {
+                                req.flash('errors', err);
+                                    res.render('home', {
+                                    title: 'Home'
+                                });
+                            } else {
+                                res.render('products/orderpage', {
+                                    title: 'Order',
+                                    restaurant: restaurant,
+                                    products: products,
+                                    order: order,
+                                    orderProducts: orderProducts
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+      }
+      
   });
 };
 
+
+/**
+ * POST /order/product/add
+ * Add product to Order.
+ * This function should get called by ajax or similar
+ */
+exports.addToOrder = (req, res) => { // Add product to order
+    Order.findById(req.query.orderId, (err, order) => { 
+        if(err) {
+            req.flash('errors', err);
+            return res.render('partials/flash', {});
+        } else {
+            order.products.push(req.query.productId);
+
+            order.save((err) => {
+                if (err) {
+                    req.flash('errors', err);
+                    return res.render('partials/flash', {});
+                } else {
+                    Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
+                        if(err) {
+                            req.flash('errors', err)
+                            return res.render('partials/flash', {});
+                        } else {
+                            return res.render('products/order', {
+                                orderProducts: placeDuplicates(order.products, orderProducts)
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+};
+
+/**
+ * The find function only finds puts one object in the array if found
+ * Let add it multiple times if the objectId exitst more than one time
+ */
+function placeDuplicates(objectIds, orderProducts) {
+    var newOrderProducts = [];
+    for (var i = 0, len = objectIds.length; i < len; i++) {
+        var product = search(objectIds[i], orderProducts);
+        if (product) {
+            newOrderProducts.push(product);
+        }
+    }
+    return newOrderProducts;
+}
+
+/**
+ * Search through the array and if found return it
+ */
+function search(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (String(myArray[i]._id) === String(nameKey)) {
+            return myArray[i];
+        }
+    }
+}
+
+/**
+ * POST /order/product/remove
+ * Remove product from Order.
+ */
+exports.removeFromOrder = (req, res) => {
+    req.assert('restaurantId', 'RestaurantId cannot be empty').notEmpty();
+    req.assert('productId', 'ProductId cannot be empty').notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('errors', errors);
+        return res.redirect('/');// TODO: check of we can redirect to orderpage
+    }
+};
+
+/**
+ * POST /order/
+ * Create Order.
+ */
+exports.postNewOrder = (req, res) => {
+    req.assert('restaurantId', 'RestaurantId cannot be empty').notEmpty();
+    req.assert('productId', 'ProductId cannot be empty').notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('errors', errors);
+        return res.redirect('/');
+    }
+
+    // Create new order
+    const order = new Order({
+        products: [req.body.productId],
+        restaurantId: req.body.restaurantId
+    });
+
+    order.save((err) => {
+        if (err) {
+            req.flash('errors', err);
+            res.redirect('/');
+        } else {
+            res.redirect('/order/'+order._id);   
+        }
+    });
+};
