@@ -1,6 +1,7 @@
 const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
+const stripe = require('stripe')(process.env.STRIPE_SKEY);
 
 /**
  * GET /order/5
@@ -220,4 +221,70 @@ exports.postNewOrder = (req, res) => {
             });
          }
      });
+};
+
+/**
+ * GET /order/checkout/5
+ * Checkout the Order.
+ */
+exports.checkoutOrder = (req, res) => {
+    Order.findById(req.params.orderId, (err, order) => { 
+        if(err) {
+            req.flash('errors', err);
+            return res.render('partials/flash', {});
+        } else {
+            // TODO: Check of order is null or not and return error
+            // The user might want to refresh the page...
+            if (!order.isCheckedout) {
+                order.isCheckedout = true;
+                order.products.forEach(function(id) {
+                    Product.update({_id: id}, {$inc: {quantity: -1}}, (err) => {});
+                });
+            }
+            order.save((err) => {
+                if (err) {
+                    req.flash('errors', err);
+                    return res.render('partials/flash', {});
+                } else {
+                    Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
+                        if(err) {
+                            req.flash('errors', err)
+                            return res.render('partials/flash', {});
+                        } else {
+                            const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                            const price = getPrice(fullOrderProducts);
+                            return res.render('products/checkout', {
+                                orderProducts: fullOrderProducts,
+                                price: price,
+                                order: order,
+                                publishableKey: process.env.STRIPE_PKEY
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+};
+
+/**
+ * POST /order/checkout/5
+ * Make a payment.
+ */
+exports.postStripe = (req, res) => {
+  const stripeToken = req.body.stripeToken;
+  const stripeEmail = req.body.stripeEmail;
+  stripe.charges.create({
+    amount: 395,
+    currency: 'usd',
+    source: stripeToken,
+    description: stripeEmail
+  }, (err) => {
+    if (err && err.type === 'StripeCardError') {
+      req.flash('errors', { msg: 'Your card has been declined.' });
+      return res.redirect('/api/stripe');
+    }
+    req.flash('success', { msg: 'Your card has been successfully charged.' });
+    res.redirect('/api/stripe');
+  });
 };
