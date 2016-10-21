@@ -254,13 +254,14 @@ exports.checkoutOrder = (req, res) => {
                             });
                         }
                     }
+                    const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                    const price = getPrice(fullOrderProducts);
+                    order.price = price;
                     order.save((err) => {
                         if (err) {
                             req.flash('errors', err);
                             return res.redirect('/order/'+req.params.orderId);
                         } else {
-                            const fullOrderProducts = placeDuplicates(order.products, orderProducts);
-                            const price = getPrice(fullOrderProducts);
                             return res.render('products/checkout', {
                                 orderProducts: fullOrderProducts,
                                 price: price,
@@ -293,19 +294,48 @@ function productsExits(productList) {
  * Make a payment.
  */
 exports.postStripe = (req, res) => {
+  const orderId     = req.params.orderId;
   const stripeToken = req.body.stripeToken;
   const stripeEmail = req.body.stripeEmail;
-  stripe.charges.create({
-    amount: 395,
-    currency: 'usd',
-    source: stripeToken,
-    description: stripeEmail
-  }, (err) => {
-    if (err && err.type === 'StripeCardError') {
-      req.flash('errors', { msg: 'Your card has been declined.' });
-      return res.redirect('/api/stripe');
-    }
-    req.flash('success', { msg: 'Your card has been successfully charged.' });
-    res.redirect('/api/stripe');
+  Order.findById(req.params.orderId, (err, order) => { 
+    if (err) {
+        req.flash('errors', err);
+        return res.redirect('/order/checkout/'+orderId);
+    } else {
+        if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+        order.email = stripeEmail;
+        order.save((err) => { 
+            if (err) {
+                req.flash('errors', err);
+                return res.redirect('/order/checkout/'+orderId);
+            } else {
+                stripe.charges.create({
+                    amount: order.price*100, // Stripe expects the price in "cents"
+                    currency: 'sek',
+                    source: stripeToken,
+                    description: stripeEmail
+                }, (err) => {
+                    if (err && err.type === 'StripeCardError') {
+                        req.flash('errors', { msg: 'Your card has been declined.' });
+                        return res.redirect('/order/checkout/'+orderId);
+                    }
+                
+                    req.flash('success', { msg: 'Your card has been successfully charged.' });
+                    res.redirect('/order/successful/'+orderId);
+                
+                    // TODO: Send email here
+                });
+            }
+        });
+      }
   });
+};
+
+/**
+ * GET /order/successful/5
+ * Show the successful order information
+ */
+exports.successfulOrder = (req, res) => { 
+    return res.render('products/successfulorder', {
+    });
 };

@@ -14,7 +14,7 @@ exports.index = (req, res) => {
       });
     } else {
       Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}]}, null,
-      {limit: 16, sort: { enddate: 1 }}, (err, products) => {
+      {limit: 16, sort: { enddate: 1 }}, (err, products) => { // TODO: Add quantity bigger than 0
         if (err) {
           req.flash('errors', err);
             res.render('home', {

@@ -145,6 +145,7 @@ app.get('/order/product/add', orderController.addToOrder)
 app.get('/order/product/delete', orderController.deleteFromOrder)
 app.get('/order/checkout/:orderId', orderController.checkoutOrder)
 app.post('/order/checkout/:orderId', orderController.postStripe)
+app.get('/order/successful/:orderId', orderController.successfulOrder)
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
