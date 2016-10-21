@@ -333,15 +333,15 @@ exports.successfulOrder = (req, res) => {
     const orderId = req.params.orderId;
     if (email) {
         const transporter = nodemailer.createTransport({
-            service: 'SendGrid',
+            service: 'Mailgun',
             auth: {
-                user: process.env.SENDGRID_USER,
-                pass: process.env.SENDGRID_PASSWORD
+                user: process.env.MAILGUN_USER,
+                pass: process.env.MAILGUN_PASSWORD
             }
         });
         const mailOptions = {
             to: email,
-            from: 'hackathon@starter.com', // TODO: Change the email address as well as text
+            from: '"Räddamaten" <order@raddamaten.se>', // TODO: Change the email address as well as text
             subject: 'Reset your password on Hackathon Starter',
             text: 'Something'
         };
@@ -359,4 +359,5 @@ exports.successfulOrder = (req, res) => {
     } else {
         // TODO: Email could not be sent error
     }
+};
 };
