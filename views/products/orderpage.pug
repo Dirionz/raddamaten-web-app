@@ -15,5 +15,6 @@ block content
                             a.btn.btn-default(class='add-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) Add
         .col-xs-12.col-sm-3.right-side
             .order-list
-                include order
-                    a.btn.btn-default(href='/order/checkout/'+order._id) Checkout
+                .orders
+                    include order
+                a.btn.btn-default(href='/order/checkout/'+order._id) Checkout

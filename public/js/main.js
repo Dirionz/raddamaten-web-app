@@ -18,7 +18,7 @@ $(document).ready(function() {
     addToOrder($(this));
   });
   // Remove product on order page.
-  $('div.order-list').on('click', '.delete-product-btn', function() {
+  $('div.orders').on('click', '.delete-product-btn', function() {
     removeFromOrder($(this));
   })
 });
@@ -35,7 +35,7 @@ function addToOrder(btn) {
 
   $.get("/order/product/add/?productId="+ productId +"&orderId="+ orderId, function(html) {
     if (html) {
-      $("div.order-list").html(html); // Replace the html in order-list
+      $("div.orders").html(html); // Replace the html in order-list
     } else {
       btn.hide();
     }
@@ -56,7 +56,7 @@ function removeFromOrder(btn) {
 
   $.get("/order/product/delete/?productId="+ productId +"&orderId="+ orderId, function(html) {
     if (html) {
-      $("div.order-list").html(html); // Replace the html in order-list
+      $("div.orders").html(html); // Replace the html in order-list
     } else {
       btn.hide();
     }

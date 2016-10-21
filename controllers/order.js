@@ -231,25 +231,33 @@ exports.checkoutOrder = (req, res) => {
     Order.findById(req.params.orderId, (err, order) => { 
         if(err) {
             req.flash('errors', err);
-            return res.render('partials/flash', {});
+            return res.redirect('/order/'+req.params.orderId);
         } else {
-            // TODO: Check of order is null or not and return error
-            // The user might want to refresh the page...
-            if (!order.isCheckedout) {
-                order.isCheckedout = true;
-                order.products.forEach(function(id) {
-                    Product.update({_id: id}, {$inc: {quantity: -1}}, (err) => {});
-                });
-            }
-            order.save((err) => {
-                if (err) {
-                    req.flash('errors', err);
-                    return res.render('partials/flash', {});
+            if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+            Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
+                if(err) {
+                    req.flash('errors', err)
+                    return res.redirect('/order/'+req.params.orderId);
                 } else {
-                    Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
-                        if(err) {
-                            req.flash('errors', err)
-                            return res.render('partials/flash', {});
+                    // The user might want to refresh the page...
+                    if (!order.isCheckedout) {
+                        // Need to return list of errors in case exists
+                        const proderr = productsExits(orderProducts);
+                        if (proderr) {
+                            req.flash('errors', proderr)
+                            return res.redirect('/order/'+req.params.orderId);
+                        } else {
+                            order.isCheckedout = true;
+                            order.products.forEach(function(id) {
+                                Product.update({$and: [{ _id: id }, { quantity: {$gte: 0}}]},
+                                {$inc: {quantity: -1}}, (err) => {});
+                            });
+                        }
+                    }
+                    order.save((err) => {
+                        if (err) {
+                            req.flash('errors', err);
+                            return res.redirect('/order/'+req.params.orderId);
                         } else {
                             const fullOrderProducts = placeDuplicates(order.products, orderProducts);
                             const price = getPrice(fullOrderProducts);
@@ -263,9 +271,22 @@ exports.checkoutOrder = (req, res) => {
                     });
                 }
             });
+
         }
     });
 };
+
+function productsExits(productList) {
+    var errlist = [];
+    productList.forEach(function(product) {
+        if (!(product.quantity > 0)) {
+            errlist.push({ msg: 'Product no longer exists: ' + product.name});
+        }
+    });
+    if (errlist.length > 0) {
+        return errlist;
+    }
+}
 
 /**
  * POST /order/checkout/5

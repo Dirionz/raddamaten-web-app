@@ -1,9 +1,17 @@
 extends ../layout
 
 block content
-    .row
-        each product in orderProducts
-            p #{product.name} | #{product.quantity} | #{product.price} Sek
+    table.table.table-striped.table-bordered.table-condensed
+        thead
+        tr
+            th Product
+            th Price
+        tbody
+            each product in orderProducts
+                tr
+                td #{product.name}
+                td #{product.price} Sek
+          
     p Sum: #{price} Sek
     br
     // TODO Change the image in the data-image tag
