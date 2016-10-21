@@ -2,6 +2,7 @@ const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const stripe = require('stripe')(process.env.STRIPE_SKEY);
+const nodemailer = require('nodemailer');
 
 /**
  * GET /order/5
@@ -302,30 +303,22 @@ exports.postStripe = (req, res) => {
         req.flash('errors', err);
         return res.redirect('/order/checkout/'+orderId);
     } else {
-        if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
-        order.email = stripeEmail;
-        order.save((err) => { 
-            if (err) {
-                req.flash('errors', err);
+        if (!order) { req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+        stripe.charges.create({
+            amount: order.price*100, // Stripe expects the price in "cents"
+            currency: 'sek',
+            source: stripeToken,
+            description: stripeEmail
+        }, (err) => {
+            if (err && err.type === 'StripeCardError') {
+                req.flash('errors', { msg: 'Your card has been declined.' });
                 return res.redirect('/order/checkout/'+orderId);
-            } else {
-                stripe.charges.create({
-                    amount: order.price*100, // Stripe expects the price in "cents"
-                    currency: 'sek',
-                    source: stripeToken,
-                    description: stripeEmail
-                }, (err) => {
-                    if (err && err.type === 'StripeCardError') {
-                        req.flash('errors', { msg: 'Your card has been declined.' });
-                        return res.redirect('/order/checkout/'+orderId);
-                    }
-                
-                    req.flash('success', { msg: 'Your card has been successfully charged.' });
-                    res.redirect('/order/successful/'+orderId);
-                
-                    // TODO: Send email here
-                });
             }
+        
+            order.email = stripeEmail;
+            order.save((err) => {});
+            req.flash('success', { msg: 'Your card has been successfully charged.' });
+            res.redirect('/order/successful/'+orderId+'/?=email'+stripeEmail);
         });
       }
   });
@@ -335,7 +328,35 @@ exports.postStripe = (req, res) => {
  * GET /order/successful/5
  * Show the successful order information
  */
-exports.successfulOrder = (req, res) => { 
-    return res.render('products/successfulorder', {
-    });
+exports.successfulOrder = (req, res) => {
+    const email = req.query.email;
+    const orderId = req.params.orderId;
+    if (email) {
+        const transporter = nodemailer.createTransport({
+            service: 'SendGrid',
+            auth: {
+                user: process.env.SENDGRID_USER,
+                pass: process.env.SENDGRID_PASSWORD
+            }
+        });
+        const mailOptions = {
+            to: email,
+            from: 'hackathon@starter.com', // TODO: Change the email address as well as text
+            subject: 'Reset your password on Hackathon Starter',
+            text: 'Something'
+        };
+        transporter.sendMail(mailOptions, (err) => {
+            if (err) {
+                // TODO: Email could not be sent error (try again?)
+            } else {
+                req.flash('info', { msg: `An e-mail has been sent to ${email} with the order information.` });
+                return res.render('products/successfulorder', {
+                    email: email,
+                    orderId: orderId
+                });
+            }
+        });
+    } else {
+        // TODO: Email could not be sent error
+    }
 };
