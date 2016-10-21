@@ -330,7 +330,7 @@ exports.postStripe = (req, res) => {
  */
 exports.successfulOrder = (req, res) => {
     const email = req.query.email;
-    const orderId = req.params.orderId;
+    const orderId = req.params.orderId; // TODO: Need to validate the orderId here?
     if (email) {
         const transporter = nodemailer.createTransport({
             service: 'Mailgun',
@@ -347,7 +347,11 @@ exports.successfulOrder = (req, res) => {
         };
         transporter.sendMail(mailOptions, (err) => {
             if (err) {
-                // TODO: Email could not be sent error (try again?)
+                req.flash('errors', { msg: `An e-mail could not be sent to ${email}` });
+                return res.render('products/successfulorder', {
+                    email: email,
+                    orderId: orderId
+                });
             } else {
                 req.flash('info', { msg: `An e-mail has been sent to ${email} with the order information.` });
                 return res.render('products/successfulorder', {
@@ -358,6 +362,10 @@ exports.successfulOrder = (req, res) => {
         });
     } else {
         // TODO: Email could not be sent error
+        req.flash('errors', { msg: `An e-mail could not be sent, no email specified` });
+        return res.render('products/successfulorder', {
+            email: email,
+            orderId: orderId
+        });
     }
-};
 };
