@@ -426,7 +426,7 @@ exports.postForgot = (req, res, next) => {
             });
             const mailOptions = {
                 to: user.email,
-                from: '"Räddamaten" <account@raddamaten.se>', // TOOD: Change message email and so on here..
+                from: '"Räddamaten" <account@raddamaten.se>',
                 subject: 'Reset your password on Räddamaten',
                 text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
           Please click on the following link, or paste this into your browser to complete the process:\n\n

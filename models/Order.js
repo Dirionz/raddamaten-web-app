@@ -11,4 +11,14 @@ const orderSchema = new mongoose.Schema({
 
 const Order = mongoose.model('Order', orderSchema);
 
+// Getter
+orderSchema.path('price').get(function(num) {
+  return parseFloat(Math.round(num) / 100).toFixed(2);
+});
+
+// Setter
+orderSchema.path('price').set(function(num) {
+  return num * 100;
+});
+
 module.exports = Order;

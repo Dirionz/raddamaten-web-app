@@ -124,7 +124,7 @@ function search(nameKey, myArray){
 function getPrice(products) {
     var sum = 0;
     for (var i=0; i < products.length; i++) {
-        sum += products[i].price;
+        sum += parseFloat(products[i].price);
     }
     return sum;
 }
@@ -305,7 +305,7 @@ exports.postStripe = (req, res) => {
     } else {
         if (!order) { req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
         stripe.charges.create({
-            amount: order.price*100, // Stripe expects the price in "cents"
+            amount: parseFloat(order.price)*100, // Stripe expects the price in "cents"
             currency: 'sek',
             source: stripeToken,
             description: stripeEmail
@@ -318,7 +318,7 @@ exports.postStripe = (req, res) => {
             order.email = stripeEmail;
             order.save((err) => {});
             req.flash('success', { msg: 'Your card has been successfully charged.' });
-            res.redirect('/order/successful/'+orderId+'/?=email'+stripeEmail);
+            res.redirect('/order/successful/'+orderId+'/?email='+stripeEmail);
         });
       }
   });
@@ -361,7 +361,6 @@ exports.successfulOrder = (req, res) => {
             }
         });
     } else {
-        // TODO: Email could not be sent error
         req.flash('errors', { msg: `An e-mail could not be sent, no email specified` });
         return res.render('products/successfulorder', {
             email: email,
