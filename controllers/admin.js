@@ -47,7 +47,7 @@ exports.postInvite = (req, res) => {
         }
     ], (err) => {
         if (err) { 
-            req.flash('errors', { msg: err.message });
+            req.flash('errors', err);
          }
         res.redirect('/admin/invite'); 
     });
@@ -58,6 +58,15 @@ exports.postInvite = (req, res) => {
  * Admin invite create.
  */
 exports.deleteInvite = (req, res) => {
+    const inviteId = req.params.inviteId;
 
-    return res.redirect('/admin/invite'); // TODO: Delete invite
+    Invite.findById(inviteId).remove((err, invite) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/admin/invite');
+        } else {
+            req.flash('success', { msg: 'Invite has been deleted successfully!' });
+            return res.redirect('/admin/invite');
+        }
+    });
 };
