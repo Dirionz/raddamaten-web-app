@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    p invite
+    form.form-horizontal(role='form', method='POST')
+        input(type='hidden', name='_csrf', value=_csrf)
+        .form-group
+            .col-sm-offset-2.col-sm-8
+                button.btn.btn-primary(type='submit')
+                    | Create

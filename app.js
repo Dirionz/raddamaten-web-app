@@ -181,6 +181,8 @@ app.get('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaura
 app.post('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postDeleteProduct);
 
 app.get('/admin', passportConfig.isAuthenticatedAdmin, adminController.getIndex);
+app.get('/admin/invite', passportConfig.isAuthenticatedAdmin, adminController.getInvite);
+app.post('/admin/invite', passportConfig.isAuthenticatedAdmin, adminController.postInvite);
 
 /**
  * API examples routes.
