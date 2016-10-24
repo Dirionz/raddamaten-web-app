@@ -42,5 +42,9 @@
                 li
                   a(href='/restaurant') Restaurant
                 li.divider
+              if user.isAdmin
+                li
+                  a(href='/admin') Admin
+                li.divider
               li
                 a(href='/logout') Logout

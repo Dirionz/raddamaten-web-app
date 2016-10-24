@@ -228,7 +228,7 @@ exports.postNewOrder = (req, res) => {
  * GET /order/checkout/5
  * Checkout the Order.
  */
-exports.checkoutOrder = (req, res) => {
+exports.checkoutOrder = (req, res) => { 
     Order.findById(req.params.orderId, (err, order) => { 
         if(err) {
             req.flash('errors', err);

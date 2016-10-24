@@ -49,6 +49,7 @@ const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const restaurantController = require('./controllers/restaurant');
 const orderController = require('./controllers/order');
+const adminController = require('./controllers/admin');
 
 /**
  * API keys and Passport configuration.
@@ -178,6 +179,8 @@ app.post('/restaurant/product/edit/:id', passportConfig.isAuthenticatedRestauran
 app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedRestaurant, upload.single('myFile'), restaurantController.postEditPictureProduct);
 app.get('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getDeleteProduct);
 app.post('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postDeleteProduct);
+
+app.get('/admin', passportConfig.isAuthenticatedAdmin, adminController.getIndex);
 
 /**
  * API examples routes.

@@ -508,6 +508,16 @@ passport.use('pinterest', new OAuth2Strategy({
 ));
 
 /**
+ * Login Required Admin middleware.
+ */
+exports.isAuthenticatedAdmin = (req, res, next) => {
+    if (req.isAuthenticated() && req.user.isAdmin) {
+        return next();
+    }
+    res.redirect('/');
+};
+
+/**
  * Login Required Restaurant middleware.
  */
 exports.isAuthenticatedRestaurant = (req, res, next) => {

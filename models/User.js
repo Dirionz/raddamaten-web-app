@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     passwordResetToken: String,
     passwordResetExpires: Date,
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
+    isAdmin: { type: Boolean, default: false },
 
     facebook: String,
     twitter: String,
