@@ -73,11 +73,11 @@ describe('GET /restaurant/edit', () => {
     });
 });
 
-describe('GET /signup/restaurant', () => {
-    it('should return 200 OK', (done) => {
+describe('GET /signup/restaurant/5', () => {
+    it('should return 302 OK', (done) => {
         request(app)
-            .get('/signup/restaurant')
-            .expect(200, done);
+            .get('/signup/restaurant/5')
+            .expect(302, done);
     });
 });
 
