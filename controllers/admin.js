@@ -17,9 +17,16 @@ exports.getIndex = (req, res) => {
  * Admin invite page.
  */
 exports.getInvite = (req, res) => {
-  res.render('admin/invite', { // TOOD: Load invitations
-    title: 'Admin invite'
-  });
+    Invite.find({}, (err, invitations) => {
+        if (err) {
+            req.flash('errors', err);
+        }
+        return res.render('admin/invite', { 
+            title: 'Admin invite',
+            invitations: invitations,
+            host: req.headers.host
+        });
+    });
 };
 
 /**

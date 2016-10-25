@@ -8,3 +8,13 @@ block content
             .col-sm-offset-2.col-sm-8
                 button.btn.btn-primary(type='submit')
                     | Create
+
+    each invite in invitations
+        .col-sm-6
+            div #{host}/signup/restaurant/#{invite.token}
+        form.form-horizontal(role='form', action='/admin/invite/delete/'+invite._id, method='POST')
+            input(type='hidden', name='_csrf', value=_csrf)
+            .form-group
+                .col-sm-offset-6.col-sm-6
+                    button.btn.btn-danger(type='submit')
+                        | Delete
