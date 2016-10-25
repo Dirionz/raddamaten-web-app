@@ -156,7 +156,7 @@ app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
 app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
-app.get('/signup/restaurant', userController.getSignupRestaurant);
+app.get('/signup/restaurant/:token', userController.getSignupRestaurant);
 app.post('/signup/restaurant', userController.postSignupRestaurant);
 app.get('/contact', contactController.getContact);
 app.get('/restaurant', passportConfig.isAuthenticatedRestaurant, restaurantController.getRestaurant);

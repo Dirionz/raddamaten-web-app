@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const passport = require('passport');
 const User = require('../models/User');
 const Restaurant = require('../models/Restaurant');
+const Invite = require('../models/Invite');
 
 /**
  * GET /login
@@ -111,16 +112,24 @@ exports.postSignup = (req, res, next) => {
 };
 
 /**
- * GET /signup/restaurant
+ * GET /signup/restaurant/5
  * Signup page for restaurant.
  */
 exports.getSignupRestaurant = (req, res) => {
     if (req.user) {
         return res.redirect('/');
     }
-    res.render('account/signup_restaurant', {
-        title: 'Create Account'
+
+    Invite.findOne({token: req.params.token}, (err, invite) => {
+        if (err || !invite) {
+            return res.redirect('/');
+        } else {
+            res.render('account/signup_restaurant', {
+                title: 'Create Account'
+            });
+        }
     });
+
 };
 
 /**
@@ -158,7 +167,7 @@ exports.postSignupRestaurant = (req, res, next) => {
     });
 
     User.findOne({ email: req.body.email }, (err, existingUser) => {
-        if (err) { return next(err); }
+        if (!err) { return next(err); }
         if (existingUser) {
             req.flash('errors', { msg: 'Account with that email address already exists.' });
             return res.redirect('/signup/restaurant');
