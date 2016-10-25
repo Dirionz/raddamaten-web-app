@@ -1,5 +1,6 @@
 const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
+const Order = require('../models/Order');
 
 /**
  * GET /restaurant
@@ -317,3 +318,30 @@ exports.getProducts = (req, res) => {
 function getSkip(page, limit) {
     return (page*limit)-limit;
 }
+
+/**
+ * GET /restaurant/products/5
+ * Products list page.
+ */
+exports.getOrders = (req, res) => {
+    const limit = parseInt(req.query.limit) || 16;
+    const page = req.params.page;
+    Order.find({$and: [
+        {restaurantId: req.user.restaurantId}, 
+        {email: {$exists: true}},
+        {price: {$exists: true}}
+    ]}, null,
+    {limit: limit, skip: getSkip(page, limit), sort: { date: -1 }}, (err, orders) => {
+        if (err) {
+            //callback function return error
+            req.flash('errors', err);
+            return res.redirect('/restaurant');
+        } else {
+            //successfully braunch
+            res.render('restaurant/orderspage', {
+                title: 'Order List',
+                orders: orders
+            });
+        }
+    });
+};

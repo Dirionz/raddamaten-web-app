@@ -180,6 +180,8 @@ app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedR
 app.get('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getDeleteProduct);
 app.post('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postDeleteProduct);
 
+app.get('/restaurant/orders', passportConfig.isAuthenticatedRestaurant, restaurantController.getOrders);
+
 app.get('/admin', passportConfig.isAuthenticatedAdmin, adminController.getIndex);
 app.get('/admin/invite', passportConfig.isAuthenticatedAdmin, adminController.getInvite);
 app.post('/admin/invite', passportConfig.isAuthenticatedAdmin, adminController.postInvite);
