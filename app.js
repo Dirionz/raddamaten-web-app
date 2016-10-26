@@ -20,8 +20,11 @@ const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const crypto = require('crypto');
 const mime = require('mime');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+
+
 const multer = require('multer');
-//const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -44,6 +47,7 @@ dotenv.load({ path: '.env.example' });
  * Controllers (route handlers).
  */
 const homeController = require('./controllers/home');
+const uploadController = require('./controllers/upload');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
@@ -159,12 +163,6 @@ app.post('/signup', userController.postSignup);
 app.get('/signup/restaurant/:token', userController.getSignupRestaurant);
 app.post('/signup/restaurant', userController.postSignupRestaurant);
 app.get('/contact', contactController.getContact);
-app.get('/restaurant', passportConfig.isAuthenticatedRestaurant, restaurantController.getRestaurant);
-app.get('/restaurant/product', passportConfig.isAuthenticatedRestaurant, restaurantController.getAddProduct);
-app.post('/restaurant/product', passportConfig.isAuthenticatedRestaurant, upload.single('myFile'), restaurantController.postAddProduct);
-app.get('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditRestaurant);
-app.post('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.postEditRestaurant);
-app.post('/restaurant/edit/picture', passportConfig.isAuthenticatedRestaurant, upload.single('myFile'), restaurantController.postPictureRestaurant);
 app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
@@ -172,11 +170,23 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
-app.get('/restaurant/products/:page', passportConfig.isAuthenticatedRestaurant, restaurantController.getProducts);
 
+app.get('/restaurant', passportConfig.isAuthenticatedRestaurant, restaurantController.getRestaurant);
+app.get('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditRestaurant);
+app.post('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.postEditRestaurant);
+app.post('/restaurant/edit/picture', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, 
+                                     restaurantController.middlewareGetResturant,
+                                     uploadController.imgUpload, uploadController.imgRemoveOld, 
+                                     restaurantController.saveResturant);
+app.get('/restaurant/product', passportConfig.isAuthenticatedRestaurant, restaurantController.getAddProduct);
+app.post('/restaurant/product', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, uploadController.imgUpload, restaurantController.postAddProduct);
+app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, 
+                                                 restaurantController.middlewareGetProduct, 
+                                                 uploadController.imgUpload, uploadController.imgRemoveOld, 
+                                                 restaurantController.saveProduct);
+app.get('/restaurant/products/:page', passportConfig.isAuthenticatedRestaurant, restaurantController.getProducts);
 app.get('/restaurant/product/edit/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditProduct);
 app.post('/restaurant/product/edit/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postEditProduct);
-app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedRestaurant, upload.single('myFile'), restaurantController.postEditPictureProduct);
 app.get('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getDeleteProduct);
 app.post('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postDeleteProduct);
 

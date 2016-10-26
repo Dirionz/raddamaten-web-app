@@ -93,26 +93,34 @@ exports.postEditRestaurant = (req, res) => {
 };
 
 /**
- * POST /restaurant/edit/picture
- * Edit Restaurant page.
+ * Get Restaurant middleware
  */
-exports.postPictureRestaurant = (req, res) => {
+exports.middlewareGetResturant = (req, res, next) => {
     Restaurant.findById(req.user.restaurantId, (err, restaurant) => {
         if (err) {
             req.flash('errors', err);
             return res.redirect('/restaurant/edit');
         } else {
-            restaurant.pictureURL = ((req.file) ? "/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
+            req.restaurant = restaurant;
+            req.cloudinary_oldImgUrl = req.restaurant.pictureURL;
+            next();
+        }
+    });
+};
 
-            restaurant.save((err) => {
-                if (err) {
-                    req.flash('errors', err);
-                    return res.redirect('/restaurant/edit');
-                } else {
-                    req.flash('success', { msg: 'Profile picture has been updated.' });
-                    return res.redirect('/restaurant');
-                }
-            });
+/**
+ * Save Restaurant, ex. middlewareGetResturant is required
+ */
+exports.saveResturant = (req, res) => {
+    const restaurant = req.restaurant;
+    restaurant.pictureURL = ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "http://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg"), 
+    restaurant.save((err) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/restaurant/edit');
+        } else {
+            req.flash('success', { msg: 'Profile picture has been updated.' });
+            return res.redirect('/restaurant');
         }
     });
 };
@@ -148,7 +156,7 @@ exports.postAddProduct = (req, res) => {
     const product = new Product({
         name: req.body.name,
         description: req.body.description,
-        pictureURL: ((req.file) ? "/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
+        pictureURL: ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "http://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg"),
         price: parseFloat(req.body.price),
         quantity: parseInt(req.body.quantity),
         startdate: new Date(req.body.startdate),
@@ -230,6 +238,40 @@ exports.postEditProduct = (req, res) => {
 };
 
 /**
+ * Get product middleware
+ */
+exports.middlewareGetProduct = (req, res, next) => {
+    const id = req.params.id;
+    Product.findOne({ _id: id, restaurantId: req.user.restaurantId }, (err, product) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/restaurant');
+        } else {  
+            req.product = product;
+            req.cloudinary_oldImgUrl = req.product.pictureURL;
+            next();
+        }
+    });
+};
+
+/**
+ * Save Product, ex. middlewareGetProduct is required
+ */
+exports.saveProduct = (req, res) => {
+    const product = req.product;
+    product.pictureURL = ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "http://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg");
+    product.save((err) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/restaurant');
+        } else {
+            req.flash('success', { msg: 'Product picture has been updated.' });
+            return res.redirect('/restaurant');
+        }
+    });
+};
+
+/**
  * POST /restaurant/product/edit/5
  * Edit product page.
  */
@@ -240,7 +282,7 @@ exports.postEditPictureProduct = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/restaurant');
         } else {  
-            product.pictureURL = ((req.file) ? "/" + req.file.filename : "http://www.alsglobal.com/~/media/Images/Divisions/Life%20Sciences/Food/ALS-Food-Hero.jpg"), // TODO: Set the default img
+            product.pictureURL = ((res.req.cloudinary_imgUrl) ? res.req.cloudinary_imgUrl : "http://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg"), 
 
             product.save((err) => {
             if (err) {
