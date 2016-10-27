@@ -16,7 +16,8 @@ block content
                         a(href='#email')
                             i.fa.fa-angle-double-right
                             |  Email
-            input#search_param(type='hidden', name='search_param', value='name')
+            // TODO: Need to implement change value in js??
+            input#search_param(type='hidden', name='search_param', value='id') 
             input#search_key.form-control(type='text', name='q', placeholder='Search..', value='')
             span.input-group-btn
                 a.btn.btn-default.text-muted(href='/restaurant/orders', title='Clear')

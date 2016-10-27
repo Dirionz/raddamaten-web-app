@@ -366,24 +366,69 @@ function getSkip(page, limit) {
  * Orders list page.
  */
 exports.getOrders = (req, res) => {
-    const limit = parseInt(req.query.limit) || 16;
-    const page = req.params.page;
-    Order.find({$and: [
-        {restaurantId: req.user.restaurantId}, 
-        {email: {$exists: true}},
-        {price: {$exists: true}}
-    ]}, null,
-    {limit: limit, skip: getSkip(page, limit), sort: { date: -1 }}, (err, orders) => {
-        if (err) {
-            //callback function return error
-            req.flash('errors', err);
-            return res.redirect('/restaurant');
-        } else {
-            //successfully braunch
-            res.render('restaurant/orderspage', {
-                title: 'Order List',
-                orders: orders
-            });
-        }
-    });
+    
+    const search_param = req.query.search_param;
+    const searchString = req.query.q;
+    if (searchString && searchString.length < 4) {
+        req.flash('errors', {msg: "Must type at least 4 characters"});
+        return res.redirect('/restaurant/orders');
+    }
+
+    if (search_param == "id") {
+        Order.find({$and: [
+            {restaurantId: req.user.restaurantId},
+            {objectId: new RegExp(searchString, "i")}
+        ]}, (err, orders) => {
+            if (err) {
+                req.flash('errors', err);
+                return res.redirect('/restaurant');
+            } else {
+                res.render('restaurant/orderspage', {
+                    title: 'Order List',
+                    orders: orders
+                });
+            }
+        });
+    } else if(search_param == "email") {
+        Order.find({$and: [
+            {restaurantId: req.user.restaurantId},
+            {email: new RegExp(searchString, "i")}
+        ]}, (err, orders) => {
+            if (err) {
+                req.flash('errors', err);
+                return res.redirect('/restaurant');
+            } else {
+                res.render('restaurant/orderspage', {
+                    title: 'Order List',
+                    orders: orders
+                });
+            }
+        });
+    } else {
+        const limit = parseInt(req.query.limit) || 16;
+        const page = req.params.page;
+        Order.find({$and: [
+            {restaurantId: req.user.restaurantId}, 
+            {email: {$exists: true}},
+            {price: {$exists: true}}
+        ]}, null,
+        {limit: limit, skip: getSkip(page, limit), sort: { date: -1 }}, (err, orders) => {
+            if (err) {
+                //callback function return error
+                req.flash('errors', err);
+                return res.redirect('/restaurant');
+            } else {
+                //successfully braunch
+                res.render('restaurant/orderspage', {
+                    title: 'Order List',
+                    orders: orders
+                });
+            }
+        });
+    }
+
+
 };
+
+function searchOrderById(searchString, callback) {
+}

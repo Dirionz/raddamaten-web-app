@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+    objectId: String,
     email: String,
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
@@ -8,6 +9,16 @@ const orderSchema = new mongoose.Schema({
     price: Number
 
 }, { timestamps: true });
+
+/**
+ * OrderObject make searchable id middleware 
+ */
+orderSchema.pre('save', function(next) {
+    const order = this;
+    if (!order.isModified('restaurantId')) { return next(); }
+    order.objectId = order._id.toString();
+    next();
+});
 
 const Order = mongoose.model('Order', orderSchema);
 
