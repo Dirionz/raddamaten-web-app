@@ -1,3 +1,9 @@
 each order in orders
-  .col-xs-6.col-sm-4.col-md-3
-    p #{order.email}
+  tr
+    td #{order.email}
+    td #{order.updatedAt}
+    td
+      if (order.email)
+        span.label.label-success Successful
+      else 
+        span.label.label-fail Unsuccessful

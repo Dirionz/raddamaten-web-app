@@ -362,8 +362,8 @@ function getSkip(page, limit) {
 }
 
 /**
- * GET /restaurant/products/5
- * Products list page.
+ * GET /restaurant/orders
+ * Orders list page.
  */
 exports.getOrders = (req, res) => {
     const limit = parseInt(req.query.limit) || 16;
