@@ -21,6 +21,22 @@ $(document).ready(function() {
   $('div.orders').on('click', '.delete-product-btn', function() {
     removeFromOrder($(this));
   })
+
+  // Restaurant/orders search box
+  $('.dropdown-toggle').click(function() {
+
+    $('#search-dropdown-ID').click(function() {
+      $('#search_concept').html('ID ');
+      $('input#search_param').val('ID');
+    });
+
+    $('#search-dropdown-Email').click(function() {
+      $('#search_concept').html('Email ');
+      $('input#search_param').val('Email');
+    });
+  });
+
+
 });
 
 function addToOrder(btn) {
@@ -41,7 +57,6 @@ function addToOrder(btn) {
     }
     btn.button('reset');
   });
-
 }
 
 function removeFromOrder(btn) {

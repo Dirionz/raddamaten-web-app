@@ -367,44 +367,49 @@ function getSkip(page, limit) {
  */
 exports.getOrders = (req, res) => {
     
-    const search_param = req.query.search_param;
+    var search_param = req.query.search_param;
     const searchString = req.query.q;
-    if (searchString && searchString.length < 4) {
+    if ((searchString && searchString.length < 4) || (search_param && !searchString)) {
         req.flash('errors', {msg: "Must type at least 4 characters"});
         return res.redirect('/restaurant/orders');
     }
 
-    if (search_param == "id") {
+    if (search_param == "ID") {
         Order.find({$and: [
             {restaurantId: req.user.restaurantId},
+            {isCheckedout: true},
             {objectId: new RegExp(searchString, "i")}
-        ]}, (err, orders) => {
+        ]}, null, {sort: {updatedAt: -1}}, (err, orders) => {
             if (err) {
                 req.flash('errors', err);
                 return res.redirect('/restaurant');
             } else {
                 res.render('restaurant/orderspage', {
                     title: 'Order List',
-                    orders: orders
+                    orders: orders,
+                    search_param
                 });
             }
         });
-    } else if(search_param == "email") {
+    } else if(search_param == "Email") {
         Order.find({$and: [
             {restaurantId: req.user.restaurantId},
+            {isCheckedout: true},
             {email: new RegExp(searchString, "i")}
-        ]}, (err, orders) => {
+        ]}, null, {sort: {updatedAt: -1}}, (err, orders) => {
             if (err) {
                 req.flash('errors', err);
                 return res.redirect('/restaurant');
             } else {
                 res.render('restaurant/orderspage', {
                     title: 'Order List',
-                    orders: orders
+                    orders: orders,
+                    search_param
                 });
             }
         });
     } else {
+        search_param = "ID"; // Default
         const limit = parseInt(req.query.limit) || 16;
         const page = req.params.page;
         Order.find({$and: [
@@ -412,7 +417,7 @@ exports.getOrders = (req, res) => {
             {email: {$exists: true}},
             {price: {$exists: true}}
         ]}, null,
-        {limit: limit, skip: getSkip(page, limit), sort: { date: -1 }}, (err, orders) => {
+        {limit: limit, skip: getSkip(page, limit), sort: { updatedAt: -1 }}, (err, orders) => {
             if (err) {
                 //callback function return error
                 req.flash('errors', err);
@@ -421,14 +426,10 @@ exports.getOrders = (req, res) => {
                 //successfully braunch
                 res.render('restaurant/orderspage', {
                     title: 'Order List',
-                    orders: orders
+                    orders: orders,
+                    search_param
                 });
             }
         });
     }
-
-
 };
-
-function searchOrderById(searchString, callback) {
-}

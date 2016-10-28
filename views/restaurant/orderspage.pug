@@ -5,19 +5,18 @@ block content
         .input-group
             .input-group-btn.search-panel
                 button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
-                    span#search_concept ID
+                    span#search_concept #{search_param} 
                     span.caret
                 ul.dropdown-menu(role='menu')
                     li
-                        a(href='#id')
+                        a(id='search-dropdown-ID')
                             i.fa.fa-angle-double-right
                             |  ID
                     li
-                        a(href='#email')
+                        a(id='search-dropdown-Email')
                             i.fa.fa-angle-double-right
                             |  Email
-            // TODO: Need to implement change value in js??
-            input#search_param(type='hidden', name='search_param', value='id') 
+            input#search_param(type='hidden', name='search_param', value=search_param)
             input#search_key.form-control(type='text', name='q', placeholder='Search..', value='')
             span.input-group-btn
                 a.btn.btn-default.text-muted(href='/restaurant/orders', title='Clear')
