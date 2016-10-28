@@ -1,6 +1,7 @@
 const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
+const uploadController = require('./upload');
 
 /**
  * GET /restaurant
@@ -272,7 +273,7 @@ exports.saveProduct = (req, res) => {
 };
 
 /**
- * POST /restaurant/product/edit/5
+ * POST /restaurant/product/edit/5 // TODO: Check if this is used if not remove
  * Edit product page.
  */
 exports.postEditPictureProduct = (req, res) => {
@@ -327,6 +328,7 @@ exports.postDeleteProduct = (req, res) => {
             return res.redirect('/restaurant');
         } else {
             req.flash('success', { msg: 'Product has been deleted successfully!' });
+            uploadController.removeImage(req.body.pictureURL);
             return res.redirect('/restaurant');
         }
     });

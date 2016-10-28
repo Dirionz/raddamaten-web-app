@@ -28,7 +28,7 @@ exports.imgUpload = (req, res, next) => {
 };
 
 /**
- * Upload img middleware
+ * Remove img middleware
  */
 exports.imgRemoveOld = (req, res, next) => {
     var url = req.cloudinary_oldImgUrl;
@@ -45,4 +45,12 @@ exports.imgRemoveOld = (req, res, next) => {
  */
 function getNameFromUrl(url) {
     return (url) ? url.split( '/' ).pop().split('.')[0] : "";
+}
+
+exports.removeImage = function(url) {
+    var name = getNameFromUrl(url);
+    if (name == BANNEDNAME) {
+    } else {
+        cloudinary.uploader.destroy(getNameFromUrl(url), function(result) { /* Ignore result for now */ });
+    }
 }
