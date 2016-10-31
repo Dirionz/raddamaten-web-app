@@ -1,28 +1,46 @@
 extends ../layout
 
 block content
-    table.table.table-striped.table-bordered.table-condensed
-        thead
-        tr
-            th Product
-            th Price
-        tbody
+    .container
+      .row
+        .col-sm-12.col-md-10.col-md-offset-1
+          table.table.table-hover
+            thead
+              tr
+                th Product
+                th.text-center Price
+            tbody
             each product in orderProducts
-                tr
-                td #{product.name}
-                td #{product.price} Sek
-          
-    p Sum: #{price} Sek
-    br
-    // TODO Change the image in the data-image tag
-    form(method='POST')
-        input(type='hidden', name='_csrf', value=_csrf)
-        script(
-        src='https://checkout.stripe.com/checkout.js',
-        class='stripe-button',
-        data-key=publishableKey,
-        data-image='http://static.tumblr.com/nljhkjv/z0Jlpk23i/logo', 
-        data-name='Räddamaten',
-        data-currency='sek',
-        data-amount=price*100)
-
+              tr
+                td.col-sm-8.col-md-6
+                  .media
+                    a.pull-left(href='', style='width: 100px; height: 50px')
+                      //img.media-object(src=product.pictureURL)
+                      div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
+                    .media-body
+                      h4.media-heading
+                        a(href='#') #{product.name}
+                      h5.media-heading
+                        a(href='#') #{product.description.substring(0, 20)}
+                td.col-sm-1.col-md-1.text-center
+                  strong #{product.price} SEK
+              tr
+                td
+                  h3 Total
+                td.text-right
+                  h3
+                    strong #{price} SEK
+              tr
+                td    
+                td
+                    // TODO Change the image in the data-image tag
+                    form(method='POST')
+                        input(type='hidden', name='_csrf', value=_csrf)
+                        script(
+                        src='https://checkout.stripe.com/checkout.js',
+                        class='stripe-button',
+                        data-key=publishableKey,
+                        data-image='http://static.tumblr.com/nljhkjv/z0Jlpk23i/logo', 
+                        data-name='Räddamaten',
+                        data-currency='sek',
+                        data-amount=price*100)

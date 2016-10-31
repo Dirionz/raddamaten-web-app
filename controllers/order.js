@@ -273,7 +273,6 @@ exports.checkoutOrder = (req, res) => {
                     });
                 }
             });
-
         }
     });
 };
