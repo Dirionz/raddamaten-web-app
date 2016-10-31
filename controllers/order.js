@@ -328,7 +328,7 @@ exports.postStripe = (req, res) => {
  * Show the successful order information
  */
 exports.successfulOrder = (req, res) => {
-    const email = req.query.email;
+    const email = req.query.email; // TODO: Need to validate email together with the order?
     const orderId = req.params.orderId; // TODO: Need to validate the orderId here?
     if (email) {
         const transporter = nodemailer.createTransport({
@@ -346,24 +346,24 @@ exports.successfulOrder = (req, res) => {
         };
         transporter.sendMail(mailOptions, (err) => {
             if (err) {
-                req.flash('errors', { msg: `An e-mail could not be sent to ${email}` });
                 return res.render('products/successfulorder', {
                     email: email,
-                    orderId: orderId
+                    orderId: orderId,
+                    successSendEmail: false
                 });
             } else {
-                req.flash('info', { msg: `An e-mail has been sent to ${email} with the order information.` });
                 return res.render('products/successfulorder', {
                     email: email,
-                    orderId: orderId
+                    orderId: orderId,
+                    successSendEmail: true
                 });
             }
         });
     } else {
-        req.flash('errors', { msg: `An e-mail could not be sent, no email specified` });
         return res.render('products/successfulorder', {
             email: email,
-            orderId: orderId
+            orderId: orderId,
+            successSendEmail: false
         });
     }
 };

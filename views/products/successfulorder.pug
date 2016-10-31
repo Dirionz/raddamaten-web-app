@@ -1,7 +1,26 @@
 extends ../layout
 
 block content
-
-    p Success 
-    if email  
-        | #{email}
+    .container
+        .row.text-center
+            .col-sm-6.col-sm-offset-3
+                br
+                br
+                h2(style='color:#0fad00') Success
+                img(src='http://osmhotels.com//assets/check-true.jpg')
+                h3 Dear, customer
+                p(style='font-size:20px;color:#5C5C5C;')
+                    if (successSendEmail) 
+                        | Thank you. We have sent you an email "#{email}" with your details.
+                    else 
+                        | Thank you. We could 
+                        strong not 
+                        | send and email to "#{email}" with your details. 
+                    |  Use the order id below when you pickup the order.
+                h2 #{orderId.substr(orderId.length - 5)}
+                br
+                br
+                if (!successSendEmail)
+                    p(style='font-size:20px;color:#5C5C5C;')
+                        | To try again to send the email press 
+                        a(href='') here.
