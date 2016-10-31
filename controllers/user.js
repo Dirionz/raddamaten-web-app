@@ -167,7 +167,7 @@ exports.postSignupRestaurant = (req, res, next) => {
     });
 
     User.findOne({ email: req.body.email }, (err, existingUser) => {
-        if (!err) { return next(err); }
+        if (err) { return next(err); }
         if (existingUser) {
             req.flash('errors', { msg: 'Account with that email address already exists.' });
             return res.redirect('/signup/restaurant');
