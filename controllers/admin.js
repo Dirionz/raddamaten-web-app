@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const async = require('async');
 const Invite = require('../models/Invite');
+const Restaurant = require('../models/Restaurant');
 
 /**
  * GET /admin
@@ -74,6 +75,69 @@ exports.deleteInvite = (req, res) => {
         } else {
             req.flash('success', { msg: 'Invite has been deleted successfully!' });
             return res.redirect('/admin/invite');
+        }
+    });
+};
+
+
+/**
+ * GET /admin/restaurants
+ * Admin restaurants page.
+ */
+exports.getRestaurants = (req, res) => {
+    var search_param = req.query.search_param;
+    const searchString = req.query.q;
+    if ((searchString && searchString.length < 4) || (search_param && !searchString)) {
+        req.flash('errors', {msg: "Must type at least 4 characters"});
+        return res.redirect('/admin/restaurants');
+    }
+
+    if (search_param == "Name") {
+        Restaurant.find({$and: [
+            {name: new RegExp(searchString, "i")}
+        ]}, null, {sort: {updatedAt: -1}}, (err, restaurants) => {
+            if (err) {
+                req.flash('errors', err);
+                return res.redirect('/admin');
+            } else {
+                return res.render('admin/restaurantsPage', { 
+                    title: 'Admin restaurants',
+                    restaurants: restaurants,
+                    search_param: search_param,
+                });
+            }
+        });
+    }
+    else {
+        Restaurant.find({}, (err, restaurants) => { // TODO: Prob need to limit this in the future
+            if (err) {
+                req.flash('errors', err);
+            }
+            return res.render('admin/restaurantsPage', { 
+                title: 'Admin restaurants',
+                restaurants: restaurants,
+                search_param: "Name",
+            });
+        });
+    }
+
+};
+
+/**
+ * POST /admin/restaurants
+ * Admin restaurants page.
+ */
+exports.postPretendRestaurant = (req, res) => {
+    const restaurantId = req.body.restaurantId;
+    const user = req.user;
+
+    user.restaurantId = restaurantId;
+    user.save((err) => {
+        if (err) {
+            req.flash('errors', err);
+            return res.redirect('/admin/restaurants');
+        } else {
+            return res.redirect('/admin/restaurants');
         }
     });
 };

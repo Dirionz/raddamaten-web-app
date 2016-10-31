@@ -196,6 +196,8 @@ app.get('/admin', passportConfig.isAuthenticatedAdmin, adminController.getIndex)
 app.get('/admin/invite', passportConfig.isAuthenticatedAdmin, adminController.getInvite);
 app.post('/admin/invite', passportConfig.isAuthenticatedAdmin, adminController.postInvite);
 app.post('/admin/invite/delete/:inviteId', passportConfig.isAuthenticatedAdmin, adminController.deleteInvite);
+app.get('/admin/restaurants', passportConfig.isAuthenticatedAdmin, adminController.getRestaurants);
+app.post('/admin/restaurants', passportConfig.isAuthenticatedAdmin, adminController.postPretendRestaurant);
 
 /**
  * API examples routes.

@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+    form
+        .input-group
+            input#search_param(type='hidden', name='search_param', value=search_param)
+            input#search_key.form-control(type='text', name='q', placeholder='Search..', value='')
+            span.input-group-btn
+                a.btn.btn-default.text-muted(href='/admin/restaurants', title='Clear')
+                    i.fa.fa-times
+                button.btn.btn-info(type='submit')   Search 
+
+    br
+    div(id='restaurantsframe')
+      .row
+        .span5
+            table.table.table-striped.table-condensed
+                thead
+                tr
+                    th Name
+                    th Date
+                    th Status
+                    th
+                tbody
+                    include restaurants
