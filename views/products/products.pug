@@ -1,15 +1,15 @@
 each product in products
   .col-xs-6.col-sm-4.col-md-3
-    div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
-    h2 #{product.name}
-    p(style='word-wrap: break-word') #{product.description} 
-    p #{product.quantity}
-    p #{product.price} sek
-    p
-      form.form-horizontal(method='POST' action='/order/')
-          input(type='hidden', name='_csrf', value=_csrf)
-          input.form-control(type='hidden', name='restaurantId', id='restaurantId', value=product.restaurantId)
-          input.form-control(type='hidden', name='productId', id='productId', value=product._id)
-          .form-group
-            button.btn.btn-primary(type='submit')
+   .product-container
+      div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
+      h2 #{product.name}
+      p(style='word-wrap: break-word') #{product.description} 
+      p #{product.quantity}
+      .product-price #{product.price} kr
+      p
+        form.form-horizontal(method='POST' action='/order/')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input.form-control(type='hidden', name='restaurantId', id='restaurantId', value=product.restaurantId)
+            input.form-control(type='hidden', name='productId', id='productId', value=product._id)
+            button.product-button(type='submit')
               | Order
