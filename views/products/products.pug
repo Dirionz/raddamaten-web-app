@@ -1,10 +1,11 @@
-each product in products
-  .col-xs-6.col-sm-4.col-md-3
+//each product in products
+- for (var i = 0; i < products.length; i++) {
+- var product = products[i%products.length];
+  div
    .product-container
       div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
       h2 #{product.name}
       p(style='word-wrap: break-word') #{product.description} 
-      p #{product.quantity}
       .product-price #{product.price} kr
       p
         form.form-horizontal(method='POST' action='/order/')
@@ -13,3 +14,4 @@ each product in products
             input.form-control(type='hidden', name='productId', id='productId', value=product._id)
             button.product-button(type='submit')
               | Order
+- }
