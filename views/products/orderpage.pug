@@ -1,19 +1,22 @@
 extends ../layout
 
 block content
-    .row.leftright-container.col-xs-12
-        .col-xs-12.col-sm-9.left-side
+    .col-xs-12
+        .col-xs-12.col-sm-6
             each product in products
-                .col-xs-4.col-sm-3
+                .product-container-horizontal
+                    //.col-xs-4.col-sm-3
                     div(class='product-img-small' style='background-image: url(' + product.pictureURL + ')')
-                .col-xs-8.col-sm-9
-                    .col-xs-6.col-sm-6
+                    //.col-xs-8.col-sm-9
+                    //.col-xs-6.col-sm-6
+                    .product-info-horizontal
                         h4 #{product.name}
-                        p Quantity #{product.quantity} Price #{product.price} sek
-                    .col-xs-2.col-sm-3
-                        p
-                            a.btn.btn-default(class='add-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) Add
-        .col-xs-12.col-sm-3.right-side
+                        //p Quantity #{product.quantity} Price #{product.price} sek
+                        .product-price-horizontal #{product.price} kr
+                    btn(class='add-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) +
+                    btn(class='info-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) i
+                .desctiption-horizontal-hidden #{product.description}
+        //.col-xs-12.col-sm-3.right-side
             .order-list
                 .orders
                     include order
