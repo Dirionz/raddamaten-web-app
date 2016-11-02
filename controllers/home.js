@@ -37,14 +37,12 @@ exports.index = (req, res) => {
  */
 exports.getProducts = (req, res) => {
     const limit = parseInt(req.query.limit) || 16;
-    const page = req.params.page;
-    if (page === 1) { return res.redirect('/')}
+    const currentCount = parseInt(req.params.currentCount);
     Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}]}, null,
-    {limit: limit, skip: getSkip(page, limit), sort: { enddate: 1 }}, (err, products) => {
+    {limit: limit, skip: currentCount, sort: { enddate: 1 }}, (err, products) => {
         if (err) {
             //callback function return error
-            req.flash('errors', err);
-            return res.redirect('/');
+            return res.sendStatus(500);
         } else {
             //successfully braunch
             res.render('products/products', {
@@ -54,7 +52,3 @@ exports.getProducts = (req, res) => {
         }
     });
 };
-
-function getSkip(page, limit) {
-    return (page*limit)-limit;
-}

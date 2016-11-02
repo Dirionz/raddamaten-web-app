@@ -143,7 +143,7 @@ app.use(express.static('uploads'));
  * Primary app routes.
  */
 app.get('/', homeController.index);
-app.get('/products/:page', homeController.getProducts);
+app.get('/products/:currentCount', homeController.getProducts);
 app.get('/order/:orderId', orderController.getOrderPage);
 app.post('/order/', orderController.postNewOrder);
 app.get('/order/product/add', orderController.addToOrder)

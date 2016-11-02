@@ -104,17 +104,24 @@ function loadMoreProducts() {
   // Retains compatibility for those with no javascript
   event.preventDefault()
   var limit = getLimit()
+  var currentCount = $grid.children('div').length;
   // Fetch the data
-  $.get(baseurl + nextpage + '?limit=' + limit, function(html){
+  $.get(baseurl + currentCount + '?limit=' + limit, function(html){
     if (html) {
       hideLoadMoreIfLessThanLimit($(html));
       // Put the data where it belongs. I like it more this way
-      $("div#productsframe").append(html)
-      // Keep the counter up-to-date
-      nextpage++;
+      //$("div#productsframe").append(html);
+      html = $(html);
+      $grid.isotope()
+        .append( html )
+        .isotope( 'appended', html )
+        .isotope('layout');
     } else {
       loadmoreBtn.hide();
     }
+    loadmoreBtn.button('reset');
+  })
+  .fail(function() {
     loadmoreBtn.button('reset');
   });
 }
@@ -122,9 +129,9 @@ function loadMoreProducts() {
 function getLimit() {
   var w = window.innerWidth;
   var limit; 
-  if (w >= 991) {
+  if (w >= 1200) {
     limit = 16;
-  } else if (w <= 767) {
+  } else if (w <= 992) {
     limit = 8;
   } else {
     if (nextpage === 2) {
