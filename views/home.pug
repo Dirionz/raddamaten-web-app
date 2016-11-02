@@ -3,8 +3,9 @@ extends layout
 block content
     .div(id='baseurl' data-internalbaseurl="/products/")
 
-    .row(id='productsframe')
-        include products/products
+    div
+        div(id='productsframe')
+            include products/products
 
     hr
     .text-center

@@ -39,6 +39,19 @@ $(document).ready(function() {
 
 });
 
+var $container = $('#container'),
+    $body = $('body'),
+    colW = 23,
+    columns = null
+// ISOTOPE Layout
+var $grid = $('#productsframe').isotope({
+  itemSelector: '.product-container',
+  layoutMode: 'masonry',
+  masonry: {
+    fitWidth: true
+  }
+});
+
 function addToOrder(btn) {
   var orderId = btn.data('orderid') // The order id
   var productId = btn.data('productid'); // The product to be added
@@ -130,3 +143,4 @@ function hideLoadMoreIfLessThanLimit(htmlObject) {
     loadmoreBtn.hide();
   }
 }
+

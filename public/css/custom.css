@@ -88,21 +88,38 @@
 }
 
 #productsframe {
+    /*
     -moz-column-width: 20em;
     -webkit-column-width: 20em;
     -moz-column-gap: .5em;
     -webkit-column-gap: .5em; 
     text-align: center;
+    */
+    margin: 0 auto;
+}
+/* clear fix */
+#productsframe:after {
+  content: '';
+  display: block;
+  clear: both;
 }
 
 .product-container {
     font: 13px/23px "Raleway", Arial, sans-serif;
     position: relative;
     text-align: center;
-    display: inline-block;
     margin:  .5em;
     padding:  0; 
-    width: 280px;
+    width: 240px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.product-info h2 { /* Title */
+    padding: 5px;
+}
+
+.product-info p { /* Description */
+    margin: 16px !important;
 }
 
 .product-price {
@@ -124,9 +141,10 @@
   color: white;
   font-size: 16px;
   font-weight: 500;
-  padding: 12px 54px;
+  padding: 9px 54px;
   border-radius: 5px;
   border: none;
+  margin: 16px;
   width: 75%;
 }
 

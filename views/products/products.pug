@@ -1,17 +1,14 @@
-//each product in products
-- for (var i = 0; i < products.length; i++) {
-- var product = products[i%products.length];
-  div
-   .product-container
+each product in products
+   div.product-container.col-xs-6.col-sm-4.col-md-3
       div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
-      h2 #{product.name}
-      p(style='word-wrap: break-word') #{product.description} 
-      .product-price #{product.price} kr
-      p
-        form.form-horizontal(method='POST' action='/order/')
-            input(type='hidden', name='_csrf', value=_csrf)
-            input.form-control(type='hidden', name='restaurantId', id='restaurantId', value=product.restaurantId)
-            input.form-control(type='hidden', name='productId', id='productId', value=product._id)
-            button.product-button(type='submit')
-              | Order
-- }
+      .product-info
+        h2 #{product.name}
+        p(style='word-wrap: break-word') #{product.description} 
+        .product-price #{product.price} kr
+        p
+          form.form-horizontal(method='POST' action='/order/')
+              input(type='hidden', name='_csrf', value=_csrf)
+              input.form-control(type='hidden', name='restaurantId', id='restaurantId', value=product.restaurantId)
+              input.form-control(type='hidden', name='productId', id='productId', value=product._id)
+              button.product-button(type='submit')
+                | Order
