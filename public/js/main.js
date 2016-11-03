@@ -17,6 +17,10 @@ $(document).ready(function() {
   $('.add-product-btn').click(function() {
     addToOrder($(this));
   });
+  // Show description button
+  $('.info-product-btn').click(function() {
+    showDescription($(this));
+  });
   // Remove product on order page.
   $('div.orders').on('click', '.delete-product-btn', function() {
     removeFromOrder($(this));
@@ -57,7 +61,8 @@ function addToOrder(btn) {
   var productId = btn.data('productid'); // The product to be added
   
   var baseurl = $('div#baseurl').data('internalbaseurl');
-  btn.button('loading');
+  //btn.button('loading');
+  btn.prop("disabled",true);
 
   // Retains compatibility for those with no javascript
   event.preventDefault()
@@ -68,8 +73,18 @@ function addToOrder(btn) {
     } else {
       btn.hide();
     }
-    btn.button('reset');
+    //btn.button('reset');
+    btn.prop("disabled",false);
   });
+}
+
+var descElm;
+function showDescription(btn) {
+  descElm = btn.parent().parent().first().find('div.desctiption-horizontal')
+  if (!descElm) {
+    descElm = $('.desctiption-horizontal');
+  } 
+  descElm.toggleClass( 'desctiption-horizontal-hidden' );
 }
 
 function removeFromOrder(btn) {

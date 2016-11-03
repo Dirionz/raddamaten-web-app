@@ -4,18 +4,19 @@ block content
     .col-xs-12
         .col-xs-12.col-sm-6
             each product in products
-                .product-container-horizontal
-                    //.col-xs-4.col-sm-3
-                    div(class='product-img-small' style='background-image: url(' + product.pictureURL + ')')
-                    //.col-xs-8.col-sm-9
-                    //.col-xs-6.col-sm-6
-                    .product-info-horizontal
-                        h4 #{product.name}
-                        //p Quantity #{product.quantity} Price #{product.price} sek
-                        .product-price-horizontal #{product.price} kr
-                    btn(class='add-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) +
-                    btn(class='info-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) i
-                .desctiption-horizontal-hidden #{product.description}
+                div
+                    .product-container-horizontal
+                        //.col-xs-4.col-sm-3
+                        div(class='product-img-small' style='background-image: url(' + product.pictureURL + ')')
+                        //.col-xs-8.col-sm-9
+                        //.col-xs-6.col-sm-6
+                        .product-info-horizontal
+                            h4 #{product.name}
+                            //p Quantity #{product.quantity} Price #{product.price} sek
+                            .product-price-horizontal #{product.price} kr
+                        button(class='add-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) +
+                        button(class='info-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) i
+                    .desctiption-horizontal.desctiption-horizontal-hidden #{product.description}
         .col-xs-12.col-sm-3.right-side
             .order-list
                 .orders
