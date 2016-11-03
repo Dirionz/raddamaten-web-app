@@ -1,8 +1,8 @@
 extends ../layout
 
 block content
-    .col-xs-12
-        .col-xs-12.col-sm-6.col-sm-offset-1
+    div
+        .col-xs-12.col-sm-6.col-sm-offset-1.xs-clear-padding
             each product in products
                 div
                     .product-container-horizontal
@@ -23,4 +23,5 @@ block content
                     p Cart
                 .orders
                     include order
-                a.btn.btn-default(href='/order/checkout/'+order._id) Checkout
+                div
+                    a.btn.btn-default(href='/order/checkout/'+order._id) Checkout

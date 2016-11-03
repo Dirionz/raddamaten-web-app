@@ -49,16 +49,6 @@
     background-position: 50% 50%;
 }
 
-.leftright-container {
-    display: table;
-}
-
-.left-side {
-    /* background-color: blue; */
-    float: none;
-    display: table-cell;
-}
-
 .right-side {
     font: 13px/23px "Raleway", Arial, sans-serif;
     float: none;
@@ -76,20 +66,22 @@
     width: 100%;
     overflow: auto;
 }
-@media only screen and (max-width:767px) {
-    .leftright-container {
-        display: block;
-    }
 
-    .left-side {
-        display: block;
-    }
+@media only screen and (max-width:767px) {
 
     .right-side {
         display: block;
         float: inherit;
         border: 0px;
     }
+
+    .xs-clear-padding {
+        padding-left:0px; 
+        padding-right:0px;
+    }
+
+    
+
 }
 
 #productsframe {
