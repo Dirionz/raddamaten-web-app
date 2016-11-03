@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     .col-xs-12
-        .col-xs-12.col-sm-6
+        .col-xs-12.col-sm-6.col-sm-offset-1
             each product in products
                 div
                     .product-container-horizontal
@@ -19,6 +19,8 @@ block content
                     .desctiption-horizontal.desctiption-horizontal-hidden #{product.description}
         .col-xs-12.col-sm-3.right-side
             .order-list
+                .order-list-header
+                    p Cart
                 .orders
                     include order
                 a.btn.btn-default(href='/order/checkout/'+order._id) Checkout

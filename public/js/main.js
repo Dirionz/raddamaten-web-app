@@ -78,12 +78,8 @@ function addToOrder(btn) {
   });
 }
 
-var descElm;
 function showDescription(btn) {
-  descElm = btn.parent().parent().first().find('div.desctiption-horizontal')
-  if (!descElm) {
-    descElm = $('.desctiption-horizontal');
-  } 
+  descElm = btn.parent().parent().find('div.desctiption-horizontal')
   descElm.toggleClass( 'desctiption-horizontal-hidden' );
 }
 
