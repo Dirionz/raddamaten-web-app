@@ -25,6 +25,12 @@ $(document).ready(function() {
   $('div.orders').on('click', '.delete-product-btn', function() {
     removeFromOrder($(this));
   })
+  // Hide order when in small screen
+  $('.order-list-header').click(function(e) {  
+    $('.orders').toggleClass('orders-xs-collapse');
+    $('.checkout').toggleClass('checkout-xs-collapse');
+    $('.order-list').toggleClass('toggle-xs-cart');
+  });
 
   // Restaurant/orders search box
   $('.dropdown-toggle').click(function() {
@@ -62,6 +68,7 @@ function addToOrder(btn) {
   
   var baseurl = $('div#baseurl').data('internalbaseurl');
   //btn.button('loading');
+  btn.css('background', 'lightgray');
   btn.prop("disabled",true);
 
   // Retains compatibility for those with no javascript
@@ -70,11 +77,16 @@ function addToOrder(btn) {
   $.get("/order/product/add/?productId="+ productId +"&orderId="+ orderId, function(html) {
     if (html) {
       $("div.orders").html(html); // Replace the html in order-list
+      var w = window.innerWidth;
+      if (w < 576) {
+        $("div.order-list-header").fadeIn(100).fadeOut(100).fadeIn(100);
+      }
     } else {
       btn.hide();
     }
     //btn.button('reset');
     btn.prop("disabled",false);
+    btn.removeAttr("style");
   });
 }
 

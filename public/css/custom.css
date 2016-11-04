@@ -65,6 +65,7 @@
 .order-list {
     width: 100%;
     overflow: auto;
+    background: white;
 }
 
 @media only screen and (max-width:767px) {
@@ -73,6 +74,7 @@
         display: block;
         float: inherit;
         border: 0px;
+        box-shadow: none;
     }
 
     .xs-clear-padding {
@@ -80,9 +82,47 @@
         padding-right:0px;
     }
 
-    
+    .order-list {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: 2;
+        /*top: 50px;*/
+
+    }
+
+    .orders-xs-collapse {
+        height: 0px;
+        padding: 0px !important;
+    }
+
+    .checkout-xs-collapse {
+        height: 0px;
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+    }
 
 }
+
+.toggle-xs-cart {
+    top: 50px;
+}
+
+/* 
+
+ Order content 
+    height: 0px;
+    padding: 0px;
+
+ 
+ Button order
+    height: 0px;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+
+*/ 
 
 #productsframe {
     /*
