@@ -13,7 +13,7 @@ exports.index = (req, res) => {
         title: 'Home'
       });
     } else {
-      Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}]}, null,
+      Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}, {quantity: {$gt: 0}}]}, null,
       {limit: 16, sort: { enddate: 1 }}, (err, products) => { // TODO: Add quantity bigger than 0
         if (err) {
           req.flash('errors', err);
@@ -38,7 +38,7 @@ exports.index = (req, res) => {
 exports.getProducts = (req, res) => {
     const limit = parseInt(req.query.limit) || 16;
     const currentCount = parseInt(req.params.currentCount);
-    Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}]}, null,
+    Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}, {quantity: {$gt: 0}}]}, null,
     {limit: limit, skip: currentCount, sort: { enddate: 1 }}, (err, products) => {
         if (err) {
             //callback function return error

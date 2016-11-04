@@ -25,7 +25,7 @@ exports.getOrderPage = (req, res) => {
                         req.flash('errors', err);
                         res.redirect('/');
                     } else {
-                        Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}},{ restaurantId: restaurant._id }]}, (err, products) => {
+                        Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}},{ restaurantId: restaurant._id }, {quantity: {$gt: 0}}]}, (err, products) => {
                             if (err) {
                                 req.flash('errors', err);
                                     res.render('home', {
