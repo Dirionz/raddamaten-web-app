@@ -19,7 +19,7 @@ exports.imgUpload = (req, res, next) => {
                 req.flash('errors', result.error);
                 return res.redirect(req.url);
             }
-            req.cloudinary_imgUrl = result.url;
+            req.cloudinary_imgUrl = result.secure_url;
             next();
         });
     } else {
