@@ -59,6 +59,8 @@ exports.postEditRestaurant = (req, res) => {
     req.assert('street', 'Street cannot be empty').notEmpty();
     req.assert('postalcode', 'postalCode cannot be empty').notEmpty();
     req.assert('city', 'City cannot be empty').notEmpty();
+    req.assert('name', 'Name cannot be more than 50 characters').len(0,50);
+    req.assert('aboutUs', 'AboutUs cannot be more than 400 characters').len(0,400);
 
     const errors = req.validationErrors();
 
@@ -146,6 +148,8 @@ exports.postAddProduct = (req, res) => {
     req.assert('price', 'Price cannot be blank').notEmpty();
     req.assert('quantity', 'Quantity cannot be blank').notEmpty();
     req.assert('description', 'Description cannot be blank').notEmpty();
+    req.assert('name', 'Name cannot be more than 100 characters').len(0,100);
+    req.assert('description', 'Description cannot be more than 400 characters').len(0,400);
 
     const errors = req.validationErrors();
 
@@ -204,12 +208,14 @@ exports.postEditProduct = (req, res) => {
     req.assert('price', 'Price cannot be blank').notEmpty();
     req.assert('quantity', 'Quantity cannot be blank').notEmpty();
     req.assert('description', 'Description cannot be blank').notEmpty();
+    req.assert('name', 'Name cannot be more than 100 characters').len(0,100);
+    req.assert('description', 'Description cannot be more than 400 characters').len(0,400);
 
     const errors = req.validationErrors();
 
     if (errors) {
         req.flash('errors', errors);
-        return res.redirect('/restaurant/product');
+        return res.redirect(req.url);
     }
 
     const id = req.params.id;

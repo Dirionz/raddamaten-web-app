@@ -145,12 +145,14 @@ exports.postSignupRestaurant = (req, res, next) => {
     req.assert('postalcode', 'postalCode cannot be empty').notEmpty();
     req.assert('city', 'City cannot be empty').notEmpty();
     req.sanitize('email').normalizeEmail({ remove_dots: false });
+    req.assert('name', 'Name cannot be more than 50 characters').len(0,50);
+    req.assert('aboutUs', 'AboutUs cannot be more than 400 characters').len(0,400);
 
     const errors = req.validationErrors();
 
     if (errors) {
         req.flash('errors', errors);
-        return res.redirect('/signup/restaurant');
+        return res.redirect(req.url);
     }
 
     const restaurant = new Restaurant({
@@ -170,7 +172,7 @@ exports.postSignupRestaurant = (req, res, next) => {
         if (err) { return next(err); }
         if (existingUser) {
             req.flash('errors', { msg: 'Account with that email address already exists.' });
-            return res.redirect('/signup/restaurant');
+            return res.redirect(req.url);
         }
         user.save((err) => {
             if (err) { return next(err); }

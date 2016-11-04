@@ -235,6 +235,7 @@ exports.checkoutOrder = (req, res) => {
             return res.redirect('/order/'+req.params.orderId);
         } else {
             if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+            if (order.email) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); }; // This order has already been payed for.
             Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
                 if(err) {
                     req.flash('errors', err)
@@ -307,7 +308,7 @@ exports.postStripe = (req, res) => {
             amount: parseFloat(order.price)*100, // Stripe expects the price in "cents"
             currency: 'sek',
             source: stripeToken,
-            description: stripeEmail
+            description: stripeEmail // TODO: Change to Something + the orderId (last 5)
         }, (err) => {
             if (err && err.type === 'StripeCardError') {
                 req.flash('errors', { msg: 'Your card has been declined.' });
