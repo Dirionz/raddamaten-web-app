@@ -236,6 +236,7 @@ exports.checkoutOrder = (req, res) => {
         } else {
             if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
             if (order.email) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); }; // This order has already been payed for.
+            if (!order.products.length > 0) {req.flash('errors', { msg: 'Cart is empty' }); return res.redirect('/order/'+req.params.orderId); }; 
             Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
                 if(err) {
                     req.flash('errors', err)
