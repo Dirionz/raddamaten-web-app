@@ -138,7 +138,7 @@ exports.middlewareGetResturant = (req, res, next) => {
  */
 exports.saveResturant = (req, res) => {
     const restaurant = req.restaurant;
-    restaurant.pictureURL = ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "http://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg"), 
+    restaurant.pictureURL = ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "https://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg"), 
     restaurant.save((err) => {
         if (err) {
             req.flash('errors', err);
@@ -183,7 +183,7 @@ exports.postAddProduct = (req, res) => {
     const product = new Product({
         name: req.body.name,
         description: req.body.description,
-        pictureURL: ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "http://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg"),
+        pictureURL: ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "https://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg"),
         price: parseFloat(req.body.price),
         quantity: parseInt(req.body.quantity),
         startdate: new Date(req.body.startdate),
@@ -288,7 +288,7 @@ exports.middlewareGetProduct = (req, res, next) => {
  */
 exports.saveProduct = (req, res) => {
     const product = req.product;
-    product.pictureURL = ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "http://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg");
+    product.pictureURL = ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : "https://res.cloudinary.com/dvcj7nttu/image/upload/v1477395474/sample.jpg");
     product.save((err) => {
         if (err) {
             req.flash('errors', err);
