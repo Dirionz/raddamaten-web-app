@@ -14,8 +14,10 @@ block content
                             h4 #{product.name}
                             //p Quantity #{product.quantity} Price #{product.price} sek
                             .product-price-horizontal #{product.price} kr
-                        button(class='add-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) +
-                        button(class='info-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) i
+                        button(class='add-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id)
+                            i.fa.fa-plus
+                        button(class='info-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id)
+                            i.fa.fa-info
                     .desctiption-horizontal.desctiption-horizontal-hidden #{product.description}
         .col-xs-12.col-sm-3.right-side
             .order-list
