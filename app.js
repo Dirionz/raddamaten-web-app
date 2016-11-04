@@ -184,7 +184,7 @@ app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedR
                                                  restaurantController.middlewareGetProduct, 
                                                  uploadController.imgUpload, uploadController.imgRemoveOld, 
                                                  restaurantController.saveProduct);
-app.get('/restaurant/products/:page', passportConfig.isAuthenticatedRestaurant, restaurantController.getProducts);
+app.get('/restaurant/products/:currentCount', passportConfig.isAuthenticatedRestaurant, restaurantController.getProducts);
 app.get('/restaurant/product/edit/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditProduct);
 app.post('/restaurant/product/edit/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postEditProduct);
 app.get('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getDeleteProduct);

@@ -14,7 +14,7 @@ exports.getRestaurant = (req, res) => {
             return res.redirect('/');
         } else {
             Product.find({ restaurantId: req.user.restaurantId }, null, 
-            {limit: 16, skip: getSkip(1, 16), sort: { date: -1 }}, (err, products) => {
+            {limit: 16, sort: { enddate: -1 }}, (err, products) => {
                 if (err) {
                     //callback function return error
                     req.flash('errors', err);
@@ -27,6 +27,28 @@ exports.getRestaurant = (req, res) => {
                         restaurant: restaurant
                     });
                 }
+            });
+        }
+    });
+};
+
+/**
+ * GET restaurant/products/5
+ * Products list page.
+ */
+exports.getProducts = (req, res) => {
+    const limit = parseInt(req.query.limit) || 16;
+    const currentCount = parseInt(req.params.currentCount);
+    Product.find({restaurantId: req.user.restaurantId}, null,
+    {limit: limit, skip: currentCount, sort: { enddate: -1 }}, (err, products) => {
+        if (err) {
+            //callback function return error
+            return res.sendStatus(500);
+        } else {
+            //successfully braunch
+            res.render('restaurant/products', {
+                title: 'Products List',
+                products: products
             });
         }
     });
@@ -339,35 +361,6 @@ exports.postDeleteProduct = (req, res) => {
         }
     });
 };
-
-
-/**
- * GET /restaurant/products/5
- * Products list page.
- */
-exports.getProducts = (req, res) => {
-    const limit = parseInt(req.query.limit) || 16;
-    const page = req.params.page;
-    if (page === 1) { return res.redirect('/restaurant')}
-    Product.find({ restaurantId: req.user.restaurantId }, null,
-    {limit: limit, skip: getSkip(page, limit), sort: { date: -1 }}, (err, products) => {
-        if (err) {
-            //callback function return error
-            req.flash('errors', err);
-            return res.redirect('/restaurant');
-        } else {
-            //successfully braunch
-            res.render('restaurant/products', {
-                title: 'Products List',
-                products: products
-            });
-        }
-    });
-};
-
-function getSkip(page, limit) {
-    return (page*limit)-limit;
-}
 
 /**
  * GET /restaurant/orders

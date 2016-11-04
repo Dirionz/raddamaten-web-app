@@ -1,10 +1,10 @@
 each product in products
-  .col-xs-6.col-sm-4.col-md-3
-    div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
-    h2 #{product.name}
-    p(style='word-wrap: break-word') #{product.description} 
-    p #{product.quantity}
-    p #{product.price} sek
-    p
-      a.btn.btn-default(href='/restaurant/product/edit/' + product._id, role='button') Edit
-      a.btn.btn-danger(href='/restaurant/product/delete/'+ product._id, role='button') Delete
+   div.product-container.col-xs-6.col-sm-4.col-md-3
+      div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
+      .product-info
+        h2 #{product.name}
+        p(style='word-wrap: break-word') #{product.description} 
+        .product-price #{product.price} kr
+        p
+          a.btn.btn-default(href='/restaurant/product/edit/' + product._id, role='button') Edit
+          a.btn.btn-danger(href='/restaurant/product/delete/'+ product._id, role='button') Delete

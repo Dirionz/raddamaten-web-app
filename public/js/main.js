@@ -3,7 +3,6 @@ $(document).ready(function() {
   // Load more products
   var productsframe = $("div#productsframe").length;
   if (productsframe) {
-    nextpage = 2;
     hideLoadMoreIfLessThanLimit($(this));
     $('#load_more').click(function(event) {
       loadMoreProducts();
@@ -118,15 +117,14 @@ function removeFromOrder(btn) {
 
 // Load more products on restaurant page and on the main page
 function loadMoreProducts() {
-
   var baseurl = $('div#baseurl').data('internalbaseurl');
 
   const loadmoreBtn = $('#load_more.btn');
   loadmoreBtn.button('loading');
 
   // Retains compatibility for those with no javascript
-  event.preventDefault()
-  var limit = getLimit()
+  event.preventDefault();
+  var limit = getLimit();
   var currentCount = $grid.children('div').length;
   // Fetch the data
   $.get(baseurl + currentCount + '?limit=' + limit, function(html){
