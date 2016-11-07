@@ -156,6 +156,15 @@ var job = new CronJob('00 30 2 * * *', function() { // Runs 2:30 every day.
 
 job.start();
 
+var jobOnceAMonth = new CronJob('00 30 5 1 * *', function() { // Runs 5:30 every month (the 1:st).
+    if (im.isMaster) {
+        console.log('I am the master, cron started');
+        
+    }
+}, null, false, "Europe/Stockholm");
+
+jobOnceAMonth.start();
+
 /**
  * Primary app routes.
  */
