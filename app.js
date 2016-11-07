@@ -149,17 +149,18 @@ im.start();
 // Clean old orders (Not checkedout)
 var job = new CronJob('00 30 2 * * *', function() { // Runs 2:30 every day.
     if (im.isMaster) {
-        console.log('I am the master, cron started');
+        console.log('I am the master, cron started (daily)');
         cronJobsController.removeOldOrders();
     }
 }, null, false, "Europe/Stockholm");
 
 job.start();
 
+// Clean old orders (checkedout but not with email)
 var jobOnceAMonth = new CronJob('00 30 5 1 * *', function() { // Runs 5:30 every month (the 1:st).
     if (im.isMaster) {
-        console.log('I am the master, cron started');
-        
+        console.log('I am the master, cron started (one a month)');
+        cronJobsController.removeOldOrdersCheckedoutNotPayed();
     }
 }, null, false, "Europe/Stockholm");
 

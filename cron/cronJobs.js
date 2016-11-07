@@ -8,12 +8,28 @@ exports.removeOldOrders = (req, res) => {
         {isCheckedout: false},
         {updatedAt: {$lte: date}}
         ]}, (err) => {
-        if (err) {
-            console.log('There was an error when removeOldOrders'+err.message)
-        } else {
-            console.log('Successfully cleaned old orders (Not checkedout)')
-        }
+            if (err) {
+                console.log('There was an error when removeOldOrders'+err.message)
+            } else {
+                console.log('Successfully cleaned old orders (Not checkedout)')
+            }
     });
 }
 
-// Where is checkedOUt without email, remove one month old?
+// Where is checkedout without email, remove one month old?
+exports.removeOldOrdersCheckedoutNotPayed = (req, res) => {
+    var date = new Date();
+    date.setDate(date.getDate() - 15); // fifteen days old
+
+    Order.remove({$and: [
+        {isCheckedout: true},
+        {email: {$exists: false}},
+        {updatedAt: {$lte: date}}
+        ]}, (err) => {
+            if (err) {
+                console.log('There was an error when removeOldOrders'+err.message)
+            } else {
+                console.log('Successfully cleaned old orders (Not checkedout)')
+            }
+    });
+}
