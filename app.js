@@ -22,6 +22,8 @@ const crypto = require('crypto');
 const mime = require('mime');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var CronJob = require('cron').CronJob;
+var im = require('is-master/is-master.js');
 
 
 const multer = require('multer');
@@ -54,6 +56,8 @@ const contactController = require('./controllers/contact');
 const restaurantController = require('./controllers/restaurant');
 const orderController = require('./controllers/order');
 const adminController = require('./controllers/admin');
+
+const cronJobsController = require('./cron/cronJobs');
 
 /**
  * API keys and Passport configuration.
@@ -138,6 +142,19 @@ app.use(function(req, res, next) {
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 app.use(express.static('uploads'));
+
+// Start the is-master worker
+im.start();
+
+// Clean old orders (Not checkedout)
+var job = new CronJob('00 30 2 * * *', function() { // Runs 2:30 every day.
+    if (im.isMaster) {
+        console.log('I am the master, cron started');
+        cronJobsController.removeOldOrders();
+    }
+}, null, false, "Europe/Stockholm");
+
+job.start();
 
 /**
  * Primary app routes.
