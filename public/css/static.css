@@ -1,0 +1,441 @@
+body {
+    background: #f2f2f2;
+    margin-bottom: 0px;
+}
+footer {
+    position: relative;
+    height: 100%;
+    line-height: 20px;
+}
+::selection {
+    background: #96f8e3;
+}
+.wrapper {
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 1203px;
+    min-width: 310px;
+    padding: 0 42px;
+    position: relative;
+    width: 100%
+}
+@media only screen and (min-width: 1450px) {
+    .wrapper {
+        max-width: 1403px
+    }
+}
+@media only screen and (max-width: 985px) {
+    .wrapper {
+        padding: 0 20px
+    }
+}
+@media only screen and (max-width: 540px) {
+    .wrapper {
+        padding: 0 15px
+    }
+}
+.fancybox-inner>.wrapper {
+    padding: 0;
+    max-width: 1215px
+}
+.wrapper.about {
+    min-width: inherit
+}
+@media only screen and (max-width: 540px) {
+    .wrapper.about {
+        padding-left: 0;
+        padding-right: 0
+    }
+}
+.wrapper.yield {
+    min-height: calc(80% - 173px)
+}
+
+footer {
+    background-color: white;
+    padding: 78px 0 72px;
+    margin-top: 20px;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+
+.footer-content-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row;
+    flex-flow: row
+}
+@media only screen and (max-width: 680px) {
+    .footer-content-container {
+        -ms-flex-flow: column-reverse;
+        flex-flow: column-reverse
+    }
+}
+
+.footer-proper {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding-right: 48px
+}
+@media only screen and (max-width: 680px) {
+    .footer-proper {
+        padding-right: 0
+    }
+}
+
+h1.footer-tagline, .footer-tagline {
+    color: #595959;
+    font-size: 24px;
+    -webkit-transition-property: color, font-size;
+    transition-property: color, font-size;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    font-weight: 300;
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: subpixel-antialiased;
+    line-height: 1.4;
+    font-weight: 500;
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: subpixel-antialiased;
+    margin: 0
+}
+@media only screen and (max-width: 540px) {
+    h1.footer-tagline, .footer-tagline {
+        font-size: 16px
+    }
+}
+
+.footer-primary-links {
+    margin: 20px 0;
+    display: inline-block
+}
+@media only screen and (max-width: 985px) {
+    body:not(.logged-in) .footer-primary-links a {
+        display: block
+    }
+}
+@media only screen and (max-width: 540px) {
+    .footer-primary-links a {
+        display: block
+    }
+}
+.footer-primary-links a {
+    color: #595959;
+    font-size: 18px;
+    -webkit-transition-property: color, font-size;
+    transition-property: color, font-size;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    font-weight: 300;
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: subpixel-antialiased;
+    margin-right: 20px;
+    text-decoration: none;
+    line-height: 1.5
+}
+@media only screen and (max-width: 540px) {
+    .footer-primary-links a {
+        font-size: 16px
+    }
+}
+.footer-primary-links a:hover span {
+    color: #141414;
+    background-size: 2px 2px;
+    background-image: -webkit-linear-gradient(top, transparent 50%, #141414 50%);
+    background-image: linear-gradient(to bottom, transparent 50%, #141414 50%);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    text-decoration: none
+}
+.footer-primary-links a.active {
+    color: #141414
+}
+.footer-primary-links a.active span {
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+.footer-primary-links a.active:hover span {
+    color: #141414;
+    cursor: default;
+    background-image: none
+}
+
+.footer-small-text {
+    color: #a6a6a6;
+    font-size: 15px;
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+.footer-small-text p {
+    margin: 0;
+    max-width: 600px
+}
+.footer-small-text p.strong {
+    color: #878787
+}
+.footer-small-text a {
+    color: #a6a6a6;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    text-decoration: none
+}
+.footer-small-text a:hover {
+    color: #595959
+}
+
+.footer-secondary-links {
+    margin: 20px 0
+}
+.footer-secondary-links a {
+    padding-right: 20px
+}
+
+.footer-small-text {
+    color: #a6a6a6;
+    font-size: 15px;
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+.footer-small-text p {
+    margin: 0;
+    max-width: 600px
+}
+.footer-small-text p.strong {
+    color: #878787
+}
+.footer-small-text a {
+    color: #a6a6a6;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    text-decoration: none
+}
+.footer-small-text a:hover {
+    color: #595959
+}
+
+.footer-social-links a {
+    display: inline-block;
+    width: 32px;
+    height: 48px;
+    font-size: 0;
+    vertical-align: bottom;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+    opacity: .3
+}
+.footer-social-links a:hover {
+    opacity: .7
+}
+.footer-social-links a.footer-facebook-link {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALNJREFUeNpi%2FP%2F%2FP8NAAiaGAQajDhh1ANEOYGRkRMcCQDwfiM8D8X8gvg%2FE%2B0l1ACOx2RBkKRJQAOLzQCyArg5oHiM9oqAem%2BXkABYy9QWg8RcA8UNyDCI3CpA1XQBiQ6QooHsu%2BDBiyoH90KBHD2MHJPH%2FAx0CFwbaAR9omQ0XAvFBpHIABh5A5cgKAXC2IQaja0PC%2B8kxD4ZHa8NRB4w6YMAdwDjaMRl1wKgDBtoBAAEGAJwhbiKJBO64AAAAAElFTkSuQmCC);
+    background-image: -webkit-image-set(url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALNJREFUeNpi%2FP%2F%2FP8NAAiaGAQajDhh1ANEOYGRkRMcCQDwfiM8D8X8gvg%2FE%2B0l1ACOx2RBkKRJQAOLzQCyArg5oHiM9oqAem%2BXkABYy9QWg8RcA8UNyDCI3CpA1XQBiQ6QooHsu%2BDBiyoH90KBHD2MHJPH%2FAx0CFwbaAR9omQ0XAvFBpHIABh5A5cgKAXC2IQaja0PC%2B8kxD4ZHa8NRB4w6YMAdwDjaMRl1wKgDBtoBAAEGAJwhbiKJBO64AAAAAElFTkSuQmCC) 1x, url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARdJREFUeNrs29ENgkAMgGFq3ENHYAMdQTdwFDdwBF3BCXAEnADdgA3OXoIvRs%2FDHAj0b9LEh5PQz5LekSjOucxyzDLjAQAAAAAAAAAAAACA1ZinvqCItFmea641F81nH7Xm9blAzyr7LgEk9WEoEsAXe2iKD4ben4yqAyJip3kcyiPQdwf4X7xoc72uO6BvgEpzOSSAPqfApm3xo5wCgVhFrPEToJwqQP6l8K3mxepG6PSP4ocEcGYrDAAAAEwFwJ%2Fe3JsMHXyKD9%2BprHfADQDjAHfrAKV1gJoO6Dr8C5GU%2BcOoC47I1Pf3mmyEAAAAAAAAAAAAAAAAAAAAAADAXgj%2FGOERAAAAAAAAAAAAAAAAAAAMxkOAAQCefMUdPqsdZQAAAABJRU5ErkJggg%3D%3D) 2x)
+}
+.footer-social-links a.footer-twitter-link {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAOVJREFUeNrsllENxCAMhtkpmAQkIOEkIGXn4BxMAhbOAZmCSdg5OAkcTbqELAFaRsJLm%2Fwv29L%2Fo6XNphCCGhkPNTgEQAAEYDiAgkWUE4appJijHKRCHVE2SuPzuehBANgxUS58Yn4VvLN3AdJk%2BmJuCuagH3zTowJpUpe05VkBMNU2EwCWgsFeAVA9AM5SBqY8BYAyhh%2B86dz49hpD3VgB26sFECsT4qAekroJN2YbXj034RkWT1Y7vWN5MADgLry55ncBLI7TTth4S1OViVOwZiA8Gs%2BtbZ7kt1wABEAARgP8BRgAhZ59yUn%2BLCgAAAAASUVORK5CYII%3D);
+    background-image: -webkit-image-set(url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAOVJREFUeNrsllENxCAMhtkpmAQkIOEkIGXn4BxMAhbOAZmCSdg5OAkcTbqELAFaRsJLm%2Fwv29L%2Fo6XNphCCGhkPNTgEQAAEYDiAgkWUE4appJijHKRCHVE2SuPzuehBANgxUS58Yn4VvLN3AdJk%2BmJuCuagH3zTowJpUpe05VkBMNU2EwCWgsFeAVA9AM5SBqY8BYAyhh%2B86dz49hpD3VgB26sFECsT4qAekroJN2YbXj034RkWT1Y7vWN5MADgLry55ncBLI7TTth4S1OViVOwZiA8Gs%2BtbZ7kt1wABEAARgP8BRgAhZ59yUn%2BLCgAAAAASUVORK5CYII%3D) 1x, url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAhVJREFUeNrsmYFtwjAQRZOKAegE9Qb1Bk03oBvABoxAJ6AbWJ0AOkHoBIQJYAPYII2li2RFAYx9tqPmn%2FSFEgXL9%2B6csy95XdfZmO0pG7kBAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAhNd4RcFMjmjTZ6WoZKut9nRSPh5QcTgJWn41NytL6hfSNJz8%2Fo%2BTP9NymAOU1QeTi%2Fv%2BN8q3PneumdyQwAlDEhFwjK0vmuFGXEWi%2BDlAC6qbtp09LChKPzWkf6XaXOgPLK5ArLl17tIeW7BDjK4OlKZEtScScDXO2r0WIIZXBmEak9RVv0VA%2BXyJdcfuSuNT3Pc%2FPy%2BEA0dcZUjQ6N3iyXStd2jd67AJz8YAAgjDo%2BzeIYG4AJw2QUOb6j5RDDfrkG4gBwoTSWEXfwlyEdhn4SHGF2XANxvAParayIGP3nviqQKgMuLPXY3rZD7AfolPzgXJs37Huo%2FYCpcTipA%2BnI7ceEkaWgd0FI%2Bxx6R6gMGP0yiB%2FMAERP04JLMgQA7qboibaoFfO4iwBjBm%2BKtg1O34xQQf0I3BWWD%2FT7nJ0fIgDp0etrtY6RyRPPsieNzY8%2BEL2YvXrPneU2i2GeGVAYzUkOKdeeQuolMOv5omOrc9vaThFIrpaYuR3WMF5pecieiFZULg%2BU5hVXJkc9Dv8Xw%2BdxAAAAAAAAAAAAAAAAAAAAAAAAAAAAABid%2FQkwAFoAOsP1A4C%2BAAAAAElFTkSuQmCC) 2x)
+}
+.footer-social-links a.footer-pinterest-link {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAWxJREFUeNrsVottAyEMvYsyACNcN2CEjHCdoIyQEdjgRrh2gnaDdIN0A7pBsgEF6SE5lgn0Po0qHdITFwfsh21sdt775pHYNQ8eG4GNwD73R9u2NfsPmD9LC2PGL%2BEBFWADXNQZcAI8ZBZr6kfufgrDBFxg7B4uWFtnp5LAWGGYY1yKgBGUnyCPOdBhHgQPmRKBNpccSEKF2Ka4XgOekXQGxpP8Fd%2BRnCbypzjn7JQ8YNmJNOAysdeEdJLbOSGgigbIziTrz4zEuxA2N4cAP31PlCpGKKFBaG5kU7rhgf3%2BIrH9QHybzL3%2FLuiaVIiUYLQjiUgN6yV6AS%2BvPTl5R2TSHl3QVe0B6soBiq8Ih%2BT%2BN8wvd8Ix6xom9OSkDkhF58jWzrqGKlP%2FFYwfhUbFa4NauhQ75h2H6icRNWs0o5GU3D9pRrwdW6HQrN6OaZw1boQXQpN9kEzthqs%2Fyfa%2F3VBbYLZn%2BUbg3xD4EWAAA4bJ5h1bcbEAAAAASUVORK5CYII%3D);
+    background-image: -webkit-image-set(url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAWxJREFUeNrsVottAyEMvYsyACNcN2CEjHCdoIyQEdjgRrh2gnaDdIN0A7pBsgEF6SE5lgn0Po0qHdITFwfsh21sdt775pHYNQ8eG4GNwD73R9u2NfsPmD9LC2PGL%2BEBFWADXNQZcAI8ZBZr6kfufgrDBFxg7B4uWFtnp5LAWGGYY1yKgBGUnyCPOdBhHgQPmRKBNpccSEKF2Ka4XgOekXQGxpP8Fd%2BRnCbypzjn7JQ8YNmJNOAysdeEdJLbOSGgigbIziTrz4zEuxA2N4cAP31PlCpGKKFBaG5kU7rhgf3%2BIrH9QHybzL3%2FLuiaVIiUYLQjiUgN6yV6AS%2BvPTl5R2TSHl3QVe0B6soBiq8Ih%2BT%2BN8wvd8Ix6xom9OSkDkhF58jWzrqGKlP%2FFYwfhUbFa4NauhQ75h2H6icRNWs0o5GU3D9pRrwdW6HQrN6OaZw1boQXQpN9kEzthqs%2Fyfa%2F3VBbYLZn%2BUbg3xD4EWAAA4bJ5h1bcbEAAAAASUVORK5CYII%3D) 1x, url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAsNJREFUeNrsW%2B1twjAQTSoG8AbNBg0TkE5Q2CAjMEKYIGIC2gnSDRImgA1CJzAbUEdyJMv4O3E%2ByFm6HxHB9j3f%2BfmeIXw8HsGS21uw8AYAAAAAAAAAAAAAAAAAAAAAAAttK5cvhWHYx9gJ91x17dClsFsNBDQilhLbUMeR5L07BeJM7Js%2B%2B20NarZm0SJip2YYRzvRPvz54gkA1NFxERBoLgDExOoenW%2Btpn1PGoDUg%2BO8pVMFYAjnlSC4%2BBK6UIeABpvQvBh%2B%2FZfu8leG%2FmKa4zFliq1BP2umD2ca7CMCkEHOY2KZyUbG9JkZ7AloCimg2%2B0LC8dlkaVih1EBiDTO7yV7RUGjgn23cTQX8D7SgBCNCYBq9TPB0bd23OSQALCnKBgaAKRwoOyBIVKLPtAYAKQmYUnz2IXqsCAdahVYLr50KYe%2FFDR349KEbQ117Yh9EjtomICnw6PlXLzSoCwn2UlvddSl2UdKASvIomXwCJBRG1vXb7jPDoIS989izKvlXLwpQoniszu3Ynx6%2BGrJHCQxkcDxsXRN0GblojkAwE7yJtjEAm6TVOXveaoAVIYr%2BqNZ7Y3lOInjnAalwZobIpdQZKA5GmPBdC9TosFKkQKZhOYqi5A%2BCt6Ne139jhGgO9%2B39X%2FJVHtPw0vsYnlgcj4K%2ByqGtLW7ID1U4mei6XuUYshEDDERM%2Fc0SkqJaqQqhUcth00EEVmFGOkkbkNFaHRBxDQKasGqYwWttZog1vSbT0EVbiWrSKME75jngqHE9i7wRvt4NzggtYesNXu8HksVNhE9eG0QB93vBuI5XYzEPShEXi5Ghroa4%2FP%2FJa%2FGZJej2OL4O%2FvLUXZjzAWyVhIs4HqcPyfsDYqZl%2FuBhAyMQsMAmL6Tuuh8Y94O96EEVV07dPIF%2FjKz8AYAAAAAAAAAAAAAAAAAAAAAAAtt%2FwIMAEHC6ySGb59iAAAAAElFTkSuQmCC) 2x)
+}
+.footer-social-links a.footer-instagram-link {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAchJREFUWAntlc8rRUEUx59f5VdhYycrJbGQkgULGxYSaxbKSllasLSxoCzY%2BIOULGUjiSyIWPkV%2Bf05mlPTNPPe3HHrbe63vu%2BcmTnnO2fOvW9uqVSg6ECVO1ATsb%2FExMT5pH6YFCZhmKxzqCKp9hKNUZgZx2SkburmnYV2L9fab5LKrfs0P5mch7dmcRG7YPxarBQWDfcUMeMLR32CseZ5DyNVVRV5F9DBaVqsE3VZfmZXW%2BezT6itwiE4CFfgA5TYZ3hjKO%2BR5nsfAetBaKJrX8jo82T1MPcI3XgdJxewh%2BgS%2FDLi69gQ1ljQDZfxd61xcgEziHRaQuP4IYywoAV04%2Bf2L7Crbwjtzry9ZucEU2L%2FBXco3BsVOVUIuiYv5FUoKHZeWymPQLAJZe4DjkEX8u14gxIjz14wCVUnqiN%2FWeZHE7WAJuZPjaAUsQOn4RTchu9QcuQ2bIWCXAsQwQF4ArU418pHR%2B4FRcWXUAN9VsW1AxrTiLMBr6HGyMWzBZuhjVw6MGsrOn4b43Znzh5WLKDejnZ8uXjqoFxC8vzltFkxlzXBjj9koC3%2Brz2yhWP9XgL3oXxcXhMp340D2A8LFB0oOuDtwC8Yts0UM4D8%2BQAAAABJRU5ErkJggg%3D%3D);
+    background-image: -webkit-image-set(url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAchJREFUWAntlc8rRUEUx59f5VdhYycrJbGQkgULGxYSaxbKSllasLSxoCzY%2BIOULGUjiSyIWPkV%2Bf05mlPTNPPe3HHrbe63vu%2BcmTnnO2fOvW9uqVSg6ECVO1ATsb%2FExMT5pH6YFCZhmKxzqCKp9hKNUZgZx2SkburmnYV2L9fab5LKrfs0P5mch7dmcRG7YPxarBQWDfcUMeMLR32CseZ5DyNVVRV5F9DBaVqsE3VZfmZXW%2BezT6itwiE4CFfgA5TYZ3hjKO%2BR5nsfAetBaKJrX8jo82T1MPcI3XgdJxewh%2BgS%2FDLi69gQ1ljQDZfxd61xcgEziHRaQuP4IYywoAV04%2Bf2L7Crbwjtzry9ZucEU2L%2FBXco3BsVOVUIuiYv5FUoKHZeWymPQLAJZe4DjkEX8u14gxIjz14wCVUnqiN%2FWeZHE7WAJuZPjaAUsQOn4RTchu9QcuQ2bIWCXAsQwQF4ArU418pHR%2B4FRcWXUAN9VsW1AxrTiLMBr6HGyMWzBZuhjVw6MGsrOn4b43Znzh5WLKDejnZ8uXjqoFxC8vzltFkxlzXBjj9koC3%2Brz2yhWP9XgL3oXxcXhMp340D2A8LFB0oOuDtwC8Yts0UM4D8%2BQAAAABJRU5ErkJggg%3D%3D) 1x, url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA9tJREFUeAHtWdmrTWEUP6ZrHlLKEC5JIZK%2FwFD3gRclKfKo%2BCO8eMaLEqXO2y3JkBQh4sEDeSGZ7z1lfBChjNfw%2Bz1sfVZrn%2F0Ne%2B%2BzY636dfZa%2B1vD9%2FuG%2Fe19Wi0TY8AYMAaMAWPAGDAGjAFj4L9kYFQJvR6LGGXEiSnlF5xGYhxTfSYiwH7gNcAieok3yH8YmArUIuOQ5RbQy05rue%2Bjpsl1MLC3gZ3PCDlYBwG3G0zAUCgBMZvXVyTpC02U0P4afK8AP0WMVdC3ChvVMYBsqzSLN2XTrY7fYZTJp0yenMMNWQcJ8JbR3i1705BTuttj7mFqWU0nILV%2Fhf5GQCFF%2F3iDps%2BAog2t2wZZ2dDJXbdK%2FT160Z%2FTEx597wEyfxFpf4WLOQcwYYp8gfMZ4DzQARhvATAAbAHkcfYzbI8B%2BWzvh20GIIWz4oc0lqlLxkP0syiEnc2T2bgxCITElG2DZkBeId3sMqGvfghBfWfcvgQSGknAJXQodMM9EUlCEAG%2BI4Ja%2FghH3JW3UJ45hhW4dndnrseVAF9XQ2Q%2BGj8CJjhOzH3H0efiepaj87L2PaDtFEBCucm5y%2BKqcz%2F08qSIxbhTnCAHlPtBMyB0Wjq51ct5sI4Xdy4LPUTVfBeFBChqWzYBWnHu8iiqR95%2FLg3QFyu2aFPZBMhnNQvjJ7RY0Xy1HLHxg3fmokQvlQYpI6b5ajmUtH6msmfAC6Tlyc2Vja4SeC19OfpDgTG6Ni%2BbgG%2FIJjeu1bBt6FqFfnMNzGvFrRvQ3wlbklo2ASzmlFIRT4HTFHueic%2F%2Bo4A8p2ix82JUZnef8bxui0x90J8Csh1nxnTRVlMnwciXJenPP2HcMwB9k88BDBIqsjBJAONtA2Q76vyGtwnIk3W4wZOe5rtbcUomwD2yKvGjTcfhyXW%2FS0RYCp1fcp8AF4AOwI1tITAALAM04XsBl0QjRI5OO6cqPsMvArJ9qM6Nj8tCk%2BQZUMUmmBX6HRd8jB3JDBG%2Fg%2FBZD3yK8PVyqZIAFjAC7AE2Aw8AXxlGw%2B3ADoAvV40SOYXbntXxLY1%2FZXFU%2BSyXcT7AxrXOTvcBPpK8BKraBLXi%2BV2AHSQoM4E5AGfhK4D%2F89cuZRAgDyu%2BneCHFCJFql7Cam1y6nJty28AqmPJRg7eTUDWw6XmLTGj9xHR5YmsA9tdgMXUJcuRaIlIxmXG%2FaPUV2aRo3UdBsl6U3QOQpDErKFjQRnqbVxbbW30qymjntVxGjUFD2jMHpCNKV94dgJ83887qmZtq%2FrlIYkvT3z34KCYGAPGgDFgDBgDxoAxYAwYA8aAMeDFwG9jgEDZ%2FAa5NQAAAABJRU5ErkJggg%3D%3D) 2x)
+}
+.footer-social-links a.footer-flipboard-link {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAJBJREFUWAljYBgFoyEw0kOAEXcAcP3HLUeOzDesdjGRYxQ19Yw6gIXY4Pz%2F%2FyuK0ufPn6Pw0TlSUiroQlj5o1Ew4CFAdBpAj8Bnz56hCJmY2KHwieUMeAiMOgBr%2BQyJP9S6AL0cYGTkJjaaoepG6wLsATbgiZDocoD0OMfuY3TRAQ%2BBUQegR8kofzQERl4IAACKQBCS5zabwwAAAABJRU5ErkJggg%3D%3D);
+    background-image: -webkit-image-set(url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAJBJREFUWAljYBgFoyEw0kOAEXcAcP3HLUeOzDesdjGRYxQ19Yw6gIXY4Pz%2F%2FyuK0ufPn6Pw0TlSUiroQlj5o1Ew4CFAdBpAj8Bnz56hCJmY2KHwieUMeAiMOgBr%2BQyJP9S6AL0cYGTkJjaaoepG6wLsATbgiZDocoD0OMfuY3TRAQ%2BBUQegR8kofzQERl4IAACKQBCS5zabwwAAAABJRU5ErkJggg%3D%3D) 1x, url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAQZJREFUeAHtmTsSwyAMRE0mVXID1zmC69z%2FJHCCpHWK9DA7s2YQPLeShfR2%2FRnYNi4IQAACEIAABCAAAQhAYEUCSR%2F6cer39LzjK81069naiGsBYERVevaEA3rSHnEtHDCiKj17ursXO89PtWQppRpvBff91UqR4jwCEq4Jk3HAhKJKI%2BEACdeEycs7wP4f0DJJzrmachzvatwdXN4BAHBbKlo9HBBNMXe%2FOMBNNFo9aQ%2F9P1z9XKC1H5DS82JGnAtIgHkHSLgmTMYBE4oqjYQDJFwTJtv3A67%2FzntV4BHw8oxXDQfE08zbMQ7w8oxXbXkHxJOMjiEAAQhAAAIQgAAEIAABB4Ef9UsQumf7De8AAAAASUVORK5CYII%3D) 2x)
+}
+
+.footer-right-side {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 400px;
+    flex: 0 1 400px;
+    border-left: 2px solid #f2f2f2;
+    padding-left: 48px
+}
+@media only screen and (max-width: 680px) {
+    .footer-right-side {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1;
+        flex: 1 1;
+        padding-left: 0;
+        padding-bottom: 48px;
+        border-left: none;
+        border-bottom: 2px solid #f2f2f2;
+        margin-bottom: 48px
+    }
+}
+.AppPromo {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -ms-flex-align: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center
+}
+.AppPromo img {
+    -webkit-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out
+}
+.AppPromo:hover img {
+    opacity: .8
+}
+a.AppPromo {
+    text-decoration: none
+}
+.AppPromo-headline {
+    font-size: 24px;
+    font-weight: 300;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    color: #999999;
+    margin: 14px 0 6px
+}
+@media only screen and (max-width: 320px) {
+    .AppPromo-headline {
+        font-size: 22px
+    }
+}
+.AppPromo:hover .AppPromo-headline {
+    text-decoration: none
+}
+.AppPromo-ActionText {
+    font-size: 18px;
+    color: #525252;
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    margin-bottom: 48px
+}
+@media only screen and (max-width: 540px) {
+    .AppPromo-ActionText {
+        margin-bottom: 0
+    }
+}
+.AppPromo:hover .AppPromo-ActionText {
+    text-decoration: none;
+    background-size: 2px 2px;
+    background-image: -webkit-linear-gradient(top, transparent 50%, #525252 50%);
+    background-image: linear-gradient(to bottom, transparent 50%, #525252 50%);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    text-decoration: none
+}
+
+.AppPromo-ActionText {
+    font-size: 18px;
+    color: #525252;
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    margin-bottom: 48px
+}
+@media only screen and (max-width: 540px) {
+    .AppPromo-ActionText {
+        margin-bottom: 0
+    }
+}
+.AppPromo:hover .AppPromo-ActionText {
+    text-decoration: none;
+    background-size: 2px 2px;
+    background-image: -webkit-linear-gradient(top, transparent 50%, #525252 50%);
+    background-image: linear-gradient(to bottom, transparent 50%, #525252 50%);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    text-decoration: none
+}
+
+.badge-footer, .IssueMeta-newBadge {
+    margin: 30px
+}
+.IssueCard .badge-footer, .IssueCard .IssueMeta-newBadge {
+    margin: 0 0 5px
+}
+.AppPromo .badge-footer, .AppPromo .IssueMeta-newBadge {
+    margin-bottom: 10px
+}
+.badge-footer span, .IssueMeta-newBadge span {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    color: white;
+    letter-spacing: 1px;
+    padding: 3px 6px;
+    background-color: #fc459e;
+    text-transform: uppercase
+}
+
+
+.PageHeader--backgroundImage {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat
+}
+
+.PageHeader--backgroundImage .PageHeader-content {
+    padding: 150px 0 136px
+}
+@media only screen and (max-width: 540px) {
+    .PageHeader--backgroundImage .PageHeader-content {
+        padding: 80px 0 70px
+    }
+}
+@media only screen and (max-width: 400px) {
+    .PageHeader--backgroundImage .PageHeader-content {
+        padding: 50px 0 20px
+    }
+}
+
+.PageHeader--grow {
+    -webkit-transition: height 0.2s ease-in-out;
+    transition: height 0.2s ease-in-out
+}
+@media only screen and (min-height: 985px) {
+    .PageHeader--grow {
+        height: 40vh
+    }
+}
+
+.u-invertTextColor{
+    color: white;
+    opacity: .8
+}
+@media only screen and (max-width: 540px) {
+    .u-invertTextColor {
+        opacity: .9
+    }
+
+
+.PageHeader, .PageHeader--search, .PageHeader--issue, .PageHeader--userCollection, .PageHeader--shop {
+    background-color: white;
+    position: relative
+}}

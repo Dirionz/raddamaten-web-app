@@ -16,10 +16,9 @@ exports.removeOldOrders = (req, res) => {
     });
 }
 
-// Where is checkedout without email, remove one month old?
 exports.removeOldOrdersCheckedoutNotPayed = (req, res) => {
     var date = new Date();
-    date.setDate(date.getDate() - 15); // fifteen days old
+    date.setDate(date.getDate() - 15); // fifhteen days old
 
     Order.remove({$and: [
         {isCheckedout: true},
