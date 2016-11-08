@@ -1,6 +1,8 @@
 extends ../layout
 
 block content
+    .restaurant-container
+        h2 #{restaurant.name}
     div
         .col-xs-12.col-sm-6.col-sm-offset-1.xs-clear-padding
             each product in products

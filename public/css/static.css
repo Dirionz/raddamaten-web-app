@@ -2,6 +2,11 @@ body {
     background: #f2f2f2;
     margin-bottom: 0px;
 }
+@media only screen and (max-width: 540px) {
+    body {
+        overflow-x: hidden;
+    }
+}
 footer {
     position: relative;
     height: 100%;
