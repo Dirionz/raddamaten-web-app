@@ -60,6 +60,9 @@ exports.getOrderPage = (req, res) => {
  * This function should get called by ajax or similar
  */
 exports.addToOrder = (req, res) => { // Add product to order
+    if(!req.query.orderId || !req.query.productId) {
+        return res.status(400).send();
+    }
     Order.findById(req.query.orderId, (err, order) => { 
         if(err) {
             req.flash('errors', err);
@@ -130,11 +133,14 @@ function getPrice(products) {
 }
 
 /**
- * POST /order/product/remove
+ * GET /order/product/remove
  * Remove product from Order.
  * This function should get called by ajax or similar
  */
 exports.deleteFromOrder = (req, res) => {
+    if(!req.query.orderId || !req.query.productId) {
+        return res.status(400).send();
+    }
     Order.findById(req.query.orderId, (err, order) => { 
         if(err) {
             req.flash('errors', err);

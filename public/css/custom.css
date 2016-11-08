@@ -31,6 +31,10 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 
+.main-container {
+    min-height: 50em;
+}
+
 .product-img {
     width: 100%;
     height: 160px;
@@ -241,12 +245,12 @@
 }
 
 .add-product-btn:hover {
-    background: #60CF6F
+    background: #96f8e3
 }
 
 .info-product-btn {
   text-decoration: none;
-  background: #49B;
+  background: #00B9D7;
   color: white;
   font-size: 13px;
   font-weight: 500;
@@ -262,7 +266,7 @@
 }
 
 .info-product-btn:hover {
-    background: #69aec9
+    background: #b3f5ff;
 }
 
 .orders {

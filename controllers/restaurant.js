@@ -418,7 +418,7 @@ exports.getOrders = (req, res) => {
             {email: {$exists: true}},
             {price: {$exists: true}}
         ]}, null,
-        {limit: limit, skip: getSkip(page, limit), sort: { updatedAt: -1 }}, (err, orders) => {
+        {limit: limit, sort: { updatedAt: -1 }}, (err, orders) => {
             if (err) {
                 //callback function return error
                 req.flash('errors', err);
