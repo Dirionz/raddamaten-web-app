@@ -115,6 +115,18 @@
 
 }
 
+@media only screen and (max-width: 540px) and (min-width: 330px) {
+    .product-img {
+        height: 80px !important;
+    }
+    .product-button {
+        padding: 9px 5px !important;
+    }
+    .product-container {
+        width: 150px !important;
+    }
+}
+
 .toggle-xs-cart {
     top: 50px;
 }
