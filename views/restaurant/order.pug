@@ -32,17 +32,3 @@ block content
               td.text-right
                 h3
                   strong #{price} SEK
-            tr
-              td    
-              td
-                  // TODO Change the image in the data-image tag
-                  form(method='POST', style='float: right; min-width: 120px;')
-                      input(type='hidden', name='_csrf', value=_csrf)
-                      script(
-                      src='https://checkout.stripe.com/checkout.js',
-                      class='stripe-button',
-                      data-key=publishableKey,
-                      data-image='http://static.tumblr.com/nljhkjv/z0Jlpk23i/logo', 
-                      data-name='Räddamaten',
-                      data-currency='sek',
-                      data-amount=price*100)

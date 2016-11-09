@@ -12,6 +12,23 @@ footer {
     height: 100%;
     line-height: 20px;
 }
+a.pink-loadmore {
+    min-width: 17.5rem;
+    padding: 1.6rem 1.6rem 3.8rem 1.6rem;
+    text-align: center;
+    color: #fc459e;
+    border: .2rem solid #fc459e;
+    border-radius: .6rem .6rem .6rem .6rem;
+    height: 5.2rem;
+    font-size: 1.6rem;
+    box-shadow: none;
+}
+a.pink-loadmore:hover {
+    background: #fc459e;
+    color: #FFF !important;
+    text-decoration: none;
+}
+
 a:hover {
     color: #595959 !important;
 }

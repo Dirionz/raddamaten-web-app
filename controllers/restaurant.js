@@ -434,3 +434,83 @@ exports.getOrders = (req, res) => {
         });
     }
 };
+
+/**
+ * GET /restaurant/order/5
+ * Order page.
+ */
+exports.getOrder = (req, res) => {
+    const orderId = req.params.orderId;
+    
+    if (!orderId) {
+        req.flash('errors', {msg: "Hittades inte"});
+        return res.redirect('/restaurant/orders');
+    }
+    Order.findById(orderId, (err, order) => { 
+        if(err) {
+            req.flash('errors', err);
+            return res.redirect('/order/'+req.params.orderId);
+        } else {
+            if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+            Product.find({ _id: { $in: order.products } }, (err, orderProducts) => {
+                if(err) {
+                    req.flash('errors', err)
+                    return res.redirect('/order/'+req.params.orderId);
+                } else {
+                    const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                    const price = getPrice(fullOrderProducts);
+                    order.price = price;
+                    order.save((err) => {
+                        if (err) {
+                            req.flash('errors', err);
+                            return res.redirect('/order/'+req.params.orderId);
+                        } else {
+                            return res.render('restaurant/order', {
+                                orderProducts: fullOrderProducts,
+                                price: price,
+                                order: order,
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+};
+
+/**
+ * The find function only finds puts one object in the array if found
+ * Let add it multiple times if the objectId exitst more than one time
+ */
+function placeDuplicates(objectIds, orderProducts) {
+    var newOrderProducts = [];
+    for (var i = 0, len = objectIds.length; i < len; i++) {
+        var product = search(objectIds[i], orderProducts);
+        if (product) {
+            newOrderProducts.push(product);
+        }
+    }
+    return newOrderProducts;
+}
+
+/**
+ * Search through the array and if found return it
+ */
+function search(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (String(myArray[i]._id) === String(nameKey)) {
+            return myArray[i];
+        }
+    }
+}
+
+/**
+ * Get the sum of the products in array
+ */
+function getPrice(products) {
+    var sum = 0;
+    for (var i=0; i < products.length; i++) {
+        sum += parseFloat(products[i].price);
+    }
+    return sum;
+}

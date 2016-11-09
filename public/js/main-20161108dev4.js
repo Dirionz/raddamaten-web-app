@@ -45,6 +45,12 @@ $(document).ready(function() {
     });
   });
 
+  $(window).on("orientationchange",function(event){
+    setTimeout(function () {
+      $grid.isotope().isotope('layout');
+    }, 500); // Better solution for this?
+  });
+
 
 });
 

@@ -169,6 +169,14 @@ describe('GET /restaurant/orders', () => {
     });
 });
 
+describe('GET /restaurant/order/5', () => {
+    it('should return 302 Found', (done) => {
+        request(app)
+            .get('/restaurant/order/5')
+            .expect(302, done);
+    });
+});
+
 describe('GET /api', () => {
     it('should return 200 OK', (done) => {
         request(app)
