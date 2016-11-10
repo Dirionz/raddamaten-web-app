@@ -6,22 +6,21 @@ block content
             .col-sm-6.col-sm-offset-3
                 br
                 br
-                h2(style='color:#0fad00') Success
-                //img(src='http://osmhotels.com//assets/check-true.jpg')
+                h2(style='color:#0fad00') Lyckades
                 i(class="fa fa-check-circle-o" aria-hidden="true", style='color:#0fad00; font-size: 3em;')
-                h3 Dear, customer
+                h3 Kära, kund
                 p(style='font-size:20px;color:#5C5C5C;')
                     if (successSendEmail) 
-                        | Thank you. We have sent you an email "#{email}" with your details.
+                        | Tack. Vi har skickat ett email till "#{email}" med detaljer.
                     else 
-                        | Thank you. We could 
-                        strong not 
-                        | send and email to "#{email}" with your details. 
-                    |  Use the order id below when you pickup the order.
+                        | Tack. Vi kunde
+                        strong inte
+                        | skicka email till "#{email}". 
+                    |  Använd de id nedanför när du hämtar din order.
                 h2 #{orderId.substr(orderId.length - 5)}
                 br
                 br
                 if (!successSendEmail)
                     p(style='font-size:20px;color:#5C5C5C;')
-                        | To try again to send the email press 
-                        a(href='') here.
+                        | För att försöka skicka email igen tryck
+                        a(href='') här.

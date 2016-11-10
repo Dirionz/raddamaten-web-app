@@ -1,8 +1,8 @@
 extends ../layout
 
 block content
-    h2 Are your sure that you want to delete #{product.name}?
+    h2 Är du säker på att du vill ta bort #{product.name}?
     form.form-horizontal(method='POST')
         input(type='hidden', name='_csrf', value=_csrf)
         input(type='hidden', name='pictureURL', value=product.pictureURL)
-        button.btn.btn.btn-danger(type='submit') Yes Delete
+        button.btn.btn.btn-danger(type='submit') Ja, ta bort

@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   .page-header
-    h3 Profile Information
+    h3 Profil information
 
   form.form-horizontal(action='/account/profile', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
@@ -11,27 +11,27 @@ block content
       .col-sm-7
         input.form-control(type='email', name='email', id='email', value=user.email)
     .form-group
-      label.col-sm-3.control-label(for='name') Name
+      label.col-sm-3.control-label(for='name') Namn
       .col-sm-7
         input.form-control(type='text', name='name', id='name', value=user.profile.name)
     .form-group
-      label.col-sm-3.control-label Gender
+      label.col-sm-3.control-label Kön
       .col-sm-6
         label.radio.col-sm-3
           input(type='radio', checked=user.profile.gender=='male', name='gender', value='male', data-toggle='radio')
-          span Male
+          span Man
         label.radio.col-sm-3
           input(type='radio', checked=user.profile.gender=='female', name='gender', value='female', data-toggle='radio')
-          span Female
+          span Kvinna
         label.radio.col-sm-3
           input(type='radio', checked=user.profile.gender=='other', name='gender', value='other', data-toggle='radio')
-          span Other
+          span Annat
     .form-group
-      label.col-sm-3.control-label(for='location') Location
+      label.col-sm-3.control-label(for='location') Plats
       .col-sm-7
         input.form-control(type='text', name='location', id='location', value=user.profile.location)
     .form-group
-      label.col-sm-3.control-label(for='website') Website
+      label.col-sm-3.control-label(for='website') Webbsida
       .col-sm-7
         input.form-control(type='text', name='website', id='website', value=user.profile.website)
     .form-group
@@ -42,70 +42,70 @@ block content
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
-          | Update Profile
+          | Updatera profil
 
   .page-header
-    h3 Change Password
+    h3 Ändra lösenord
 
   form.form-horizontal(action='/account/password', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label.col-sm-3.control-label(for='password') New Password
+      label.col-sm-3.control-label(for='password') Nytt lösenord
       .col-sm-7
         input.form-control(type='password', name='password', id='password')
     .form-group
-      label.col-sm-3.control-label(for='confirmPassword') Confirm Password
+      label.col-sm-3.control-label(for='confirmPassword') Repitera lösenord
       .col-sm-7
         input.form-control(type='password', name='confirmPassword', id='confirmPassword')
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn-primary(type='submit')
           i.fa.fa-lock
-          | Change Password
+          | Ändra lösenord
 
   .page-header
-    h3 Delete Account
+    h3 Ta bort konto
 
   form.form-horizontal(action='/account/delete', method='POST')
     .form-group
-      p.col-sm-offset-3.col-sm-4 You can delete your account, but keep in mind this action is irreversible.
+      p.col-sm-offset-3.col-sm-4 Du kan ta bort ditt konto, men tänk på att det inte går att återställa det.
       input(type='hidden', name='_csrf', value=_csrf)
       .col-sm-offset-3.col-sm-4
         button.btn.btn-danger(type='submit')
           i.fa.fa-trash
-          | Delete my account
+          | Ta bort konto
 
   .page-header
-    h3 Linked Accounts
+    h3 Länkade konton
   .form-horizontal
     .form-group
       .col-sm-offset-3.col-sm-4
         if user.instagram
-          p: a.text-danger(href='/account/unlink/instagram') Unlink your Instagram account
+          p: a.text-danger(href='/account/unlink/instagram') Ta bort Instagram länkning
         else
-          p: a(href='/auth/instagram') Link your Instagram account
+          p: a(href='/auth/instagram') Länka ditt Instagram konto
       .col-sm-offset-3.col-sm-4
         if user.google
-          p: a.text-danger(href='/account/unlink/google') Unlink your Google account
+          p: a.text-danger(href='/account/unlink/google') Ta bort Google länkning
         else
-          p: a(href='/auth/google') Link your Google account
+          p: a(href='/auth/google') Länka Google konto
       .col-sm-offset-3.col-sm-4
         if user.facebook
-          p: a.text-danger(href='/account/unlink/facebook') Unlink your Facebook account
+          p: a.text-danger(href='/account/unlink/facebook') Ta bort Facebook länkning
         else
-          p: a(href='/auth/facebook') Link your Facebook account
+          p: a(href='/auth/facebook') Länka ditt Facebook konto
       .col-sm-offset-3.col-sm-4
         if user.twitter
-          p: a.text-danger(href='/account/unlink/twitter') Unlink your Twitter account
+          p: a.text-danger(href='/account/unlink/twitter') Ta bort Twitter länkning
         else
-          p: a(href='/auth/twitter') Link your Twitter account
+          p: a(href='/auth/twitter') Länka ditt Twitter konto
       .col-sm-offset-3.col-sm-4
         if user.github
-          p: a.text-danger(href='/account/unlink/github') Unlink your GitHub account
+          p: a.text-danger(href='/account/unlink/github') Ta bort GitHub länkning
         else
-          p: a(href='/auth/github') Link your GitHub account
+          p: a(href='/auth/github') Länka ditt GitHub konto
       .col-sm-offset-3.col-sm-4
         if user.linkedin
-          p: a.text-danger(href='/account/unlink/linkedin') Unlink your LinkedIn account
+          p: a.text-danger(href='/account/unlink/linkedin') Ta bort LinkedIn länkning
         else
-          p: a(href='/auth/linkedin') Link your LinkedIn account
+          p: a(href='/auth/linkedin') Länka ditt LinkedIn konto

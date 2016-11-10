@@ -4,16 +4,16 @@ each restaurant in restaurants
         td #{restaurant.updatedAt}
         td
             if ((user.restaurantId) && (user.restaurantId.toString() == restaurant._id.toString()))
-                span.label.label-success Pretending
+                span.label.label-success Hanterar
             else 
-                span.label.label-info Avilable
+                span.label.label-info Tillgänglig
         td 
             if ((user.restaurantId) && (user.restaurantId.toString() == restaurant._id.toString()))
                 form(method='POST')
                     input(type='hidden', name='_csrf', value=_csrf)
-                    button.btn.btn-success(type='submit') Unpretend
+                    button.btn.btn-success(type='submit') Klar med hantering
             else 
                 form(method='POST')
                     input(type='hidden', name='_csrf', value=_csrf)
                     input(type='hidden', name='restaurantId', value=restaurant._id)
-                    button.btn.btn-success(type='submit') Pretend
+                    button.btn.btn-success(type='submit') Hantera

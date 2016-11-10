@@ -3,22 +3,6 @@ extends ../layout
 block content
 
     .div(id='baseurl' data-internalbaseurl='/restaurant/products/')
-
-    //.row
-        .col-xs-6.col-sm-3.col-md-2
-            div(class='product-img' style='background-image: url(' + restaurant.pictureURL + ')')
-        .col-xs-6.col-sm-4.col-md-5
-            h2 #{restaurant.name}
-            p #{restaurant.aboutUs}
-            p
-                a.btn.btn-default(href='/restaurant/product', role='button') Add product
-                a.btn.btn-default(href='/restaurant/edit', role='button') Edit Restaurant
-                a.btn.btn-default(href='/restaurant/orders', role='button') Orders
-        .col-xs-3.col-sm-4.col-md-5
-            br
-            p <b>Street:</b> #{restaurant.street}
-            p <b>Postal code:</b> #{restaurant.postalCode}
-            p <b>City:</b> #{restaurant.city}
     .row
         .restaurant-container.col-xs-12.col-md-10.col-md-offset-1
             .material-header
@@ -32,9 +16,9 @@ block content
                 .col-xs-12.col-md-6
                     .col-xs-12.col-sm-6(style='padding: 0px;')
                         h2 Address
-                        p <b>Street:</b> #{restaurant.street} 
-                        p <b>Postal code:</b> #{restaurant.postalCode}
-                        p <b>City:</b> #{restaurant.city}
+                        p <b>Gata:</b> #{restaurant.street} 
+                        p <b>Postnummer:</b> #{restaurant.postalCode}
+                        p <b>Stad:</b> #{restaurant.city}
                     .col-xs-12.col-sm-6
                         h2
                         div(style='text-align: center;')

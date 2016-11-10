@@ -1,11 +1,11 @@
 each order in orders
   tr
-    td #{order.email || "None"}
+    td #{order.email || "Finns ej"}
     td #{order.updatedAt}
     td
       if (order.email)
-        span.label.label-success Successful
+        span.label.label-success Lyckad
       else 
-        span.label.label-danger Unsuccessful
+        span.label.label-danger Misslyckad
     td
       a(href='/restaurant/order/'+order._id) Visa

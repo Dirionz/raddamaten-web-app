@@ -5,51 +5,51 @@ block content
 
 block content
   .page-header
-    h3 Product Information
+    h3 Produkt information
 
   form.form-horizontal(method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label.col-sm-3.control-label(for='name') Name
+      label.col-sm-3.control-label(for='name') Namn
       .col-sm-7
         input.form-control(type='text', name='name', id='name', value=product.name)
     .form-group
-      label.col-sm-3.control-label(for='description') Description
+      label.col-sm-3.control-label(for='description') Beskrivning
       .col-sm-7
         input.form-control(type='text', name='description', id='description', value=product.description)
     .form-group
-      label.col-sm-3.control-label(for='price') Price
+      label.col-sm-3.control-label(for='price') Pris
       .col-sm-7
         input.form-control(type='text', name='price', id='price', value=product.price)
     .form-group
-      label.col-sm-3.control-label(for='quantity') Quantity
+      label.col-sm-3.control-label(for='quantity') Antal
       .col-sm-7
         input.form-control(type='text', name='quantity', id='quantity', value=product.quantity)
     .form-group
-      label.col-sm-3(class='col-sm-2 control-label', for='startdate') Start Date
+      label.col-sm-3(class='col-sm-2 control-label', for='startdate') Börjar att visas
       .col-sm-7
         input.form-control(type='text', name='startdate', value=product.startdate.toISOString().slice(0, 16).replace('T', ' '), id='date', required)
     .form-group
-      label.col-sm-3(class='col-sm-2 control-label', for='enddate') End Date
+      label.col-sm-3(class='col-sm-2 control-label', for='enddate') Slutar att visas
       .col-sm-7
         input.form-control(type='text', name='enddate', value=product.enddate.toISOString().slice(0, 16).replace('T', ' '), id='date', required)
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
-          | Update Product
+          | Updatera
           
 
   .page-header
-    h3 Change picture
+    h3 Byt bild
 
   form.form-horizontal(role='form', enctype='multipart/form-data', action='/restaurant/product/edit/picture/' + product._id, method='POST')
     .form-group
-      label(class='col-sm-3 control-label', for='myFile') File
+      label(class='col-sm-3 control-label', for='myFile') Fil
       .col-sm-7
         input(type='file', name='myFile')
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
-          | Update Product picture
+          | Updatera bild

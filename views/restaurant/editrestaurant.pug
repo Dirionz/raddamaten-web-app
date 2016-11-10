@@ -2,47 +2,47 @@ extends ../layout
 
 block content
   .page-header
-    h3 Profile Information
+    h3 Profil information
 
   form.form-horizontal(method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label.col-sm-3.control-label(for='name') Name
+      label.col-sm-3.control-label(for='name') Namn
       .col-sm-7
         input.form-control(type='text', name='name', id='name', value=restaurant.name)
     .form-group
-      label.col-sm-3.control-label(for='aboutUs') About Us
+      label.col-sm-3.control-label(for='aboutUs') Om oss
       .col-sm-7
         input.form-control(type='text', name='aboutUs', id='aboutUs', value=restaurant.aboutUs)
     .form-group
-      label.col-sm-3.control-label(for='street') Street
+      label.col-sm-3.control-label(for='street') Gata
       .col-sm-7
         input.form-control(type='text', name='street', id='street', value=restaurant.street)
     .form-group
-      label.col-sm-3.control-label(for='postalcode') PostalCode
+      label.col-sm-3.control-label(for='postalcode') Postnummer
       .col-sm-7
         input.form-control(type='text', name='postalcode', id='postalcode', value=restaurant.postalCode)
     .form-group
-      label.col-sm-3.control-label(for='city') City
+      label.col-sm-3.control-label(for='city') Stad
       .col-sm-7
         input.form-control(type='text', name='city', id='city', value=restaurant.city)
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
-          | Update Profile
+          | Updatera
           
 
   .page-header
-    h3 Change picture
+    h3 Byt bild
 
   form.form-horizontal(role='form', enctype='multipart/form-data', action='/restaurant/edit/picture', method='POST')
     .form-group
-      label(class='col-sm-3 control-label', for='myFile') File
+      label(class='col-sm-3 control-label', for='myFile') Fil
       .col-sm-7
         input(type='file', name='myFile')
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
-          | Update Profile picture
+          | Updatera bild

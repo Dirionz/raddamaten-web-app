@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   .page-header
-    h3 Sign up
+    h3 Registrera
   form.form-horizontal(id='signup-form' action='/signup/restaurant', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
@@ -10,31 +10,31 @@ block content
       .col-sm-7
         input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
     .form-group
-      label.col-sm-3.control-label(for='password') Password
+      label.col-sm-3.control-label(for='password') Lösenord
       .col-sm-7
         input.form-control(type='password', name='password', id='password', placeholder='Password', required)
     .form-group
-      label.col-sm-3.control-label(for='confirmPassword') Confirm Password
+      label.col-sm-3.control-label(for='confirmPassword') Repitera lösenord
       .col-sm-7
         input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirm Password', required)
     .form-group
-      label.col-sm-3.control-label(for='name') Name
+      label.col-sm-3.control-label(for='name') Namn
       .col-sm-7
         input.form-control(type='text', name='name', id='name', placeholder='Name', required)
     .form-group
-      label.col-sm-3.control-label(for='street') Street
+      label.col-sm-3.control-label(for='street') Gata
       .col-sm-7
         input.form-control(type='text', name='street', id='street', placeholder='Street', required)
     .form-group
-      label.col-sm-3.control-label(for='postalcode') PostalCode
+      label.col-sm-3.control-label(for='postalcode') Postnummer
       .col-sm-7
         input.form-control(type='text', name='postalcode', id='postalcode', placeholder='PostalCode', required)
     .form-group
-      label.col-sm-3.control-label(for='City') City
+      label.col-sm-3.control-label(for='City') Stad
       .col-sm-7
         input.form-control(type='text', name='city', id='city', placeholder='City', required)
     .form-group
       .col-sm-offset-3.col-sm-7
         button.btn.btn-success(type='submit')
           i.fa.fa-user-plus
-          | Signup
+          | Registrera

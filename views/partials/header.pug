@@ -22,9 +22,9 @@
           a(href='/status') Status
       ul.nav.navbar-nav.navbar-right
         if !user
-          li(class=(title == 'Login') ? 'active' : undefined)
+          //li(class=(title == 'Login') ? 'active' : undefined)
             a(href='/login') Login
-          li(class=(title == 'Create Account') ? 'active' : undefined)
+          //li(class=(title == 'Create Account') ? 'active' : undefined)
             a(href='/signup') Create Account
         else
           li.dropdown(class=(title == 'Account Management') ? 'active' : undefined)
@@ -37,15 +37,15 @@
               i.caret
             ul.dropdown-menu
               li
-                a(href='/account') My Account
+                a(href='/account') Mitt konto
               li.divider
               if user.restaurantId
                 li
-                  a(href='/restaurant') Restaurant
+                  a(href='/restaurant') Hantera restaurang
                 li.divider
               if user.isAdmin
                 li
-                  a(href='/admin') Admin
+                  a(href='/admin') Admin panel
                 li.divider
               li
-                a(href='/logout') Logout
+                a(href='/logout') Logga ut
