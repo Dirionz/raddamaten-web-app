@@ -1,20 +1,20 @@
 extends ../layout
 
 block content
-    .container
+    .white-box
         .row.text-center
             .col-sm-6.col-sm-offset-3
                 br
                 br
                 h2(style='color:#0fad00') Lyckades
                 i(class="fa fa-check-circle-o" aria-hidden="true", style='color:#0fad00; font-size: 3em;')
-                h3 Kära, kund
+                h3 Kära kund
                 p(style='font-size:20px;color:#5C5C5C;')
                     if (successSendEmail) 
                         | Tack. Vi har skickat ett email till "#{email}" med detaljer.
                     else 
                         | Tack. Vi kunde
-                        strong inte
+                        strong  inte 
                         | skicka email till "#{email}". 
                     |  Använd de id nedanför när du hämtar din order.
                 h2 #{orderId.substr(orderId.length - 5)}
@@ -23,4 +23,4 @@ block content
                 if (!successSendEmail)
                     p(style='font-size:20px;color:#5C5C5C;')
                         | För att försöka skicka email igen tryck
-                        a(href='') här.
+                        a(href='')  här.

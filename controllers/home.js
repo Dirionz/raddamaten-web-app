@@ -10,7 +10,7 @@ exports.index = (req, res) => {
     if (err) {
       req.flash('errors', err);
       res.render('home', {
-        title: 'Home'
+        title: 'Raddamaten'
       });
     } else {
       Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}, {quantity: {$gt: 0}}]}, null,
@@ -18,11 +18,11 @@ exports.index = (req, res) => {
         if (err) {
           req.flash('errors', err);
             res.render('home', {
-            title: 'Home'
+            title: 'Raddamaten'
           });
         } else {
             res.render('home', {
-              title: 'Home',
+              title: 'Raddamaten',
               products: products
             });
         }
@@ -46,7 +46,7 @@ exports.getProducts = (req, res) => {
         } else {
             //successfully braunch
             res.render('products/products', {
-                title: 'Products List',
+                title: 'Produkter',
                 products: products
             });
         }

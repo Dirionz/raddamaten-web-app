@@ -14,7 +14,7 @@ exports.getRestaurant = (req, res) => {
             return res.redirect('/');
         } else {
             Product.find({ restaurantId: req.user.restaurantId }, null, 
-            {limit: 16, sort: { enddate: -1 }}, (err, products) => {
+            {limit: 16, sort: { enddate: 1 }}, (err, products) => {
                 if (err) {
                     //callback function return error
                     req.flash('errors', err);
@@ -40,7 +40,7 @@ exports.getProducts = (req, res) => {
     const limit = parseInt(req.query.limit) || 16;
     const currentCount = parseInt(req.params.currentCount);
     Product.find({restaurantId: req.user.restaurantId}, null,
-    {limit: limit, skip: currentCount, sort: { enddate: -1 }}, (err, products) => {
+    {limit: limit, skip: currentCount, sort: { enddate: 1 }}, (err, products) => {
         if (err) {
             //callback function return error
             return res.sendStatus(500);

@@ -1,7 +1,10 @@
 extends ../layout
 
 block content
-    h2 Admin panel
-    a.btn.btn-default(href='/admin/invite') Bjud in
+  .materialize-box
+    .material-header
+      p Admin panel
+    .material-body
+        a.btn.btn-default(href='/admin/invite') Bjud in
 
-    a.btn.btn-default(href='/admin/restaurants') Hantera restauranger
+        a.btn.btn-default(href='/admin/restaurants') Hantera restauranger

@@ -12,6 +12,18 @@ footer {
     height: 100%;
     line-height: 20px;
 }
+.btn.btn-primary {
+    background: #00B9D7;
+    border-color: #96f8e3;
+}
+.btn.btn-danger {
+    background: #fc459e;
+    border-color: #feb4d8;
+}
+.btn.btn-success {
+    background: #2fdab8;;
+    border-color: #96f8e3;
+}
 a.pink-loadmore {
     min-width: 17.5rem;
     padding: 1.6rem 1.6rem 3.8rem 1.6rem;
@@ -39,6 +51,9 @@ a:active {
     color: #595959 !important;
 }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    color: #595959 !important;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     color: #595959 !important;
 }
 ::selection {

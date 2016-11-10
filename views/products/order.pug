@@ -2,6 +2,6 @@ div
     each product in orderProducts
         p #{product.name} 
         p #{product.price} kr
-            a(class='delete-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id) &#10005
+            a(class='delete-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>") &#10005
     p Sum: #{price} Sek
     p

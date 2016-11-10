@@ -9,12 +9,12 @@ const nodemailer = require('nodemailer');
  * Order page.
  */
 exports.getOrderPage = (req, res) => {
-  Order.findById(req.params.orderId, (err, order) => { 
+  Order.findById(req.params.orderId, (err, order) => {
       if (err) {
         req.flash('errors', err);
         res.redirect('/');
       } else {
-        if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+        if (!order) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
         Product.find({ _id: { $in: order.products } }, (err, orderProducts) => {
             if (err) {
                 req.flash('errors', err);
@@ -29,7 +29,7 @@ exports.getOrderPage = (req, res) => {
                             if (err) {
                                 req.flash('errors', err);
                                     res.render('home', {
-                                    title: 'Home'
+                                    title: 'Raddamaten'
                                 });
                             } else {
                                 const fullOrderProducts = placeDuplicates(order.products, orderProducts);
@@ -240,9 +240,9 @@ exports.checkoutOrder = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/order/'+req.params.orderId);
         } else {
-            if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
-            if (order.email) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); }; // This order has already been payed for.
-            if (!order.products.length > 0) {req.flash('errors', { msg: 'Cart is empty' }); return res.redirect('/order/'+req.params.orderId); }; 
+            if (!order) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
+            if (order.email) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); }; // This order has already been payed for.
+            if (!order.products.length > 0) {req.flash('errors', { msg: 'Kundvagnen är tom' }); return res.redirect('/order/'+req.params.orderId); }; 
             Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
                 if(err) {
                     req.flash('errors', err)
