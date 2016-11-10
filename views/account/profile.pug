@@ -63,10 +63,10 @@ block content
           i.fa.fa-lock
           | Ändra lösenord
 
-  .page-header
+  //.page-header
     h3 Ta bort konto
 
-  form.form-horizontal(action='/account/delete', method='POST')
+  //form.form-horizontal(action='/account/delete', method='POST')
     .form-group
       p.col-sm-offset-3.col-sm-4 Du kan ta bort ditt konto, men tänk på att det inte går att återställa det.
       input(type='hidden', name='_csrf', value=_csrf)
@@ -75,9 +75,9 @@ block content
           i.fa.fa-trash
           | Ta bort konto
 
-  .page-header
+  //.page-header
     h3 Länkade konton
-  .form-horizontal
+  //.form-horizontal
     .form-group
       .col-sm-offset-3.col-sm-4
         if user.instagram
