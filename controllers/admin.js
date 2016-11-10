@@ -49,7 +49,7 @@ exports.postInvite = (req, res) => {
 
             invite.save((err) => {
                 if (err) { return done(err); };
-                req.flash('success', { msg: 'Success! Invite has been created.' });
+                req.flash('success', { msg: 'Inbjudan skapad.' });
                 done(err);
             });
         }
@@ -73,7 +73,7 @@ exports.deleteInvite = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/admin/invite');
         } else {
-            req.flash('success', { msg: 'Invite has been deleted successfully!' });
+            req.flash('success', { msg: 'Ibjudan borttagen.' });
             return res.redirect('/admin/invite');
         }
     });
@@ -88,7 +88,7 @@ exports.getRestaurants = (req, res) => {
     var search_param = req.query.search_param;
     const searchString = req.query.q;
     if ((searchString && searchString.length < 4) || (search_param && !searchString)) {
-        req.flash('errors', {msg: "Must type at least 4 characters"});
+        req.flash('errors', {msg: "Måste vara minst 4 tecken"});
         return res.redirect('/admin/restaurants');
     }
 
