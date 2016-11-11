@@ -9,5 +9,9 @@ block content
             include products/products
 
     hr
-    .text-center
-        a.btn.pink-loadmore(id='load_more', role='button' data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Laddar") Ladda fler
+    if (products.length > 0)
+        .text-center
+            a.btn.pink-loadmore(id='load_more', role='button' data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Laddar") Ladda fler
+    else     
+        .document
+            h2 Hittade inga produkter

@@ -488,3 +488,179 @@ a.AppPromo {
     background-color: white;
     position: relative
 }}
+
+.about-title {
+    margin: 52px auto 42px;
+    max-width: 880px;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    padding-left: 0;
+    padding-right: 0;
+    color: #525252;
+    font-weight: 300;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: 48px;
+    line-height: 56px;
+    transition: all 0.2s ease-in-out
+}
+
+.about-paragraph, .exerpt-paragraph {
+    max-width: 880px;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 30px;
+    color: #999999;
+    margin: 20px auto 30px;
+    font-weight: 300;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+@media only screen and (max-width: 540px) {
+    .about-paragraph, .exerpt-paragraph {
+        font-size: 22px
+    }
+}
+@media only screen and (max-width: 400px) {
+    .about-paragraph, .exerpt-paragraph {
+        font-size: 20px
+    }
+}
+.about-paragraph a, .exerpt-paragraph a {
+    color: #999999;
+    background-size: 2px 2px;
+    background-image: -webkit-linear-gradient(top, transparent 50%, #999 50%);
+    background-image: linear-gradient(to bottom, transparent 50%, #999 50%);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    text-decoration: none;
+    -webkit-transition-property: color, background-image;
+    transition-property: color, background-image;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out
+}
+.about-paragraph a:hover, .exerpt-paragraph a:hover {
+    color: #525252;
+    background-size: 2px 2px;
+    background-image: -webkit-linear-gradient(top, transparent 50%, #525252 50%);
+    background-image: linear-gradient(to bottom, transparent 50%, #525252 50%);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    text-decoration: none
+}
+
+.about-paragraph-spacing {
+    margin: 20px auto 30px;
+    max-width: 880px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+article.teal .about-paragraph {
+    color: #39ac95;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out
+}
+article.teal .about-paragraph a {
+    color: #39ac95;
+    background-size: 2px 2px;
+    background-image: -webkit-linear-gradient(top, transparent 50%, #39ac95 50%);
+    background-image: linear-gradient(to bottom, transparent 50%, #39ac95 50%);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    text-decoration: none
+}
+article.teal .about-paragraph a:hover {
+    color: #427067;
+    background-size: 2px 2px;
+    background-image: -webkit-linear-gradient(top, transparent 50%, #427067 50%);
+    background-image: linear-gradient(to bottom, transparent 50%, #427067 50%);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    text-decoration: none
+}
+
+.description-page {
+    text-align: center;
+    background-color: #f2f2f2
+}
+.description-page.learn-more, .description-page.giveaway {
+    text-align: left
+}
+.description-page article {
+    padding: 60px 0 120px
+}
+.description-page article:last-of-type {
+    padding-bottom: 160px
+}
+@media only screen and (max-width: 540px) {
+    .description-page article {
+        padding: 16px;
+        padding-bottom: 70px
+    }
+}
+.description-page article img {
+    max-width: 100%
+}
+@media only screen and (max-width: 540px) {
+    .description-page article .cards-container {
+        margin-left: 2%;
+        margin-right: 2%
+    }
+}
+
+.inline-box {
+    background-color: white;
+    margin: 0 auto;
+    max-width: 830px;
+    padding: 47px 50px 60px;
+    padding: 47px 6vw 60px;
+    text-align: center
+}
+.inline-box h2 {
+    margin-bottom: 48px;
+    margin-top: 36px
+}
+
+.document {
+    text-align: left;
+    padding-bottom: 100px
+}
+.document {
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    color: #999999;
+}
+.document h2 {
+    font-family: europa,'Helvetica Neue', 'Helvetica', sans-serif !important;
+    font-weight: 300 !important;
+    font-size: 3em;
+    line-height: 1.2;
+    color: #525252;
+    text-align: center;
+}
+.document .section-updated {
+    font-weight: 500 !important;
+    margin-top: -40px;
+    margin-bottom: 60px;
+    text-align: center;
+}
+.document .section-title {
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: 24px;
+    color: #525252;
+    margin-top: 40px;
+    margin-bottom: 14px
+}
+.document .section-text {
+    margin: 8px 0 12px;
+    line-height: 1.6
+}
+.document li {
+    margin-bottom: 8px
+}

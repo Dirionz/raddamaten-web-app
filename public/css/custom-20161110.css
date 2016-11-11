@@ -47,6 +47,10 @@
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+.center-text {
+    text-align: center;
+}
+
 .img-centercrop {
     background-size: cover;
     background-repeat: no-repeat;

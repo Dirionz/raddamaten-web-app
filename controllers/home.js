@@ -52,3 +52,23 @@ exports.getProducts = (req, res) => {
         }
     });
 };
+
+/**
+ * GET /
+ * About page.
+ */
+exports.about = (req, res) => {
+  return res.render('about', {
+    title: 'About',
+  });
+};
+
+/**
+ * GET /
+ * Terms page.
+ */
+exports.terms = (req, res) => {
+  return res.render('terms', {
+    title: 'Terms',
+  });
+};

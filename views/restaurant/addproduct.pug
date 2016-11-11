@@ -5,7 +5,7 @@ block content
     .material-header
       p Lägg till produkt
     .material-body
-      form.form-horizontal(role='form', enctype='multipart/form-data', method='POST')
+      form.form-horizontal(role='form', enctype='multipart/form-data', method='POST' onsubmit="return(validateInputFile());")
         .form-group
           label(class='col-sm-2 control-label', for='name') Namn
           .col-sm-8
@@ -31,9 +31,9 @@ block content
           .col-sm-8
             input.form-control(type='text', name='enddate', value=date, id='date', required)
         .form-group
-          label(class='col-sm-2 control-label', for='myFile') Fil
+          label(class='col-sm-2 control-label', for='myFile', required) Fil
           .col-sm-8
-            input(type='file', name='myFile')
+            input(id='upload' type='file', name='myFile' accept='image/*') 
         .form-group
           .col-sm-offset-2.col-sm-8
             button.btn.btn-primary(type='submit')

@@ -178,3 +178,11 @@ function hideLoadMoreIfLessThanLimit(htmlObject) {
   }
 }
 
+function validateInputFile(){
+    var inp = document.getElementById('upload');
+    if(inp.files.length == 0){
+        alert("Bild krävs");
+        inp.focus();
+        return false;
+    }
+}
