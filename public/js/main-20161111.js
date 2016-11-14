@@ -3,14 +3,12 @@ $(document).ready(function() {
   // Load more products
   var productsframe = $("div#productsframe").length;
   if (productsframe) {
-    hideLoadMoreIfLessThanLimit($(this));
+    hideLoadMoreIfLessThanLimit($(this), ".product-img", $('#load_more'), 16);
     $('#load_more').click(function(event) {
       loadMoreProducts();
     });
   }
-
   // Load more orders
-  hideLoadMoreIfLessThanLimit($(this));
   const loadmoreBtn = $('.btn.orders_load_more');
   hideLoadMoreIfLessThanLimit($(this), ".order-for-count", loadmoreBtn, 16);
   loadmoreBtn.click(function(event) {
@@ -192,6 +190,8 @@ function hideLoadMoreIfLessThanLimit(htmlObject, objectToFind, loadmoreBtn, limi
   var objectsReturned = htmlObject.find(objectToFind).length;
   if (objectsReturned < limit) {
     loadmoreBtn.hide();
+  } else {
+    loadmoreBtn.show();
   }
 }
 

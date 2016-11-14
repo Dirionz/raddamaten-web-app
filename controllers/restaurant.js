@@ -373,7 +373,7 @@ exports.getOrders = (req, res) => {
     const searchString = req.query.q;
     const limit = parseInt(req.query.limit) || 16;
     if ((searchString && searchString.length < 4) || (search_param && !searchString)) {
-        req.flash('errors', {msg: "Must type at least 4 characters"});
+        req.flash('errors', {msg: "Måste vara minst 4 karaktärer"});
         return res.redirect('/restaurant/orders');
     }
 

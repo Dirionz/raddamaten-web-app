@@ -1,7 +1,8 @@
 each order in orders
   tr.order-row
     td #{order.email || "Finns ej"}
-    td #{order.updatedAt}
+    td #{order.updatedAt.toISOString().slice(0,16).replace('T', ' ') }
+    td #{order.price} kr
     td
       if (order.email)
         span.label.label-success Lyckad
