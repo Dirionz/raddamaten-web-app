@@ -287,9 +287,10 @@ exports.checkoutOrder = (req, res) => {
 
 function productsExits(productList) {
     var errlist = [];
+    const currentDate = new Date();
     productList.forEach(function(product) {
-        if (!(product.quantity > 0)) {
-            errlist.push({ msg: 'Product no longer exists: ' + product.name});
+        if (!(product.quantity > 0) || product.enddate < currentDate) {
+            errlist.push({ msg: 'Produkten finns inte längre: ' + product.name});
         }
     });
     if (errlist.length > 0) {
