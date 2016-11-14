@@ -220,6 +220,7 @@ app.get('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaura
 app.post('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postDeleteProduct);
 
 app.get('/restaurant/orders', passportConfig.isAuthenticatedRestaurant, restaurantController.getOrders);
+app.get('/restaurant/orders/loadmore', passportConfig.isAuthenticatedRestaurant, restaurantController.getMoreOrders);
 app.get('/restaurant/order/:orderId', passportConfig.isAuthenticatedRestaurant, restaurantController.getOrder);
 
 app.get('/admin', passportConfig.isAuthenticatedAdmin, adminController.getIndex);

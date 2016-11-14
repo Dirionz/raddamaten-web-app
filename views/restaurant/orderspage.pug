@@ -1,6 +1,8 @@
 extends ../layout
 
 block content
+  .div(id='baseurl' data-internalbaseurl="/restaurant/orders/loadmore")
+  .div(id='query' data-internalbasequery=(!searchString ? '' : '&search_param='+search_param) +(!searchString ? '' : '&search_param_date='+search_param_date)+(!searchString ? '' : '&q='+searchString))
   .materialize-box
     .material-header
       p Ordrar
@@ -21,7 +23,21 @@ block content
                                 i.fa.fa-angle-double-right
                                 |  Email
                 input#search_param(type='hidden', name='search_param', value=search_param)
-                input#search_key.form-control(type='text', name='q', placeholder='Search..', value='')
+                .input-group-btn.search-panel
+                    button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                        span#search_concept_date #{ search_param_date == 'Today' ? 'Idag' : 'Alla' }  
+                        span.caret
+                    ul.dropdown-menu(role='menu')
+                        li
+                            a(id='search-dropdown-Today')
+                                i.fa.fa-angle-double-right
+                                |  Idag
+                        li
+                            a(id='search-dropdown-Alltime')
+                                i.fa.fa-angle-double-right
+                                |  Alla
+                input#search_param_date(type='hidden', name='search_param_date', value=search_param_date)
+                input#search_key.form-control(type='text', name='q', placeholder='Search..', value=searchString)
                 span.input-group-btn
                     a.btn.btn-default.text-muted(href='/restaurant/orders', title='Clear')
                         i.fa.fa-times
@@ -38,5 +54,6 @@ block content
                         th Datum
                         th Status
                         th
-                    tbody
+                    tbody.orderscontainer
                         include orders
+        button.btn.btn-info.orders_load_more(data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Laddar") Ladda fler

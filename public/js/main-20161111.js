@@ -9,6 +9,14 @@ $(document).ready(function() {
     });
   }
 
+  // Load more orders
+  hideLoadMoreIfLessThanLimit($(this));
+  const loadmoreBtn = $('.btn.orders_load_more');
+  hideLoadMoreIfLessThanLimit($(this), ".order-for-count", loadmoreBtn, 16);
+  loadmoreBtn.click(function(event) {
+    loadMoreOrders();
+  });
+
   // Date inputs
   $('input#date').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD HH:mm' });
   
@@ -42,6 +50,16 @@ $(document).ready(function() {
     $('#search-dropdown-Email').click(function() {
       $('#search_concept').html('Email ');
       $('input#search_param').val('Email');
+
+    });
+    $('#search-dropdown-Today').click(function() {
+      $('#search_concept_date').html('Idag ');
+      $('input#search_param_date').val('Today');
+    });
+    
+    $('#search-dropdown-Alltime').click(function() {
+      $('#search_concept_date').html('Alla ');
+      $('input#search_param_date').val('Alltime');
     });
   });
 
@@ -135,7 +153,7 @@ function loadMoreProducts() {
   // Fetch the data
   $.get(baseurl + currentCount + '?limit=' + limit, function(html){
     if (html) {
-      hideLoadMoreIfLessThanLimit($(html));
+      hideLoadMoreIfLessThanLimit($(html), ".product-img", loadmoreBtn, limit);
       // Put the data where it belongs. I like it more this way
       //$("div#productsframe").append(html);
       html = $(html);
@@ -170,12 +188,39 @@ function getLimit() {
   return limit;
 }
 
-function hideLoadMoreIfLessThanLimit(htmlObject) {
-  const loadmoreBtn = $('#load_more.btn');
-  var objectsReturned = htmlObject.find(".product-img").length;
-  if (objectsReturned < getLimit()) {
+function hideLoadMoreIfLessThanLimit(htmlObject, objectToFind, loadmoreBtn, limit) {
+  var objectsReturned = htmlObject.find(objectToFind).length;
+  if (objectsReturned < limit) {
     loadmoreBtn.hide();
   }
+}
+
+// Load more orders on restaurant orders page
+function loadMoreOrders() {
+  var baseurl = $('div#baseurl').data('internalbaseurl');
+  var query = $('div#query').data('internalbasequery');
+
+  const loadmoreBtn = $('.btn.orders_load_more');
+  loadmoreBtn.button('loading');
+
+  // Retains compatibility for those with no javascript
+  event.preventDefault();
+  var limit = 16;
+  var currentCount = $("tbody.orderscontainer").children('tr.order-row').length;
+  // Fetch the data
+  $.get(baseurl + '?skip=' + currentCount + query, function(html){
+    if (html) {
+      hideLoadMoreIfLessThanLimit($(html), ".order-for-count", loadmoreBtn, limit);
+      // Put the data where it belongs. I like it more this way
+      $("tbody.orderscontainer").append(html);
+    } else {
+      loadmoreBtn.hide();
+    }
+    loadmoreBtn.button('reset');
+  })
+  .fail(function() {
+    loadmoreBtn.button('reset');
+  });
 }
 
 function validateInputFile(){
@@ -186,3 +231,5 @@ function validateInputFile(){
         return false;
     }
 }
+
+

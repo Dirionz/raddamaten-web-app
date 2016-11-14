@@ -1,5 +1,5 @@
 each order in orders
-  tr
+  tr.order-row
     td #{order.email || "Finns ej"}
     td #{order.updatedAt}
     td
@@ -9,3 +9,4 @@ each order in orders
         span.label.label-danger Misslyckad
     td
       a(href='/restaurant/order/'+order._id) Visa
+      .order-for-count

@@ -369,18 +369,17 @@ exports.postDeleteProduct = (req, res) => {
 exports.getOrders = (req, res) => {
     
     var search_param = req.query.search_param;
+    var search_param_date = req.query.search_param_date;
     const searchString = req.query.q;
+    const limit = parseInt(req.query.limit) || 16;
     if ((searchString && searchString.length < 4) || (search_param && !searchString)) {
         req.flash('errors', {msg: "Must type at least 4 characters"});
         return res.redirect('/restaurant/orders');
     }
 
-    if (search_param == "ID") {
-        Order.find({$and: [
-            {restaurantId: req.user.restaurantId},
-            {isCheckedout: true},
-            {objectId: new RegExp(searchString, "i")}
-        ]}, null, {sort: {updatedAt: -1}}, (err, orders) => {
+    if (searchString) {
+        const query = getOrdersSearchQuery(search_param, searchString, search_param_date, req.user.restaurantId);
+        Order.find({$and: query}, null, {limit: limit, sort: {updatedAt: -1}}, (err, orders) => {
             if (err) {
                 req.flash('errors', err);
                 return res.redirect('/restaurant');
@@ -388,31 +387,15 @@ exports.getOrders = (req, res) => {
                 res.render('restaurant/orderspage', {
                     title: 'Order List',
                     orders: orders,
-                    search_param
-                });
-            }
-        });
-    } else if(search_param == "Email") {
-        Order.find({$and: [
-            {restaurantId: req.user.restaurantId},
-            {isCheckedout: true},
-            {email: new RegExp(searchString, "i")}
-        ]}, null, {sort: {updatedAt: -1}}, (err, orders) => {
-            if (err) {
-                req.flash('errors', err);
-                return res.redirect('/restaurant');
-            } else {
-                res.render('restaurant/orderspage', {
-                    title: 'Order List',
-                    orders: orders,
-                    search_param
+                    searchString,
+                    search_param,
+                    search_param_date
                 });
             }
         });
     } else {
         search_param = "ID"; // Default
-        const limit = parseInt(req.query.limit) || 16;
-        const page = req.params.page;
+        search_param_date = "Today"; // Default
         Order.find({$and: [
             {restaurantId: req.user.restaurantId}, 
             {email: {$exists: true}},
@@ -428,7 +411,96 @@ exports.getOrders = (req, res) => {
                 res.render('restaurant/orderspage', {
                     title: 'Order List',
                     orders: orders,
-                    search_param
+                    searchString,
+                    search_param,
+                    search_param_date
+                });
+            }
+        });
+    }
+};
+
+// Return different search querys searching 
+function getOrdersSearchQuery(searchBy, searchString, limitDate, restaurantId) {
+    var queryParams = [];
+     
+    queryParams.push({restaurantId: restaurantId});
+    queryParams.push({isCheckedout: true});
+    if (limitDate == 'Today') {
+        queryParams.push({updatedAt: {$gte: getToday()}});
+    }
+    if (searchBy == "ID") {
+        queryParams.push({objectId: new RegExp(searchString, "i")});
+
+    } else if(searchBy == "Email") {
+        queryParams.push({email: new RegExp(searchString, "i")});
+    }
+    return queryParams;
+}
+
+// Get today date
+function getToday() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    } 
+
+    if(mm<10) {
+        mm='0'+mm
+    } 
+
+    today = mm+'/'+dd+'/'+yyyy;
+    return new Date(today);
+}
+
+/**
+ * GET /restaurant/orders/loadmore
+ * More orders for list page.
+ * This function should be called by ajax or similar
+ */
+exports.getMoreOrders = (req, res) => {
+    
+    var search_param = req.query.search_param;
+    var search_param_date = req.query.search_param_date;
+    const searchString = req.query.q;
+    const skip = parseInt(req.query.skip) || 0;
+    const limit = parseInt(req.query.limit) || 16;
+    if ((searchString && searchString.length < 4) || (search_param && !searchString)) {
+        return res.sendStatus(500);
+    }
+
+    if (searchString) {
+        const query = getOrdersSearchQuery(search_param, searchString, search_param_date, req.user.restaurantId);
+        Order.find({$and: query}, null, {limit: limit, sort: {updatedAt: -1}, skip: skip}, (err, orders) => {
+            if (err) {
+                return res.sendStatus(500);
+            } else {
+                res.render('restaurant/orders', {
+                    title: 'Order List',
+                    orders: orders
+                });
+            }
+        });
+    } else {
+        search_param = "ID"; // Default
+        search_param_date = "Today"; // Default
+        Order.find({$and: [
+            {restaurantId: req.user.restaurantId}, 
+            {email: {$exists: true}},
+            {price: {$exists: true}}
+        ]}, null,
+        {limit: limit, sort: { updatedAt: -1 }, skip: skip}, (err, orders) => {
+            if (err) {
+                return res.sendStatus(500);
+            } else {
+                //successfully braunch
+                res.render('restaurant/orders', {
+                    title: 'Order List',
+                    orders: orders
                 });
             }
         });
