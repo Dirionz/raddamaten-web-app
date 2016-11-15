@@ -178,7 +178,8 @@ app.post('/order/', orderController.postNewOrder);
 app.get('/order/product/add', orderController.addToOrder)
 app.get('/order/product/delete', orderController.deleteFromOrder)
 app.get('/order/checkout/:orderId', orderController.checkoutOrder)
-app.post('/order/checkout/:orderId', orderController.postStripe)
+app.post('/order/checkout/:orderId', orderController.postStripe, orderController.sendEmail)
+app.get('/order/successful/resendEmail/:orderId', orderController.getOrder, orderController.sendEmail)
 app.get('/order/successful/:orderId', orderController.successfulOrder)
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
@@ -187,8 +188,8 @@ app.get('/forgot', userController.getForgot);
 app.post('/forgot', userController.postForgot);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
-//app.get('/signup', userController.getSignup);
-//app.post('/signup', userController.postSignup);
+app.get('/signup', userController.getSignup);
+app.post('/signup', userController.postSignup);
 app.get('/signup/restaurant/:token', userController.getSignupRestaurant);
 app.post('/signup/restaurant', userController.postSignupRestaurant);
 //app.get('/contact', contactController.getContact);
@@ -220,7 +221,6 @@ app.get('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaura
 app.post('/restaurant/product/delete/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.postDeleteProduct);
 
 app.get('/restaurant/orders', passportConfig.isAuthenticatedRestaurant, restaurantController.getOrders);
-app.get('/restaurant/orders/loadmore', passportConfig.isAuthenticatedRestaurant, restaurantController.getMoreOrders);
 app.get('/restaurant/order/:orderId', passportConfig.isAuthenticatedRestaurant, restaurantController.getOrder);
 
 app.get('/admin', passportConfig.isAuthenticatedAdmin, adminController.getIndex);

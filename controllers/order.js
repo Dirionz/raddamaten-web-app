@@ -302,7 +302,7 @@ function productsExits(productList) {
  * POST /order/checkout/5
  * Make a payment.
  */
-exports.postStripe = (req, res) => {
+exports.postStripe = (req, res, next) => {
   const orderId     = req.params.orderId;
   const stripeToken = req.body.stripeToken;
   const stripeEmail = req.body.stripeEmail;
@@ -325,20 +325,40 @@ exports.postStripe = (req, res) => {
         
             order.email = stripeEmail;
             order.save((err) => {});
-            req.flash('success', { msg: 'Your card has been successfully charged.' });
-            res.redirect('/order/successful/'+orderId+'/?email='+stripeEmail);
+            //req.flash('success', { msg: 'Your card has been successfully charged.' });
+            //res.redirect('/order/successful/'+orderId+'/?email='+stripeEmail);
+            req.succesfulOrder = order;
+            next();
         });
       }
   });
 };
 
 /**
- * GET /order/successful/5
- * Show the successful order information
+ * GET middleware
+ * Find order
  */
-exports.successfulOrder = (req, res) => {
-    const email = req.query.email; // TODO: Need to validate email together with the order?
-    const orderId = req.params.orderId; // TODO: Need to validate the orderId here?
+exports.getOrder = (req, res, next) => {
+  Order.findById(req.params.orderId, (err, order) => { 
+    if (err) {
+        req.flash('errors', { msg: 'Hittades inte' }); 
+         return res.redirect('/'); 
+    } else {
+        if (!order) { req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
+        req.succesfulOrder = order;
+        next();
+    }
+  });
+};
+
+/**
+ * GET middleware
+ * Send email
+ */
+exports.sendEmail = (req, res, next) => {
+    const email = req.succesfulOrder.email;
+    const orderId = req.succesfulOrder._id; 
+
     if (email) {
         const transporter = nodemailer.createTransport({
             service: 'Mailgun',
@@ -355,24 +375,28 @@ exports.successfulOrder = (req, res) => {
         };
         transporter.sendMail(mailOptions, (err) => {
             if (err) {
-                return res.render('products/successfulorder', {
-                    email: email,
-                    orderId: orderId,
-                    successSendEmail: false
-                });
+                res.redirect('/order/successful/'+orderId + '/?success=false&email='+email);
             } else {
-                return res.render('products/successfulorder', {
-                    email: email,
-                    orderId: orderId,
-                    successSendEmail: true
-                });
+                res.redirect('/order/successful/'+orderId + '/?success=true&email='+email);
             }
         });
     } else {
-        return res.render('products/successfulorder', {
-            email: email,
-            orderId: orderId,
-            successSendEmail: false
-        });
+        res.redirect('/order/successful/'+orderId + '/?success=false&email='+email);
     }
+};
+
+/**
+ * GET /order/successful/5
+ * Show the successful order information
+ */
+exports.successfulOrder = (req, res) => {
+    const successSendEmail = (req.query.success === "true");
+    const email = req.query.email || "";
+    const orderId = req.params.orderId;
+    if (!orderId) { req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
+    return res.render('products/successfulorder', {
+        email: email,
+        orderId: orderId,
+        successSendEmail: successSendEmail
+    });
 };
