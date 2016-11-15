@@ -338,12 +338,41 @@
 }
 
 .material-header p {
+    display: inline-block;
     top: 50%;
     position: relative;
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+
+.material-header a {
+    display: inline-block;
+    float: right;
+    color: #FFF;
+    top: 50%;
+    position: relative;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.material-header a:link {
+    text-decoration: none;
+}
+
+.material-header a:hover {
+    text-decoration: none;
+}
+
+.material-header a::visited {
+    text-decoration: none;
+}
+
+.material-header a::active {
+    text-decoration: none;
+}
+
 
 .material-body {
     padding: 16px;

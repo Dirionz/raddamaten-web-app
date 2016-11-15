@@ -6,9 +6,13 @@ block content
     .row
         .restaurant-container.col-xs-12.col-md-10.col-md-offset-1
             .material-header
-                a.btn.btn-default(href='/restaurant/product', role='button') Lägg till produkt
-                a.btn.btn-default(href='/restaurant/edit', role='button') Ändra
-                a.btn.btn-default(href='/restaurant/orders', role='button') Ordrar
+                a(href='/restaurant/product', role='button' style='float:none; margin-left:6px; margin-right:6px;') Lägg till produkt
+                p |
+                a(href='/restaurant/edit', role='button' style='float:none; margin-left:6px; margin-right:6px;') Ändra
+                p |
+                a(href='/restaurant/orders', role='button', style='float:none; margin-left:6px; margin-right:6px;') Ordrar
+                if (restaurant.website && restaurant.website.length > 1)
+                    a(href=restaurant.website, target='_blank') Besök hemsida
             .restaurant-content
                 .col-xs-12.col-md-6
                     h2 #{restaurant.name}

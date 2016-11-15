@@ -102,6 +102,7 @@ exports.postEditRestaurant = (req, res) => {
             restaurant.street = req.body.street;
             restaurant.postalcode = req.body.postalcode;
             restaurant.city = req.body.city;
+            restaurant.website = req.body.website || '';
 
             restaurant.save((err) => {
                 if (err) {
