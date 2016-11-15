@@ -1,5 +1,5 @@
 each restaurant in restaurants
-    tr
+    tr.restaurant-row
         td #{restaurant.name}
         td #{restaurant.updatedAt}
         td
@@ -17,3 +17,4 @@ each restaurant in restaurants
                     input(type='hidden', name='_csrf', value=_csrf)
                     input(type='hidden', name='restaurantId', value=restaurant._id)
                     button.btn.btn-success(type='submit') Hantera
+                    .restaurant-for-count

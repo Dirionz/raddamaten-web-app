@@ -87,6 +87,7 @@ exports.deleteInvite = (req, res) => {
 exports.getRestaurants = (req, res) => {
     var search_param = req.query.search_param;
     const searchString = req.query.q;
+    const limit = parseInt(req.query.limit) || 16;
     if ((searchString && searchString.length < 4) || (search_param && !searchString)) {
         req.flash('errors', {msg: "Måste vara minst 4 tecken"});
         return res.redirect('/admin/restaurants');
@@ -95,7 +96,7 @@ exports.getRestaurants = (req, res) => {
     if (search_param == "Name") {
         Restaurant.find({$and: [
             {name: new RegExp(searchString, "i")}
-        ]}, null, {sort: {updatedAt: -1}}, (err, restaurants) => {
+        ]}, null, {limit: limit, sort: {updatedAt: -1}}, (err, restaurants) => {
             if (err) {
                 req.flash('errors', err);
                 return res.redirect('/admin');
@@ -109,7 +110,8 @@ exports.getRestaurants = (req, res) => {
         });
     }
     else {
-        Restaurant.find({}, (err, restaurants) => { // TODO: Prob need to limit this in the future
+        Restaurant.find({},
+        null, {limit: limit, sort: {updatedAt: -1}}, (err, restaurants) => {
             if (err) {
                 req.flash('errors', err);
             }
@@ -117,6 +119,48 @@ exports.getRestaurants = (req, res) => {
                 title: 'Admin restaurants',
                 restaurants: restaurants,
                 search_param: "Name",
+            });
+        });
+    }
+
+};
+
+/**
+ * GET /admin/restaurants/loadmore
+ * Get more restaurants, this function should be called by ajax or similar
+ */
+exports.getMoreRestaurants = (req, res) => {
+    var search_param = req.query.search_param;
+    const searchString = req.query.q;
+    const skip = parseInt(req.query.skip) || 0;
+    const limit = parseInt(req.query.limit) || 16;
+    if ((searchString && searchString.length < 4) || (search_param && !searchString)) {
+        req.flash('errors', {msg: "Måste vara minst 4 tecken"});
+        return res.redirect('/admin/restaurants');
+    }
+
+    if (search_param == "Name") {
+        Restaurant.find({$and: [
+            {name: new RegExp(searchString, "i")}
+        ]}, null, {limit: limit, skip: skip, sort: {updatedAt: -1}}, (err, restaurants) => {
+            if (err) {
+                req.flash('errors', err);
+                return res.redirect('/admin');
+            } else {
+                return res.render('admin/restaurants', { 
+                    restaurants: restaurants
+                });
+            }
+        });
+    }
+    else {
+        Restaurant.find({}, 
+        null, {limit: limit, skip: skip, sort: {updatedAt: -1}}, (err, restaurants) => {
+            if (err) {
+                req.flash('errors', err);
+            }
+            return res.render('admin/restaurants', { 
+                restaurants: restaurants
             });
         });
     }

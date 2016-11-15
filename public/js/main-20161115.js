@@ -14,6 +14,12 @@ $(document).ready(function() {
   loadmoreBtn.click(function(event) {
     loadMoreOrders();
   });
+  // Load more restaurants
+  const RloadmoreBtn = $('.btn.restaurants_load_more');
+  hideLoadMoreIfLessThanLimit($(this), ".restaurant-for-count", RloadmoreBtn, 16);
+  RloadmoreBtn.click(function(event) {
+    loadMoreORestaurants();
+  });
 
   // Date inputs
   $('input#date').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD HH:mm' });
@@ -213,6 +219,33 @@ function loadMoreOrders() {
       hideLoadMoreIfLessThanLimit($(html), ".order-for-count", loadmoreBtn, limit);
       // Put the data where it belongs. I like it more this way
       $("tbody.orderscontainer").append(html);
+    } else {
+      loadmoreBtn.hide();
+    }
+    loadmoreBtn.button('reset');
+  })
+  .fail(function() {
+    loadmoreBtn.button('reset');
+  });
+}
+
+// Load more restaurants admin page
+function loadMoreORestaurants() {
+  var baseurl = $('div#baseurl').data('internalbaseurl');
+
+  const loadmoreBtn = $('.btn.restaurants_load_more');
+  loadmoreBtn.button('loading');
+
+  // Retains compatibility for those with no javascript
+  event.preventDefault();
+  var limit = 16;
+  var currentCount = $("tbody.restaurantscontainer").children('tr.restaurant-row').length;
+  // Fetch the data
+  $.get(baseurl + '?skip=' + currentCount +'&limit='+limit, function(html){
+    if (html) {
+      hideLoadMoreIfLessThanLimit($(html), ".restaurant-for-count", loadmoreBtn, limit);
+      // Put the data where it belongs. I like it more this way
+      $("tbody.restaurantscontainer").append(html);
     } else {
       loadmoreBtn.hide();
     }

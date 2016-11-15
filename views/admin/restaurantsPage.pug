@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
+  .div(id='baseurl' data-internalbaseurl="/admin/restaurants/loadmore/")
   .materialize-box
     .material-header
       p Restauranger
@@ -25,5 +26,6 @@ block content
                         th Datum
                         th Status
                         th
-                    tbody
+                    tbody.restaurantscontainer
                         include restaurants
+        button.btn.btn-info.restaurants_load_more(data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Laddar", style="display: none;") Ladda fler

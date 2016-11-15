@@ -229,6 +229,7 @@ app.get('/admin/invite', passportConfig.isAuthenticatedAdmin, adminController.ge
 app.post('/admin/invite', passportConfig.isAuthenticatedAdmin, adminController.postInvite);
 app.post('/admin/invite/delete/:inviteId', passportConfig.isAuthenticatedAdmin, adminController.deleteInvite);
 app.get('/admin/restaurants', passportConfig.isAuthenticatedAdmin, adminController.getRestaurants);
+app.get('/admin/restaurants/loadmore', passportConfig.isAuthenticatedAdmin, adminController.getMoreRestaurants);
 app.post('/admin/restaurants', passportConfig.isAuthenticatedAdmin, adminController.postPretendRestaurant);
 
 /**
