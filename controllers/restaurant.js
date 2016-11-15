@@ -22,7 +22,7 @@ exports.getRestaurant = (req, res) => {
                 } else {
                     //successfully braunch
                     res.render('restaurant/restaurant', {
-                        title: 'Restaurant',
+                        title: restaurant.name,
                         products: products,
                         restaurant: restaurant
                     });
@@ -47,7 +47,7 @@ exports.getProducts = (req, res) => {
         } else {
             //successfully braunch
             res.render('restaurant/products', {
-                title: 'Products List',
+                title: 'Produkter',
                 products: products
             });
         }
@@ -65,7 +65,7 @@ exports.getEditRestaurant = (req, res) => {
             return res.redirect('/');
         } else {
             res.render('restaurant/editrestaurant', {
-                title: 'Edit restaurant',
+                title: 'Ändra '+restaurant.name,
                 restaurant: restaurant
             });
         }
@@ -77,12 +77,12 @@ exports.getEditRestaurant = (req, res) => {
  * Edit Restaurant page.
  */
 exports.postEditRestaurant = (req, res) => {
-    req.assert('name', 'Name cannot be empty').notEmpty();
-    req.assert('street', 'Street cannot be empty').notEmpty();
-    req.assert('postalcode', 'postalCode cannot be empty').notEmpty();
-    req.assert('city', 'City cannot be empty').notEmpty();
-    req.assert('name', 'Name cannot be more than 50 characters').len(0,50);
-    req.assert('aboutUs', 'AboutUs cannot be more than 400 characters').len(0,400);
+    req.assert('name', 'Namn kan inte lämnas tom').notEmpty();
+    req.assert('street', 'Gata kan inte lämnas tom').notEmpty();
+    req.assert('postalcode', 'Postnummer kan inte lämnas tom').notEmpty();
+    req.assert('city', 'Stad kan inte lämnas tom').notEmpty();
+    req.assert('name', 'Namn kan inte vara mer än 50 karaktärer lång').len(0,50);
+    req.assert('aboutUs', 'Om oss kan inte vara mer än 400 karaktärer lång').len(0,400);
 
     const errors = req.validationErrors();
 
@@ -90,7 +90,6 @@ exports.postEditRestaurant = (req, res) => {
         req.flash('errors', errors);
         return res.redirect('/restaurant/edit');
     }
-
 
     Restaurant.findById(req.user.restaurantId, (err, restaurant) => {
         if (err) {
@@ -109,7 +108,7 @@ exports.postEditRestaurant = (req, res) => {
                     req.flash('errors', err);
                     return res.redirect('/restaurant/edit');
                 } else {
-                    req.flash('success', { msg: 'Profile information has been updated.' });
+                    req.flash('success', { msg: 'Informationen har uppdaterats.' });
                     return res.redirect('/restaurant');
                 }
             });
@@ -145,7 +144,7 @@ exports.saveResturant = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/restaurant/edit');
         } else {
-            req.flash('success', { msg: 'Profile picture has been updated.' });
+            req.flash('success', { msg: 'Bild har uppdaterats.' });
             return res.redirect('/restaurant');
         }
     });
@@ -167,17 +166,24 @@ exports.getAddProduct = (req, res) => {
  * Create product page.
  */
 exports.postAddProduct = (req, res) => {
-    req.assert('name', 'Name cannot be blank').notEmpty();
-    req.assert('price', 'Price cannot be blank').notEmpty();
-    req.assert('quantity', 'Quantity cannot be blank').notEmpty();
-    req.assert('description', 'Description cannot be blank').notEmpty();
-    req.assert('name', 'Name cannot be more than 100 characters').len(0,100);
-    req.assert('description', 'Description cannot be more than 400 characters').len(0,400);
+    req.assert('name', 'Namn kan inte lämnas tom').notEmpty();
+    req.assert('price', 'Pris kan inte lämnas tom').notEmpty();
+    req.assert('quantity', 'Antal kan inte lämnas tom').notEmpty();
+    req.assert('description', 'Beskrivning kan inte lämnas tom').notEmpty();
+    req.assert('name', 'Namn kan inte vara mer än 100 karaktärer lång').len(0,100);
+    req.assert('description', 'Beskrivning kan inte vara mer än 400 karaktärer lång').len(0,400);
 
     const errors = req.validationErrors();
 
     if (errors) {
         req.flash('errors', errors);
+        return res.redirect('/restaurant/product');
+    }
+
+    const startdate = new Date(req.body.startdate);
+    const enddate = new Date(req.body.enddate);
+    if (startdate > enddate) {
+        req.flash('errors', {msg: '"Börjar att visas" kan inte vara före "Slutar att visas"'});
         return res.redirect('/restaurant/product');
     }
 
@@ -187,8 +193,8 @@ exports.postAddProduct = (req, res) => {
         pictureURL: ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : ""),
         price: parseFloat(req.body.price),
         quantity: parseInt(req.body.quantity),
-        startdate: new Date(req.body.startdate),
-        enddate: new Date(req.body.enddate),
+        startdate: startdate,
+        enddate: enddate,
         restaurantId: req.user.restaurantId
     });
 
@@ -196,7 +202,7 @@ exports.postAddProduct = (req, res) => {
         if (err) {
             req.flash('errors', err);
         } else {
-            req.flash('success', { msg: 'Product has been added successfully!' });
+            req.flash('success', { msg: product.name+' har skapats!' });
         }
         return res.redirect('/restaurant/product');
     });
@@ -215,7 +221,7 @@ exports.getEditProduct = (req, res) => {
             return res.redirect('/restaurant');
         } else {
             res.render('restaurant/editproduct', {
-                title: 'Restaurant',
+                title: 'Ändra '+product.name,
                 product: product
             });
         }
@@ -227,17 +233,24 @@ exports.getEditProduct = (req, res) => {
  * Edit product page.
  */
 exports.postEditProduct = (req, res) => {
-    req.assert('name', 'Name cannot be blank').notEmpty();
-    req.assert('price', 'Price cannot be blank').notEmpty();
-    req.assert('quantity', 'Quantity cannot be blank').notEmpty();
-    req.assert('description', 'Description cannot be blank').notEmpty();
-    req.assert('name', 'Name cannot be more than 100 characters').len(0,100);
-    req.assert('description', 'Description cannot be more than 400 characters').len(0,400);
+    req.assert('name', 'Namn kan inte lämnas tom').notEmpty();
+    req.assert('price', 'Pris kan inte lämnas tom').notEmpty();
+    req.assert('quantity', 'Antal kan inte lämnas tom').notEmpty();
+    req.assert('description', 'Beskrivning kan inte lämnas tom').notEmpty();
+    req.assert('name', 'Namn kan inte vara mer än 100 karaktärer lång').len(0,100);
+    req.assert('description', 'Beskrivning kan inte vara mer än 400 karaktärer lång').len(0,400);
 
     const errors = req.validationErrors();
 
     if (errors) {
         req.flash('errors', errors);
+        return res.redirect(req.url);
+    }
+
+    const startdate = new Date(req.body.startdate);
+    const enddate = new Date(req.body.enddate);
+    if (startdate > enddate) {
+        req.flash('errors', {msg: '"Börjar att visas" kan inte vara före "Slutar att visas"'});
         return res.redirect(req.url);
     }
 
@@ -252,14 +265,14 @@ exports.postEditProduct = (req, res) => {
             product.description = req.body.description || '';
             product.price = req.body.price;
             product.quantity = parseInt(req.body.quantity);
-            product.startdate = new Date(req.body.startdate);
-            product.enddate = new Date(req.body.enddate);
+            product.startdate = startdate;
+            product.enddate = enddate;
 
             product.save((err) => {
             if (err) {
                 req.flash('errors', err);
             } else {
-                req.flash('success', { msg: 'Product has been updated successfully!' });
+                req.flash('success', { msg: product.name+' har uppdaterats!' });
             }
             return res.redirect('/restaurant');
         });
@@ -295,7 +308,7 @@ exports.saveProduct = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/restaurant');
         } else {
-            req.flash('success', { msg: 'Product picture has been updated.' });
+            req.flash('success', { msg: product.name+' har uppdaterats!' });
             return res.redirect('/restaurant');
         }
     });
@@ -318,7 +331,7 @@ exports.postEditPictureProduct = (req, res) => {
             if (err) {
                 req.flash('errors', err);
             } else {
-                req.flash('success', { msg: 'Product has been updated successfully!' });
+                req.flash('success', { msg: product.name+' har uppdaterats!' });
             }
             return res.redirect('/restaurant');
         });
@@ -338,7 +351,7 @@ exports.getDeleteProduct = (req, res) => {
             return res.redirect('/restaurant');
         } else {
             res.render('restaurant/deleteproduct', {
-                title: 'Delete product',
+                title: 'Ta bort '+product.name,
                 product: product
             });
         }
@@ -356,7 +369,7 @@ exports.postDeleteProduct = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/restaurant');
         } else {
-            req.flash('success', { msg: 'Product has been deleted successfully!' });
+            req.flash('success', { msg: product.name+' har tagits bort!' });
             uploadController.removeImage(req.body.pictureURL);
             return res.redirect('/restaurant');
         }
@@ -524,7 +537,7 @@ exports.getOrder = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/order/'+req.params.orderId);
         } else {
-            if (!order) {req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+            if (!order) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
             Product.find({ _id: { $in: order.products } }, (err, orderProducts) => {
                 if(err) {
                     req.flash('errors', err)

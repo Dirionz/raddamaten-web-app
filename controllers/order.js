@@ -29,7 +29,7 @@ exports.getOrderPage = (req, res) => {
                             if (err) {
                                 req.flash('errors', err);
                                     res.render('home', {
-                                    title: 'Raddamaten'
+                                    title: 'Räddamaten'
                                 });
                             } else {
                                 const fullOrderProducts = placeDuplicates(order.products, orderProducts);
@@ -196,8 +196,8 @@ function removeProductId(nameKey, myArray){
  * Create Order.
  */
 exports.postNewOrder = (req, res) => {
-    req.assert('restaurantId', 'RestaurantId cannot be empty').notEmpty();
-    req.assert('productId', 'ProductId cannot be empty').notEmpty();
+    req.assert('restaurantId', 'RestaurantId hittades inte').notEmpty();
+    req.assert('productId', 'ProductId hittades inte').notEmpty();
 
     const errors = req.validationErrors();
 
@@ -311,15 +311,15 @@ exports.postStripe = (req, res, next) => {
         req.flash('errors', err);
         return res.redirect('/order/checkout/'+orderId);
     } else {
-        if (!order) { req.flash('errors', { msg: 'Not found' }); return res.redirect('/'); };
+        if (!order) { req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
         stripe.charges.create({
             amount: parseFloat(order.price)*100, // Stripe expects the price in "cents"
             currency: 'sek',
             source: stripeToken,
-            description: stripeEmail // TODO: Change to Something + the orderId (last 5)
+            description: order.objectId.substr(orderId.length - 5) // TODO: Change to Something + the orderId (last 5)
         }, (err) => {
             if (err && err.type === 'StripeCardError') {
-                req.flash('errors', { msg: 'Your card has been declined.' });
+                req.flash('errors', { msg: 'Ditt kort har avvisats' });
                 return res.redirect('/order/checkout/'+orderId);
             }
         
