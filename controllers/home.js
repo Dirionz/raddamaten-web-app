@@ -59,7 +59,7 @@ exports.getProducts = (req, res) => {
  */
 exports.about = (req, res) => {
   return res.render('about', {
-    title: 'About',
+    title: 'Om',
   });
 };
 
@@ -69,6 +69,6 @@ exports.about = (req, res) => {
  */
 exports.terms = (req, res) => {
   return res.render('terms', {
-    title: 'Terms',
+    title: 'Villkor',
   });
 };

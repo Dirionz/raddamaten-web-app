@@ -116,7 +116,7 @@ exports.getRestaurants = (req, res) => {
                 req.flash('errors', err);
             }
             return res.render('admin/restaurantsPage', { 
-                title: 'Admin restaurants',
+                title: 'Admin restauranger',
                 restaurants: restaurants,
                 search_param: "Name",
             });
