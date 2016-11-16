@@ -72,3 +72,13 @@ exports.terms = (req, res) => {
     title: 'Villkor',
   });
 };
+
+/**
+ * GET /
+ * Press page.
+ */
+exports.press = (req, res) => {
+  return res.render('press', {
+    title: 'Press',
+  });
+};

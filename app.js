@@ -172,6 +172,7 @@ jobOnceAMonth.start();
 app.get('/', homeController.index);
 app.get('/about', homeController.about);
 app.get('/terms', homeController.terms);
+app.get('/press', homeController.press); 
 app.get('/products/:currentCount', homeController.getProducts);
 app.get('/order/:orderId', orderController.getOrderPage);
 app.post('/order/', orderController.postNewOrder);

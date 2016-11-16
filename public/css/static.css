@@ -489,6 +489,59 @@ a.AppPromo {
     position: relative
 }}
 
+.exerpt .feature-image-container {
+    text-align: left;
+    margin: 20px auto
+}
+.exerpt .feature-image {
+    -webkit-transform: rotate(0.0001deg);
+    transform: rotate(0.0001deg);
+    height: 56px;
+    opacity: 1;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+    opacity: .7
+}
+.exerpt .feature-image:hover {
+    opacity: .5
+}
+.exerpt-title {
+    padding-left: 0;
+    padding-right: 0
+}
+
+.h32 {
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 300;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+@media only screen and (max-width: 540px) {
+    .h32 {
+        font-size: 28px
+    }
+}
+.h32 a {
+    color: #525252
+}
+.h32 a:hover {
+    background-size: 2px 2px;
+    background-image: -webkit-linear-gradient(top, transparent 50%, #525252 50%);
+    background-image: linear-gradient(to bottom, transparent 50%, #525252 50%);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    text-decoration: none
+}
+
+.col-container {
+    margin: 0 -2%;
+    letter-spacing: -4px
+}
+.col-container div {
+    letter-spacing: normal
+}
+
 .about-title {
     margin: 52px auto 42px;
     max-width: 880px;
@@ -503,6 +556,15 @@ a.AppPromo {
     font-size: 48px;
     line-height: 56px;
     transition: all 0.2s ease-in-out
+}
+
+.exerpt .exerpt-paragraph {
+    font-size: 24px
+}
+@media only screen and (max-width: 540px) {
+    .exerpt .exerpt-paragraph {
+        font-size: 20px
+    }
 }
 
 .about-paragraph, .exerpt-paragraph {
@@ -549,6 +611,10 @@ a.AppPromo {
     background-repeat: repeat-x;
     background-position: center bottom;
     text-decoration: none
+}
+
+.exerpt .exerpt-paragraph {
+    line-height: 1.5;
 }
 
 .about-paragraph-spacing {
@@ -671,12 +737,13 @@ article.teal .about-paragraph a:hover {
     text-align: center; 
     background: white; 
     color: #595959; 
-    margin: 0px; 
-    margin-bottom: 16px;
+    margin: 0;
+    padding: 0.5em;
 }
 
 h1.header-tagline, .header-tagline {
-    color:#333333;
+    /*color:#333333;*/
+    color: #fc459e;
     font-size: 24px;
     -webkit-transition-property: color, font-size;
     transition-property: color, font-size;
