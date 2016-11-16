@@ -451,16 +451,16 @@ a.AppPromo {
 }
 
 .PageHeader--backgroundImage .PageHeader-content {
-    padding: 150px 0 136px
+    padding: 15px 0 13.6px
 }
 @media only screen and (max-width: 540px) {
     .PageHeader--backgroundImage .PageHeader-content {
-        padding: 80px 0 70px
+        padding: 8px 0 7px
     }
 }
 @media only screen and (max-width: 400px) {
     .PageHeader--backgroundImage .PageHeader-content {
-        padding: 50px 0 20px
+        padding: 5px 0 2px
     }
 }
 
@@ -663,4 +663,41 @@ article.teal .about-paragraph a:hover {
 }
 .document li {
     margin-bottom: 8px
+}
+
+.header-flow-container {
+    display: block; 
+    font-size: 6em; 
+    text-align: center; 
+    background: white; 
+    color: #595959; 
+    margin: 0px; 
+    margin-bottom: 16px;
+}
+
+h1.header-tagline, .header-tagline {
+    color:#333333;
+    font-size: 24px;
+    -webkit-transition-property: color, font-size;
+    transition-property: color, font-size;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    font-weight: 300;
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: subpixel-antialiased;
+    line-height: 1.4;
+    font-weight: 500;
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: subpixel-antialiased;
+    margin: 0
+}
+@media only screen and (max-width: 540px) {
+    .header-flow-container {
+        font-size: 4em; 
+    }
+    h1.header-tagline, .header-tagline {
+        font-size: 16px
+    }
 }
