@@ -3,5 +3,5 @@ div
         p #{product.name} 
         p #{product.price} kr
             a(class='delete-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>") &#10005
-    p Sum: #{price} Sek
+    p Sum: #{parseFloat(Math.round(price * 100) / 100).toFixed(2)} Sek
     p
