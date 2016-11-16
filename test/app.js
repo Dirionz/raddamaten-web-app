@@ -9,6 +9,38 @@ describe('GET /', () => {
     });
 });
 
+describe('GET /about', () => {
+    it('should return 200 OK', (done) => {
+        request(app)
+            .get('/about')
+            .expect(200, done);
+    });
+});
+
+describe('GET /terms', () => {
+    it('should return 200 OK', (done) => {
+        request(app)
+            .get('/terms')
+            .expect(200, done);
+    });
+});
+
+describe('GET /press', () => {
+    it('should return 200 OK', (done) => {
+        request(app)
+            .get('/press')
+            .expect(200, done);
+    });
+});
+
+describe('GET /faq', () => {
+    it('should return 200 OK', (done) => {
+        request(app)
+            .get('/faq')
+            .expect(200, done);
+    });
+});
+
 describe('GET /products/5', () => {
     it('should return 200 OK', (done) => {
         request(app)

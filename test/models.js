@@ -110,137 +110,215 @@ describe('User Model', () => {
 });
 
 describe('Restaurant Model', () => {
-    const restaurant = new Restaurant({
-        name: "test",
-        aboutUs: "aboutUs",
-        pictureURL: "tets",
-        street: "street",
-        postalCode: "234234",
-        city: "Jönköping"
-    })
-
     it('should create a new restaurant', (done) => {
-        restaurant.save((err) => {
+        const RestaurantMock = sinon.mock(new Restaurant({
+            name: "test",
+            aboutUs: "aboutUs",
+            pictureURL: "tets",
+            street: "street",
+            postalCode: "234234",
+            city: "Jönköping"
+        }));
+        const restaurant = RestaurantMock.object
+
+        RestaurantMock
+            .expects('save')
+            .yields(null);
+
+        restaurant.save((err, result) => {
+            RestaurantMock.verify();
+            RestaurantMock.restore();
             expect(err).to.be.null;
-            expect(restaurant.name).to.equal('test');
-            expect(restaurant).to.have.property('createdAt');
-            expect(restaurant).to.have.property('updatedAt');
             done();
         });
     });
 
-    it('should delete a restaurant', (done) => {
-        restaurant.remove((err) => {
-            expect(err).to.be.null;
+  it('should return error if restaurant is not created', (done) => {
+        const RestaurantMock = sinon.mock(new Restaurant({
+            name: "test",
+            aboutUs: "aboutUs",
+            pictureURL: "tets",
+            street: "street",
+            postalCode: "234234",
+            city: "Jönköping"
+        }));
+        const restaurant = RestaurantMock.object;
+        const expectedError = {
+            name: 'ValidationError'
+        };
+
+        RestaurantMock
+        .expects('save')
+        .yields(expectedError);
+
+        restaurant.save((err, result) => {
+            RestaurantMock.verify();
+            RestaurantMock.restore();
+            expect(err.name).to.equal('ValidationError');
+            expect(result).to.be.undefined;
             done();
         });
-    });
+  });
+
+  it('should remove restaurant', (done) => {
+    const restaurantMock = sinon.mock(Restaurant);
+    const expectedResult = {
+      nRemoved: 1
+    };
+
+    restaurantMock
+      .expects('remove')
+      .yields(null, expectedResult);
+
+    Restaurant.remove({_id: restaurantMock._id}, (err, result) => {
+      restaurantMock.verify();
+      restaurantMock.restore();
+      expect(err).to.be.null;
+      expect(result.nRemoved).to.equal(1);
+      done();
+    })
+  });
 });
 
 describe('Product Model', () => {
-
-    const restaurant = new Restaurant({
-        name: "test",
-        aboutUs: "aboutUs",
-        pictureURL: "tets",
-        street: "street",
-        postalCode: "234234",
-        city: "Jönköping"
-    });
-
-    const product = new Product({
-        name: "product",
-        description: "description",
-        pictureURL: "",
-        price: 123,
-        quantity: 2,
-        restaurant: restaurant._id
-    });
-
     it('should create a new product', (done) => {
-        restaurant.save((err) => {
-            expect(err).to.be.null;
-            expect(restaurant.name).to.equal('test');
-            expect(restaurant).to.have.property('createdAt');
-            expect(restaurant).to.have.property('updatedAt');
+        const RestaurantMock = sinon.mock(Restaurant);
+        const ProductMock = sinon.mock(new Product({
+            name: "product",
+            description: "description",
+            pictureURL: "",
+            price: 123,
+            quantity: 2,
+            restaurant: RestaurantMock._id
+        }));
+        const product = ProductMock.object;
 
-            product.save((err) => {
-                expect(err).to.be.null;
-                expect(product.name).to.equal('product');
-                expect(product).to.have.property('createdAt');
-                expect(product).to.have.property('updatedAt');
-                done();
-            });
+        ProductMock
+            .expects('save')
+            .yields(null);
+
+        product.save((err, result) => {
+            ProductMock.verify();
+            ProductMock.restore();
+            expect(err).to.be.null;
+            done();
         });
     });
 
-    it('should delete a restaurant and product', (done) => {
-        product.remove((err) => {
-            expect(err).to.be.null;
-            restaurant.remove((err) => {
-                expect(err).to.be.null;
-                done();
-            });
+  it('should return error if product is not created', (done) => {
+        const RestaurantMock = sinon.mock(Restaurant);
+        const ProductMock = sinon.mock(new Product({
+            name: "product",
+            description: "description",
+            pictureURL: "",
+            price: 123,
+            quantity: 2,
+            restaurant: RestaurantMock._id
+        }));
+        const product = ProductMock.object;
+
+        const expectedError = {
+            name: 'ValidationError'
+        };
+        ProductMock
+            .expects('save')
+            .yields(expectedError);
+
+        product.save((err, result) => {
+            ProductMock.verify();
+            ProductMock.restore();
+            expect(err.name).to.equal('ValidationError');
+            expect(result).to.be.undefined;
+            done();
         });
-    });
+  });
+
+  it('should remove product', (done) => {
+    const productMock = sinon.mock(Product);
+    const expectedResult = {
+      nRemoved: 1
+    };
+
+    productMock
+      .expects('remove')
+      .yields(null, expectedResult);
+
+    Product.remove({_id: productMock._id}, (err, result) => {
+      productMock.verify();
+      productMock.restore();
+      expect(err).to.be.null;
+      expect(result.nRemoved).to.equal(1);
+      done();
+    })
+  });
 });
 
-
 describe('Order Model', () => {
-
-    const product = new Product({
-        name: "product",
-        description: "description",
-        pictureURL: "",
-        price: 123,
-        quantity: 2
-    });
-
-    const product2 = new Product({
-        name: "product2",
-        description: "description",
-        pictureURL: "",
-        price: 123,
-        quantity: 2
-    });
-
-    const order = new Order({
-        email: "test@gmail.com",
-        products: [product._id, product2._id]
-    });
-
     it('should create a new order', (done) => {
-        product.save((err) => {
+        const RestaurantMock = sinon.mock(Restaurant);
+        const ProductMock = sinon.mock(Product);
+        const OrderMock = sinon.mock(new Order({
+            email: "test@gmail.com",
+            restaurantId: RestaurantMock._id,
+            products: [ProductMock._id, ProductMock._id]
+        }));
+        const order = OrderMock.object;
+
+        OrderMock
+            .expects('save')
+            .yields(null);
+
+        order.save((err, result) => {
+            OrderMock.verify();
+            OrderMock.restore();
             expect(err).to.be.null;
-            expect(product.name).to.equal('product');
-            expect(product).to.have.property('createdAt');
-            expect(product).to.have.property('updatedAt');
-
-            product2.save((err) => {
-                expect(err).to.be.null;
-                expect(product2.name).to.equal('product2');
-                expect(product2).to.have.property('createdAt');
-                expect(product2).to.have.property('updatedAt');
-
-                order.save((err) => {
-                    expect(err).to.be.null;
-                    expect(order.email).to.equal('test@gmail.com');
-                    done();
-                });
-            });
+            done();
         });
     });
 
-    it('should delete a order and products', (done) => {
-        product.remove((err) => {
-            expect(err).to.be.null;
-            product2.remove((err) => {
-                expect(err).to.be.null;
-                order.remove((err) => {
-                    expect(err).to.be.null;
-                    done();
-                });
-            });
+  it('should return error if order is not created', (done) => {
+        const RestaurantMock = sinon.mock(Restaurant);
+        const ProductMock = sinon.mock(Product);
+        const OrderMock = sinon.mock(new Order({
+            email: "test@gmail.com",
+            restaurantId: RestaurantMock._id,
+            products: [ProductMock._id, ProductMock._id]
+        }));
+        const order = OrderMock.object;
+
+        const expectedError = {
+            name: 'ValidationError'
+        };
+
+        OrderMock
+            .expects('save')
+            .yields(expectedError);
+
+        order.save((err, result) => {
+            OrderMock.verify();
+            OrderMock.restore();
+            expect(err.name).to.equal('ValidationError');
+            expect(result).to.be.undefined;
+            done();
         });
-    });
+  });
+
+  it('should remove order', (done) => {
+    const orderMock = sinon.mock(Order);
+    const expectedResult = {
+      nRemoved: 1
+    };
+
+    orderMock
+      .expects('remove')
+      .yields(null, expectedResult);
+
+    Order.remove({_id: orderMock._id}, (err, result) => {
+      orderMock.verify();
+      orderMock.restore();
+      expect(err).to.be.null;
+      expect(result.nRemoved).to.equal(1);
+      done();
+    })
+  });
 });
