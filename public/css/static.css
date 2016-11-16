@@ -613,6 +613,44 @@ a.AppPromo {
     text-decoration: none
 }
 
+.faq-title {
+    margin: 20px auto -10px;
+    max-width: 880px;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    padding-left: 0;
+    padding-right: 0;
+    color: #525252;
+    font-weight: 300;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: 28px;
+    line-height: 56px;
+    transition: all 0.2s ease-in-out
+}
+
+.faq-paragraph {
+    max-width: 880px;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 1.5em;
+    color: #999999;
+    margin: 20px auto 30px;
+    font-weight: 300;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+@media only screen and (max-width: 540px) {
+    .faq-paragraph {
+        font-size: 22px
+    }
+}
+@media only screen and (max-width: 400px) {
+    .faq-paragraph {
+        font-size: 20px
+    }
+}
+
 .exerpt .exerpt-paragraph {
     line-height: 1.5;
 }

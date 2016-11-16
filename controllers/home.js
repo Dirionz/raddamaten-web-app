@@ -82,3 +82,13 @@ exports.press = (req, res) => {
     title: 'Press',
   });
 };
+
+/**
+ * GET /
+ * FAQ page.
+ */
+exports.faq = (req, res) => {
+  return res.render('faq', {
+    title: 'FAQ',
+  });
+};
