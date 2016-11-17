@@ -125,7 +125,7 @@ exports.getSignupRestaurant = (req, res) => {
             return res.redirect('/');
         } else {
             res.render('account/signup_restaurant', {
-                title: 'Create Account'
+                title: 'Skapa konto'
             });
         }
     });
@@ -137,16 +137,16 @@ exports.getSignupRestaurant = (req, res) => {
  * Create a new local account for a restaurant.
  */
 exports.postSignupRestaurant = (req, res, next) => {
-    req.assert('email', 'Email is not valid').isEmail();
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
-    req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
-    req.assert('name', 'Name cannot be empty').notEmpty();
-    req.assert('street', 'Street cannot be empty').notEmpty();
-    req.assert('postalcode', 'postalCode cannot be empty').notEmpty();
-    req.assert('city', 'City cannot be empty').notEmpty();
+    req.assert('email', 'Email är inte giltlig').isEmail();
+    req.assert('password', 'Lösenordet måste vara minst 4 karaktärer långt').len(4);
+    req.assert('confirmPassword', 'Lösenorden matchar inte').equals(req.body.password);
+    req.assert('name', 'Namn kan inte vara tomt').notEmpty();
+    req.assert('street', 'Gata kan inte vara tomt').notEmpty();
+    req.assert('postalcode', 'Postnummer kan inte vara tomt').notEmpty();
+    req.assert('city', 'Stad kan inte vara tomt').notEmpty();
     req.sanitize('email').normalizeEmail({ remove_dots: false });
-    req.assert('name', 'Name cannot be more than 50 characters').len(0,50);
-    req.assert('aboutUs', 'AboutUs cannot be more than 400 characters').len(0,400);
+    req.assert('name', 'Namn kan inte vara längre än 50 karaktärer').len(0,50);
+    req.assert('aboutUs', 'Om oss kan inte vara längre än 400 karaktärer').len(0,400);
 
     const errors = req.validationErrors();
 
@@ -171,7 +171,7 @@ exports.postSignupRestaurant = (req, res, next) => {
     User.findOne({ email: req.body.email }, (err, existingUser) => {
         if (err) { return next(err); }
         if (existingUser) {
-            req.flash('errors', { msg: 'Account with that email address already exists.' });
+            req.flash('errors', { msg: 'Ett konto med den email addressen finns redan.' });
             return res.redirect(req.url);
         }
         user.save((err) => {
@@ -196,7 +196,7 @@ exports.postSignupRestaurant = (req, res, next) => {
  */
 exports.getAccount = (req, res) => {
     res.render('account/profile', {
-        title: 'Account Management'
+        title: 'Konto hantering'
     });
 };
 
@@ -205,7 +205,7 @@ exports.getAccount = (req, res) => {
  * Update profile information.
  */
 exports.postUpdateProfile = (req, res, next) => {
-    req.assert('email', 'Please enter a valid email address.').isEmail();
+    req.assert('email', 'Skriv in en giltlig email address.').isEmail();
     req.sanitize('email').normalizeEmail({ remove_dots: false });
 
     const errors = req.validationErrors();
@@ -225,7 +225,7 @@ exports.postUpdateProfile = (req, res, next) => {
         user.save((err) => {
             if (err) {
                 if (err.code === 11000) {
-                    req.flash('errors', { msg: 'The email address you have entered is already associated with an account.' });
+                    req.flash('errors', { msg: 'Email adressen är redan kopplad till kontot.' });
                     return res.redirect('/account');
                 }
                 return next(err);
@@ -241,8 +241,8 @@ exports.postUpdateProfile = (req, res, next) => {
  * Update current password.
  */
 exports.postUpdatePassword = (req, res, next) => {
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
-    req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+    req.assert('password', 'Lösenordet måste vara minst 4 karaktärer långt').len(4);
+    req.assert('confirmPassword', 'Lösenorden måste vara lika').equals(req.body.password);
 
     const errors = req.validationErrors();
 
@@ -256,7 +256,7 @@ exports.postUpdatePassword = (req, res, next) => {
         user.password = req.body.password;
         user.save((err) => {
             if (err) { return next(err); }
-            req.flash('success', { msg: 'Password has been changed.' });
+            req.flash('success', { msg: 'Lösenordet har ändrats' });
             res.redirect('/account');
         });
     });
@@ -307,11 +307,11 @@ exports.getReset = (req, res, next) => {
         .exec((err, user) => {
             if (err) { return next(err); }
             if (!user) {
-                req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
+                req.flash('errors', { msg: 'Länken är felaktig eller har gått ut.' });
                 return res.redirect('/forgot');
             }
             res.render('account/reset', {
-                title: 'Password Reset'
+                title: 'Återställning'
             });
         });
 };
@@ -321,8 +321,8 @@ exports.getReset = (req, res, next) => {
  * Process the reset password request.
  */
 exports.postReset = (req, res, next) => {
-    req.assert('password', 'Password must be at least 4 characters long.').len(4);
-    req.assert('confirm', 'Passwords must match.').equals(req.body.password);
+    req.assert('password', 'Lösenordet måste vara minst 4 karaktärer långt').len(4);
+    req.assert('confirm', 'Lösenorden måste vara lika').equals(req.body.password);
 
     const errors = req.validationErrors();
 
@@ -339,7 +339,7 @@ exports.postReset = (req, res, next) => {
                 .exec((err, user) => {
                     if (err) { return next(err); }
                     if (!user) {
-                        req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
+                        req.flash('errors', { msg: 'Länken är felaktig eller har gått ut.' });
                         return res.redirect('back');
                     }
                     user.password = req.body.password;
@@ -364,11 +364,22 @@ exports.postReset = (req, res, next) => {
             const mailOptions = {
                 to: user.email,
                 from: '"Räddamaten" <account@raddamaten.se>',
-                subject: 'Your Räddamaten password has been changed',
-                text: `Hello,\n\nThis is a confirmation that the password for your account ${user.email} has just been changed.\n`
+                subject: 'Ditt Räddamaten lösenord har ändrats',
+                html: `<div style='background: #f2f2f2; text-align:center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif'> \
+                        <div style='color: #525252;line-height: 1.5;font-weight:300;font-size: 4em;margin: 1em auto 1em;'> \
+                            Hej, \
+                        </div> \
+                        <div style='color: #999999; line-height: 1.5; font-weight:300; font-size: 2em; margin: 0.5em auto 0.5em'> \
+                            <p>Detta är en bekräftelse om att lösenordet har ändrats för ditt konto:</p> \
+                            <strong style='word-break: break-all'> ${user.email} </strong> \
+                        </div> \
+                            <br/> \
+                            <br/> \
+                            <br/> \
+                        </div>`
             };
             transporter.sendMail(mailOptions, (err) => {
-                req.flash('success', { msg: 'Success! Your password has been changed.' });
+                req.flash('success', { msg: 'Ditt lösenord har ändrats' });
                 done(err);
             });
         }
@@ -387,7 +398,7 @@ exports.getForgot = (req, res) => {
         return res.redirect('/');
     }
     res.render('account/forgot', {
-        title: 'Forgot Password'
+        title: 'Glömt lösenord'
     });
 };
 
@@ -396,7 +407,7 @@ exports.getForgot = (req, res) => {
  * Create a random token, then the send user an email with a reset link.
  */
 exports.postForgot = (req, res, next) => {
-    req.assert('email', 'Please enter a valid email address.').isEmail();
+    req.assert('email', 'Skriv in en giltlig email address.').isEmail();
     req.sanitize('email').normalizeEmail({ remove_dots: false });
 
     const errors = req.validationErrors();
@@ -417,7 +428,7 @@ exports.postForgot = (req, res, next) => {
             User.findOne({ email: req.body.email }, (err, user) => {
                 if (err) { return done(err); }
                 if (!user) {
-                    req.flash('errors', { msg: 'Account with that email address does not exist.' });
+                    req.flash('errors', { msg: 'Ett konto med denna email adress finns inte' });
                     return res.redirect('/forgot');
                 }
                 user.passwordResetToken = token;
@@ -438,14 +449,23 @@ exports.postForgot = (req, res, next) => {
             const mailOptions = {
                 to: user.email,
                 from: '"Räddamaten" <account@raddamaten.se>',
-                subject: 'Reset your password on Räddamaten',
-                text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
-          Please click on the following link, or paste this into your browser to complete the process:\n\n
-          http://${req.headers.host}/reset/${token}\n\n
-          If you did not request this, please ignore this email and your password will remain unchanged.\n`
+                subject: 'Återställ ditt lösenord på Räddamaten',
+                html: `<div style='background: #f2f2f2; text-align:center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif'> \
+                        <div style='color: #525252;line-height: 1.5;font-weight:300;font-size: 4em;margin: 1em auto 1em;'> \
+                            Hej, \
+                        </div> \
+                        <div style='color: #999999; line-height: 1.5; font-weight:300; font-size: 2em; margin: 0.5em auto 0.5em'> \
+                            <p>Du får detta email för att du (eller någon annan) har begärt återställning av lösenordet för ditt konto. Tryck på följade länk, eller kopiera och klistra in i din webläsare för att slutföra processen:</p> \
+                            <strong style='word-break: break-all'> <a style='color: #999999;' href='http://${req.headers.host}/reset/${token}'>http://${req.headers.host}/reset/${token}</a> </strong> \
+                                <p> Om du inte begärde denna återställning, ignorera detta mail och ditt lösenord förblir oförändrat. </p> \ 
+                        </div> \
+                            <br/> \
+                            <br/> \
+                            <br/> \
+                        </div>`
             };
             transporter.sendMail(mailOptions, (err) => {
-                req.flash('info', { msg: `An e-mail has been sent to ${user.email} with further instructions.` });
+                req.flash('info', { msg: `Ett email har skickats till ${user.email} med ytterligare instuktioner` });
                 done(err);
             });
         }

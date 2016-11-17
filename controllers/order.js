@@ -359,6 +359,7 @@ exports.getOrder = (req, res, next) => {
 exports.sendEmail = (req, res, next) => {
     const email = req.succesfulOrder.email;
     const orderId = req.succesfulOrder._id; 
+    const id = orderId.toString().slice(-5);
 
     if (email) {
         const transporter = nodemailer.createTransport({
@@ -370,9 +371,20 @@ exports.sendEmail = (req, res, next) => {
         });
         const mailOptions = {
             to: email,
-            from: '"Räddamaten" <order@raddamaten.se>', // TODO: Change the email address as well as text
-            subject: 'Reset your password on Hackathon Starter',
-            text: 'Something'
+            from: '"Räddamaten" <order@raddamaten.se>', 
+            subject: `Din order (${id})`,
+            html: `<div style='background: #f2f2f2; text-align:center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif'> \
+                        <div style='color: #525252;line-height: 1.5;font-weight:300;font-size: 4em;margin: 1em auto 1em;'> \
+                            Tack! \
+                        </div> \
+                        <div style='color: #999999; line-height: 1.5; font-weight:300; font-size: 2em; margin: 0.5em auto 0.5em'> \
+                            <p>Uppge denna koden i kassan när du hämtar din beställning:</p> \
+                            <strong>${id}</strong> \
+                        </div> \
+                            <br/> \
+                            <br/> \
+                            <br/> \
+                        </div>`
         };
         transporter.sendMail(mailOptions, (err) => {
             if (err) {
