@@ -543,6 +543,22 @@ a.AppPromo {
 }
 
 .about-title {
+    margin: 52px auto 12px;
+    max-width: 880px;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    padding-left: 0;
+    padding-right: 0;
+    color: #525252;
+    font-weight: 300;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: 28px;
+    line-height: 56px;
+    transition: all 0.2s ease-in-out
+}
+
+.about-title-bigger {
     margin: 52px auto 42px;
     max-width: 880px;
     -webkit-transition: all 0.2s ease-in-out;
@@ -571,7 +587,7 @@ a.AppPromo {
     max-width: 880px;
     padding-left: 0;
     padding-right: 0;
-    font-size: 30px;
+    font-size: 28px;
     color: #999999;
     margin: 20px auto 30px;
     font-weight: 300;
@@ -614,7 +630,8 @@ a.AppPromo {
 }
 
 .faq-title {
-    margin: 20px auto -10px;
+    margin: 0px auto -10px;
+    padding-top: 20px;
     max-width: 880px;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
@@ -629,16 +646,32 @@ a.AppPromo {
     transition: all 0.2s ease-in-out
 }
 
+.faq-title-bigger {
+    font-size: 38px;
+    margin: 40px auto -10px;
+}
+
 .faq-paragraph {
     max-width: 880px;
     padding-left: 0;
     padding-right: 0;
     font-size: 1.5em;
     color: #999999;
-    margin: 20px auto 30px;
+    margin: 20px auto 0px;
+    padding-bottom: 30px;
     font-weight: 300;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased
+}
+@media only screen and (max-width: 995px) {
+	.faq-title {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+    .faq-paragraph {
+		padding-left: 16px;
+		padding-right: 16px;
+    }
 }
 @media only screen and (max-width: 540px) {
     .faq-paragraph {
@@ -649,6 +682,10 @@ a.AppPromo {
     .faq-paragraph {
         font-size: 20px
     }
+}
+
+.faq-new-line {
+    margin: -50px auto 0px;
 }
 
 .exerpt .exerpt-paragraph {
@@ -805,4 +842,8 @@ h1.header-tagline, .header-tagline {
     h1.header-tagline, .header-tagline {
         font-size: 16px
     }
+}
+
+.center {
+    text-align: center
 }
