@@ -92,3 +92,13 @@ exports.faq = (req, res) => {
     title: 'FAQ',
   });
 };
+
+/**
+ * GET /
+ * Connect Restaurant page.
+ */
+exports.connect = (req, res) => {
+  return res.render('connect', {
+    title: 'Anslut din restaurang',
+  });
+};

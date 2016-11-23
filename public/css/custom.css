@@ -57,6 +57,29 @@
     background-position: 50% 50%;
 }
 
+.rounded-img {
+    border-radius: 50em;
+}
+
+.contact-container {
+    margin-left: 20em;
+    margin-right: 20em;
+    display: flex;
+}
+
+.contact-info {
+    margin-left: 4em;
+    font-size: 1.3em;
+}
+
+.contact-container p {
+    font-weight: 300
+}
+
+.contact-link {
+    color: #525252;
+}
+
 .product-img {
     width: 100%;
     height: 160px;
