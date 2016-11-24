@@ -847,3 +847,49 @@ h1.header-tagline, .header-tagline {
 .center {
     text-align: center
 }
+
+.GlobalNav-signupButton {
+    margin-top: 10px;
+    text-align: center;
+}
+.GlobalNav-signupButton a {
+    border: none;
+    border-radius: 50px;
+    box-sizing: border-box;
+    cursor: pointer;
+    line-height: 30px;
+    font-size: 15px;
+    height: 30px;
+    position: relative;
+    padding: 5px 20px 5px;
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 0 2px;
+    background-color: #2fdab8;
+    color: white !important;
+    font-weight: 500;
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-transition-property: background-color, font-size, padding;
+    transition-property: background-color, font-size, padding;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out
+}
+@media only screen and (max-width: 400px) {
+    .GlobalNav-signupButton {
+        font-size: 14px;
+        padding: 0 14px 0
+    }
+}
+.GlobalNav-signupButton:hover, .GlobalNav-signupButton:focus {
+    text-decoration: none
+}
+.GlobalNav-signupButton a:hover {
+    background-color: #39ac95 !important;
+    color: white !important;
+}
