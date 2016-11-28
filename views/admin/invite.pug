@@ -23,11 +23,11 @@ block content
                         each invite in invitations
                             tr
                                 td
-                                    div #{host}/signup/restaurant/#{invite.token}
+                                    .col-sm-6(style="word-break: break-all;") #{host}/signup/restaurant/#{invite.token}
                                 td
                                     form.form-horizontal(role='form', action='/admin/invite/delete/'+invite._id, method='POST')
                                         input(type='hidden', name='_csrf', value=_csrf)
                                         .form-group
-                                            .col-sm-offset-6.col-sm-6
+                                            .col-sm-6
                                                 button.btn.btn-danger(type='submit')
                                                     | Ta bort
