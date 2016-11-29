@@ -5,7 +5,8 @@ block content
     .material-header
       p Lägg till produkt
     .material-body
-      form.form-horizontal(role='form', enctype='multipart/form-data', method='POST' onsubmit="return(validateInputFile());")
+      form.form-horizontal(role='form', method='POST')
+        input(type='hidden', name='_csrf', value=_csrf)
         .form-group
           label(class='col-sm-2 control-label', for='name') Namn
           .col-sm-8

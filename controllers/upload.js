@@ -35,7 +35,8 @@ exports.imgRemoveOld = (req, res, next) => {
     var name = getNameFromUrl(url);
     if (name == BANNEDNAME) {
     } else {
-        cloudinary.uploader.destroy(getNameFromUrl(url), function(result) { /* Ignore result for now */ });
+        // Don't remove any imgages right now
+        //cloudinary.uploader.destroy(getNameFromUrl(url), function(result) { /* Ignore result for now */ });
     }
     next();
 };
@@ -51,6 +52,7 @@ exports.removeImage = function(url) {
     var name = getNameFromUrl(url);
     if (name == BANNEDNAME) {
     } else {
-        cloudinary.uploader.destroy(getNameFromUrl(url), function(result) { /* Ignore result for now */ });
+        // Don't remove any images right now
+        //cloudinary.uploader.destroy(getNameFromUrl(url), function(result) { /* Ignore result for now */ });
     }
 }

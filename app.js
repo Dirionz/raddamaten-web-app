@@ -113,8 +113,8 @@ app.use(flash());
 app.use((req, res, next) => {
     if (req.path === '/api/upload') {
         next();
-    } else if (req.path === '/restaurant/product') {
-        next();
+    //} else if (req.path === '/restaurant/product') {
+    //    next();
     } else if (req.path === '/restaurant/edit/picture') {
         next();
     } else if (req.path.substring(0, req.path.lastIndexOf("/") + 1) === '/restaurant/product/edit/picture/') {
@@ -212,7 +212,8 @@ app.post('/restaurant/edit/picture', passportConfig.isAuthenticatedRestaurant, m
                                      uploadController.imgUpload, uploadController.imgRemoveOld, 
                                      restaurantController.saveResturant);
 app.get('/restaurant/product', passportConfig.isAuthenticatedRestaurant, restaurantController.getAddProduct);
-app.post('/restaurant/product', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, uploadController.imgUpload, restaurantController.postAddProduct);
+app.post('/restaurant/product', passportConfig.isAuthenticatedRestaurant, restaurantController.postAddProduct);
+//app.post('/restaurant/product', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, uploadController.imgUpload, restaurantController.postAddProduct);
 app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, 
                                                  restaurantController.middlewareGetProduct, 
                                                  uploadController.imgUpload, uploadController.imgRemoveOld, 

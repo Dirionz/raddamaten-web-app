@@ -2,6 +2,7 @@ const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const uploadController = require('./upload');
+const async = require('async');
 
 /**
  * GET /restaurant
@@ -157,7 +158,7 @@ exports.saveResturant = (req, res) => {
 exports.getAddProduct = (req, res) => {
     res.render('restaurant/addproduct', {
         title: 'Add product',
-        date: new Date().toISOString().slice(0, 16).replace('T', ' ') // Date today
+        date: getLocalISOString(new Date()).slice(0, 16).replace('T', ' ') // Date today
     });
 };
 
@@ -181,32 +182,47 @@ exports.postAddProduct = (req, res) => {
     }
 
     const startdate = new Date(req.body.startdate);
-    const enddate = new Date(req.body.enddate);
+    const enddate = new Date(req.body.enddate);    
     if (startdate > enddate) {
         req.flash('errors', {msg: '"Börjar att visas" kan inte vara före "Slutar att visas"'});
         return res.redirect('/restaurant/product');
     }
 
-    const product = new Product({
-        name: req.body.name,
-        description: req.body.description,
-        pictureURL: ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : ""),
-        price: parseFloat(req.body.price),
-        quantity: parseInt(req.body.quantity),
-        startdate: startdate,
-        enddate: enddate,
-        restaurantId: req.user.restaurantId
-    });
-
-    product.save((err) => {
-        if (err) {
-            req.flash('errors', err);
-        } else {
-            req.flash('success', { msg: product.name+' har skapats!' });
+    async.waterfall([
+        function(done) {
+            Restaurant.findOne({ _id: req.user.restaurantId }, (err, restaurant) => {
+                if (err) done(err);
+                else {
+                    done(null, restaurant);
+                }
+            });
+        },
+        function(restaurant, done) {
+            const product = new Product({
+                name: req.body.name,
+                description: req.body.description,
+                //pictureURL: ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : ""),
+                pictureURL: restaurant.pictureURL || "",
+                price: parseFloat(req.body.price),
+                quantity: parseInt(req.body.quantity),
+                startdate: startdate,
+                enddate: enddate,
+                restaurantId: req.user.restaurantId
+            });
+        
+            product.save((err) => {
+                if (err) {
+                    req.flash('errors', err);
+                    done(err);
+                } else {
+                    req.flash('success', { msg: product.name+' har skapats!' });
+                }
+                done(null, product);
+            });
         }
+    ], function(err, restult) {
         return res.redirect('/restaurant/product');
     });
-
 };
 
 /**
@@ -222,7 +238,9 @@ exports.getEditProduct = (req, res) => {
         } else {
             res.render('restaurant/editproduct', {
                 title: 'Ändra '+product.name,
-                product: product
+                product: product,
+                startdate: getLocalISOString(product.startdate).slice(0, 16).replace('T', ' '),
+                enddate: getLocalISOString(product.enddate).slice(0, 16).replace('T', ' ')
             });
         }
     });
@@ -369,7 +387,7 @@ exports.postDeleteProduct = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/restaurant');
         } else {
-            req.flash('success', { msg: product.name+' har tagits bort!' });
+            req.flash('success', { msg: 'Produkten har tagits bort!' });
             uploadController.removeImage(req.body.pictureURL);
             return res.redirect('/restaurant');
         }
@@ -599,4 +617,9 @@ function getPrice(products) {
         sum += parseFloat(products[i].price);
     }
     return sum;
+}
+
+function getLocalISOString(date) {
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    return localISOTime = (new Date(date - tzoffset)).toISOString().slice(0,-1);
 }

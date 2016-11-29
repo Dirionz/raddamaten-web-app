@@ -177,17 +177,13 @@ function loadMoreProducts() {
 
 function getLimit() {
   var w = window.innerWidth;
-  var limit; 
+  var limit;
   if (w >= 1200) {
     limit = 16;
   } else if (w <= 992) {
     limit = 8;
   } else {
-    if (nextpage === 2) {
-      limit = 14;
-    } else {
-      limit = 12;
-    }
+    limit = 12;
   }
   return limit;
 }

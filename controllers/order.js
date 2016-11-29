@@ -3,6 +3,7 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const stripe = require('stripe')(process.env.STRIPE_SKEY);
 const nodemailer = require('nodemailer');
+const async = require('async');
 
 /**
  * GET /order/5
@@ -307,17 +308,34 @@ exports.postStripe = (req, res, next) => {
   const orderId     = req.params.orderId;
   const stripeToken = req.body.stripeToken;
   const stripeEmail = req.body.stripeEmail;
-  Order.findById(req.params.orderId, (err, order) => { 
-    if (err) {
-        req.flash('errors', err);
-        return res.redirect('/order/checkout/'+orderId);
-    } else {
-        if (!order) { req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
+
+  async.waterfall([
+      function(done) {
+          Order.findById(req.params.orderId, (err, order) => { 
+            if (err) {
+                req.flash('errors', err);
+                return res.redirect('/order/checkout/'+orderId);
+            } else {
+                if (!order) { req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); }; 
+                done(null, order);
+            }
+          });
+      }, 
+      function(order, done) {
+        Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
+            if (err) { req.flash('errors', err); done(err); }
+            else {
+                const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                done(null, order, fullOrderProducts);
+            }
+        }); 
+      }, 
+      function(order, products, done) {
         stripe.charges.create({
             amount: parseFloat(order.price)*100, // Stripe expects the price in "cents"
             currency: 'sek',
             source: stripeToken,
-            description: order.objectId.substr(orderId.length - 5) // TODO: Change to Something + the orderId (last 5)
+            description: order.objectId.substr(orderId.length - 5) + " Räddamaten"
         }, (err) => {
             if (err && err.type === 'StripeCardError') {
                 req.flash('errors', { msg: 'Ditt kort har avvisats' });
@@ -326,12 +344,19 @@ exports.postStripe = (req, res, next) => {
         
             order.email = stripeEmail;
             order.save((err) => {});
-            //req.flash('success', { msg: 'Your card has been successfully charged.' });
-            //res.redirect('/order/successful/'+orderId+'/?email='+stripeEmail);
-            req.succesfulOrder = order;
-            next();
+            done(null, order, products);
         });
       }
+  ], 
+  function(err, order, products) {
+      if (err) {
+          return res.redirect('/');
+      } else {
+        req.succesfulOrder = order;
+        req.succesfulOrderProducts = products;
+        next();
+      }
+
   });
 };
 
@@ -340,16 +365,35 @@ exports.postStripe = (req, res, next) => {
  * Find order
  */
 exports.getOrder = (req, res, next) => {
-  Order.findById(req.params.orderId, (err, order) => { 
-    if (err) {
-        req.flash('errors', { msg: 'Hittades inte' }); 
-         return res.redirect('/'); 
-    } else {
-        if (!order) { req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
+    async.waterfall([
+        function(done) {
+            Order.findById(req.params.orderId, (err, order) => { 
+                if (err) {
+                    req.flash('errors', { msg: 'Hittades inte' }); 
+                    done(err);
+                } else {
+                    if (!order) { req.flash('errors', { msg: 'Hittades inte' }); done({error: "Not found"}); };
+                    done(null, order);
+                }
+            });
+        },
+        function(order, done) {
+            Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
+                if (err) { req.flash('errors', err); done(err); }
+                else {
+                    const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                    done(null, order, fullOrderProducts);
+                }
+            });
+        }
+    ], function(err, order, products) {
+        if (err) {
+            return res.redirect('/');
+        }
         req.succesfulOrder = order;
+        req.succesfulOrderProducts = products;
         next();
-    }
-  });
+    })
 };
 
 /**
@@ -358,7 +402,9 @@ exports.getOrder = (req, res, next) => {
  */
 exports.sendEmail = (req, res, next) => {
     const email = req.succesfulOrder.email;
+    const order = req.succesfulOrder;
     const orderId = req.succesfulOrder._id; 
+    const products = req.succesfulOrderProducts; 
     const id = orderId.toString().slice(-5);
 
     if (email) {
@@ -373,7 +419,7 @@ exports.sendEmail = (req, res, next) => {
             to: email,
             from: '"Räddamaten" <order@raddamaten.se>', 
             subject: `Din order (${id})`,
-            html: `<div style='background: #f2f2f2; text-align:center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif'> \
+            html: `<div style="background: #f2f2f2; text-align:center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif"> \
                         <div style='color: #525252;line-height: 1.5;font-weight:300;font-size: 4em;margin: 1em auto 1em;'> \
                             Tack! \
                         </div> \
@@ -381,10 +427,40 @@ exports.sendEmail = (req, res, next) => {
                             <p>Uppge denna koden i kassan när du hämtar din beställning:</p> \
                             <strong>${id}</strong> \
                         </div> \
-                            <br/> \
-                            <br/> \
-                            <br/> \
-                        </div>`
+                        <br/> \
+                        <br/> \
+                        <div style="color: #525252;line-height: 1.5;font-weight:300;font-size: 1em;margin: 3em auto 3em;"> \
+                            <p><strong>Räddamaten</strong></p> \
+                            <p>MELLANGATAN 16 A</p> \
+                            <p>554 51 Jönköping</p> \
+                            <p>Jönköpings län</p> \
+                            <p>Org nr: 559076-8338</p> \
+                        </div>
+                        <br/> \
+                        <div style="color: #525252;line-height: 1.5;font-weight:300;font-size: 1em;margin: 1em auto 1em;"> \
+                            <table style="width:100%; max-width: 300px; align-self: center; font-size: 1em; margin-left: auto; margin-right: auto; padding-left: 50px; display: inline-table;"> \
+                                <tbody><tr style="text-align: left;"> \
+                                    <th>Produkt</th> \
+                                    <th></th> \
+                                    <th>Pris</th> \
+                                </tr> \
+                                ${getProductsHTML(products)}
+                                <tr style="text-align: left;"> \
+                                    <th>Summa:</th> \
+                                    <td></td> \
+                                    <th>${order.price} Kr</th> \
+                                </tr> \
+                                <tr style="text-align: left;"> \
+                                    <td>Moms 12%:</td> \
+                                    <td></td> \
+                                    <td>${parseFloat(Math.round((order.price * 0.12) * 100) / 100).toFixed(2)} Kr</td> \
+                                </tr></tbody> \
+                            </table> \
+                        </div> \
+                        <br/> \
+                        <br/> \
+                        <br/> \
+                    </div>`
         };
         transporter.sendMail(mailOptions, (err) => {
             if (err) {
@@ -413,3 +489,16 @@ exports.successfulOrder = (req, res) => {
         successSendEmail: successSendEmail
     });
 };
+
+function getProductsHTML(products) {
+    var str = "";
+    for (var i = 0; i < products.length; i++) {
+       str += ` <tr style="text-align: left;"> \
+            <td>${products[i].name}</td> \
+            <td></td> \
+            <td>${products[i].price} Kr</td> \
+            </tr> \
+       `
+    }
+    return str;
+}

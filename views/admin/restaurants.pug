@@ -1,7 +1,7 @@
 each restaurant in restaurants
     tr.restaurant-row
         td #{restaurant.name}
-        td #{restaurant.updatedAt.toISOString().slice(0,16).replace('T', ' ') }
+        td #{(new Date(restaurant.updatedAt - ((new Date()).getTimezoneOffset() * 60000))).toISOString().slice(0,-1).slice(0,16).replace('T', ' ')}
         td
             if ((user.restaurantId) && (user.restaurantId.toString() == restaurant._id.toString()))
                 span.label.label-success Hanterar
