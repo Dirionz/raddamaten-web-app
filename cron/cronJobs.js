@@ -28,7 +28,7 @@ exports.removeOldOrdersCheckedoutNotPayed = (req, res) => {
             if (err) {
                 console.log('There was an error when removeOldOrders'+err.message)
             } else {
-                console.log('Successfully cleaned old orders (Not checkedout)')
+                console.log('Successfully cleaned old orders (Checkedout)')
             }
     });
 }
