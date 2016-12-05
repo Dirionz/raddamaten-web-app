@@ -3,7 +3,7 @@ each product in products
       div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
       .product-info
         h2 #{product.name}
-        p(style='word-wrap: break-word') #{product.description} 
+        p(style='word-wrap: break-word') Uthämtningstid: #{product.description} 
         .product-price #{product.price} kr
         p
           form.form-horizontal(method='POST' action='/order/')
