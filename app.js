@@ -20,6 +20,7 @@ const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const crypto = require('crypto');
 const mime = require('mime');
+var forceSsl = require('force-ssl-heroku');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var CronJob = require('cron').CronJob;
@@ -85,6 +86,7 @@ mongoose.connection.on('error', () => {
 /**
  * Express configuration.
  */
+app.use(forceSsl);
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
