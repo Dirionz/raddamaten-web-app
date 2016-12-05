@@ -2,7 +2,7 @@ each product in products
    div.product-container.col-xs-6.col-sm-4.col-md-3
       div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
       .product-info
-        h2 #{product.name}
+        h2(style='word-wrap: break-word') #{product.name}
         p(style='word-wrap: break-word') Uthämtningstid: #{product.description} 
         .product-price #{product.price} kr
         p
