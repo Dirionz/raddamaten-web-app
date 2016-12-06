@@ -271,7 +271,7 @@ exports.exportOrders = (req, res) => {
         if (err) {
             return res.status(500).send();
         }
-        res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
+        res.setHeader('Content-disposition', 'attachment; filename=export.csv');
         res.set('Content-Type', 'text/csv');
         res.status(200).send(csv);
     });
