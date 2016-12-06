@@ -191,15 +191,34 @@ exports.postPretendRestaurant = (req, res) => {
 
 
 /**
+ * GET /admin/export/orders
+ * Export all orders to csv
+ */
+exports.getExportOrders = (req, res) => {
+    return res.render('admin/ordersexport', {
+        date: getLocalISOString(new Date()).slice(0, 16).replace('T', ' ') // Date today
+    });
+}
+
+/**
  * POST /admin/export/orders
  * Export all orders to csv
  */
 exports.exportOrders = (req, res) => {
-    var startDate = req.query.startDate;
-    var endDate = req.query.endDate;
+    var startDate = req.body.startdate;
+    var endDate = req.body.enddate;
 
     if (!startDate || !endDate) {
-        return res.status(400).send();
+        req.flash('errors', {msg: 'Felaktig request'});
+        return res.render('admin/ordersexport', {
+            date: getLocalISOString(new Date()).slice(0, 16).replace('T', ' ') // Date today
+        })
+    }
+    if (startDate >= endDate) {
+        req.flash('errors', {msg: '"Från" kan inte vara större än eller lika med "Till"'});
+        return res.render('admin/ordersexport', {
+            date: getLocalISOString(new Date()).slice(0, 16).replace('T', ' ') // Date today
+        })
     }
 
     async.waterfall([
@@ -275,4 +294,9 @@ function addRestaurantNameToOrders(orders, restaurants) {
     return rows.sort(function(a, b) {
         return a.restaurantName.localeCompare(b.restaurantName);
     });
+}
+
+function getLocalISOString(date) {
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    return localISOTime = (new Date(date - tzoffset)).toISOString().slice(0,-1);
 }
