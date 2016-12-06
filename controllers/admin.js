@@ -249,7 +249,12 @@ exports.exportOrders = (req, res) => {
                     });
                 }
             }, function(err, result) {
-                if (err) return res.status(500).send();
+                if (err) {
+                    req.flash('errors', {msg: 'Något gick fel! (500)'});
+                    return res.render('admin/ordersexport', {
+                        date: getLocalISOString(new Date()).slice(0, 16).replace('T', ' ') // Date today
+                    })
+                }
                 done(null, result.orders, result.restaurants);
             });
         },
@@ -269,7 +274,10 @@ exports.exportOrders = (req, res) => {
 
     ], function(err, csv) {
         if (err) {
-            return res.status(500).send();
+            req.flash('errors', {msg: 'Något gick fel! (500)'});
+            return res.render('admin/ordersexport', {
+                date: getLocalISOString(new Date()).slice(0, 16).replace('T', ' ') // Date today
+            })
         }
         res.setHeader('Content-disposition', 'attachment; filename=export.csv');
         res.set('Content-Type', 'text/csv');
