@@ -2,6 +2,9 @@ const crypto = require('crypto');
 const async = require('async');
 const Invite = require('../models/Invite');
 const Restaurant = require('../models/Restaurant');
+const Order = require('../models/Order');
+
+var json2csv = require('json2csv');
 
 /**
  * GET /admin
@@ -185,3 +188,91 @@ exports.postPretendRestaurant = (req, res) => {
         }
     });
 };
+
+
+/**
+ * POST /admin/export/orders
+ * Export all orders to csv
+ */
+exports.exportOrders = (req, res) => {
+    var startDate = req.query.startDate;
+    var endDate = req.query.endDate;
+
+    if (!startDate || !endDate) {
+        return res.status(400).send();
+    }
+
+    async.waterfall([
+        function(done) {
+            async.parallel({
+                restaurants: function(done) {
+                    Restaurant.find({},
+                    null, {sort: {updatedAt: -1}}, (err, restaurants) => {
+                        if (err) {
+                            done(err);
+                        } else {
+                            done(null, restaurants);
+                        }
+                    });
+                },
+                orders: function(done) {
+                    Order.find({$and: [ 
+                        { email: {$exists: true}},
+                        { createdAt: {$gte: new Date(startDate)} },
+                        { createdAt: {$lte: new Date(endDate)} }
+                    ]},
+                    null, {sort: {updatedAt: -1}}, (err, orders) => {
+                        if (err) {
+                            done(err);
+                        } else {
+                            done(null, orders);
+                        }
+                    });
+                }
+            }, function(err, result) {
+                if (err) return res.status(500).send();
+                done(null, result.orders, result.restaurants);
+            });
+        },
+        function(orders, restaurants, done) {
+            var data = addRestaurantNameToOrders(orders, restaurants);
+            done(null, data);
+        }, 
+        function(data, done) {
+            // TO csv
+            var fields = ['objectId', 'email', 'price', 'date', 'restaurantName'];
+            var fieldNames = ['ID', 'Email', 'Pris SEK', 'Datum', 'Restaurang Namn'];
+            json2csv({ data: data, fields: fields, fieldNames: fieldNames }, function(err, csv) {
+                if (err) done(err);
+                else done(null, csv);
+            });
+        }
+
+    ], function(err, csv) {
+        if (err) {
+            return res.status(500).send();
+        }
+        res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
+        res.set('Content-Type', 'text/csv');
+        res.status(200).send(csv);
+    });
+
+};
+
+
+function addRestaurantNameToOrders(orders, restaurants) {
+    var rows = [];
+    for(i in orders) {
+        var row = {
+            objectId: orders[i].objectId,
+            email: orders[i].email,
+            price: orders[i].price,
+            date: orders[i].createdAt,
+            restaurantName: restaurants.find( x => x._id.toString() == orders[i].restaurantId.toString() ).name
+        }
+        rows.push(row);
+    }
+    return rows.sort(function(a, b) {
+        return a.restaurantName.localeCompare(b.restaurantName);
+    });
+}

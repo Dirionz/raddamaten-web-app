@@ -238,6 +238,8 @@ app.get('/admin/restaurants', passportConfig.isAuthenticatedAdmin, adminControll
 app.get('/admin/restaurants/loadmore', passportConfig.isAuthenticatedAdmin, adminController.getMoreRestaurants);
 app.post('/admin/restaurants', passportConfig.isAuthenticatedAdmin, adminController.postPretendRestaurant);
 
+app.get('/admin/export/orders', passportConfig.isAuthenticatedAdmin, adminController.exportOrders);
+
 /**
  * API examples routes.
  */
