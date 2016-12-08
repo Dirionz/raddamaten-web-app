@@ -16,6 +16,7 @@ exports.getOrderPage = (req, res) => {
         res.redirect('/');
       } else {
         if (!order) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
+        if (order.isCheckedout) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
         Product.find({ _id: { $in: order.products } }, (err, orderProducts) => {
             if (err) {
                 req.flash('errors', err);
@@ -26,7 +27,11 @@ exports.getOrderPage = (req, res) => {
                         req.flash('errors', err);
                         res.redirect('/');
                     } else {
-                        Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}},{ restaurantId: restaurant._id }, {quantity: {$gt: 0}}]},
+                        Product.find({$and:[
+                            {startdate:{$lte:new Date()}},
+                            {enddate:{$gte:new Date()}},
+                            {restaurantId: restaurant._id}, 
+                            {quantity: {$gt: 0}}]},
                         null, {sort: { enddate: 1 }}, (err, products) => {
                             if (err) {
                                 req.flash('errors', err);
@@ -67,15 +72,13 @@ exports.addToOrder = (req, res) => { // Add product to order
     }
     Order.findById(req.query.orderId, (err, order) => { 
         if(err) {
-            req.flash('errors', err);
-            return res.render('partials/flash', {});
+            return res.status(400).send();
         } else {
             order.products.push(req.query.productId);
 
             order.save((err) => {
                 if (err) {
-                    req.flash('errors', err);
-                    return res.render('partials/flash', {});
+                    return res.status(400).send();
                 } else {
                     Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
                         if(err) {
@@ -83,6 +86,15 @@ exports.addToOrder = (req, res) => { // Add product to order
                             return res.render('partials/flash', {});
                         } else {
                             const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                            const proderr = productsExits([orderProducts.find( x => 
+                                                                               x._id.toString() == req.query.productId 
+                                                                               )], 
+                                                                               fullOrderProducts);
+                            if (proderr) {
+                                order.products = removeProductId(req.query.productId, order.products);
+                                order.save((err) => {});
+                                return res.status(400).send();
+                            }
                             const price = getPrice(fullOrderProducts);
                             return res.render('products/order', {
                                 orderProducts: fullOrderProducts,
@@ -145,20 +157,17 @@ exports.deleteFromOrder = (req, res) => {
     }
     Order.findById(req.query.orderId, (err, order) => { 
         if(err) {
-            req.flash('errors', err);
-            return res.render('partials/flash', {});
+            return res.status(400).send();
         } else {
             order.products = removeProductId(req.query.productId, order.products);
 
             order.save((err) => {
                 if (err) {
-                    req.flash('errors', err);
-                    return res.render('partials/flash', {});
+                    return res.status(400).send();
                 } else {
                     Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
                         if(err) {
-                            req.flash('errors', err)
-                            return res.render('partials/flash', {});
+                            return res.status(400).send();
                         } else {
                             const fullOrderProducts = placeDuplicates(order.products, orderProducts);
                             const price = getPrice(fullOrderProducts);
@@ -245,27 +254,27 @@ exports.checkoutOrder = (req, res) => {
             if (!order) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
             if (order.email) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); }; // This order has already been payed for.
             if (!order.products.length > 0) {req.flash('errors', { msg: 'Kundvagnen är tom' }); return res.redirect('/order/'+req.params.orderId); }; 
+            if (order.isCheckedout) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); }; // TODO: Mby put produkt back "on the shelf" here
             Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
                 if(err) {
                     req.flash('errors', err)
                     return res.redirect('/order/'+req.params.orderId);
                 } else {
-                    // The user might want to refresh the page...
+                    const fullOrderProducts = placeDuplicates(order.products, orderProducts);
                     if (!order.isCheckedout) {
                         // Need to return list of errors in case exists
-                        const proderr = productsExits(orderProducts);
+                        const proderr = productsExits(orderProducts, fullOrderProducts);
                         if (proderr) {
                             req.flash('errors', proderr)
                             return res.redirect('/order/'+req.params.orderId);
                         } else {
                             order.isCheckedout = true;
                             order.products.forEach(function(id) {
-                                Product.update({$and: [{ _id: id }, { quantity: {$gte: 0}}]},
+                                Product.update({$and: [{ _id: id }, { quantity: {$gt: 0}}]},
                                 {$inc: {quantity: -1}}, (err) => {});
                             });
                         }
-                    }
-                    const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                    } 
                     const price = getPrice(fullOrderProducts);
                     order.price = price;
                     order.save((err) => {
@@ -287,17 +296,27 @@ exports.checkoutOrder = (req, res) => {
     });
 };
 
-function productsExits(productList) {
+function productsExits(productList, fullOrderProducts) {
     var errlist = [];
     const currentDate = new Date();
     productList.forEach(function(product) {
-        if (!(product.quantity > 0) || product.enddate < currentDate) {
+        if (!(product.quantity >= timesInArray(product, fullOrderProducts)) || product.enddate < currentDate) {
             errlist.push({ msg: 'Produkten finns inte längre: ' + product.name});
         }
     });
     if (errlist.length > 0) {
         return errlist;
     }
+}
+
+function timesInArray(obj, array) {
+    var count = 0;
+    array.forEach(function(inArrObj) {
+        if (obj._id.toString() === inArrObj._id.toString()) {
+            count++;
+        }
+    });
+    return count;
 }
 
 /**

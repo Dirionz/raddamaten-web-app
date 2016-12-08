@@ -100,7 +100,6 @@ function addToOrder(btn) {
 
   // Retains compatibility for those with no javascript
   event.preventDefault()
-
   $.get("/order/product/add/?productId="+ productId +"&orderId="+ orderId, function(html) {
     if (html) {
       $("div.orders").html(html); // Replace the html in order-list
@@ -111,7 +110,10 @@ function addToOrder(btn) {
     } else {
       btn.hide();
     }
-    //btn.button('reset');
+    btn.prop("disabled",false);
+    btn.removeAttr("style");
+  }).fail(function(response) {
+    alert( "Finns inte fler av denna produkt!" );
     btn.prop("disabled",false);
     btn.removeAttr("style");
   });
@@ -138,6 +140,9 @@ function removeFromOrder(btn) {
     } else {
       btn.hide();
     }
+    btn.button('reset');
+  }).fail(function() {
+    alert( "Något gick fel!" );
     btn.button('reset');
   });
 
