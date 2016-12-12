@@ -5,6 +5,7 @@ const productSchema = new mongoose.Schema({
     description: String,
     pictureURL: String,
     price: Number,
+    ordPrice: Number,
     quantity: Number,
     startdate: { type: Date, default: '2000-10-10T08:00' },
     enddate: { type: Date, default: '2000-10-10T09:00' },
@@ -23,5 +24,23 @@ productSchema.path('price').get(function(num) {
 productSchema.path('price').set(function(num) {
   return num * 100;
 });
+
+// Getter
+productSchema.path('ordPrice').get(function(num) {
+  if (num) {
+    return parseFloat(Math.round(num) / 100).toFixed(2);
+  }
+  return null;
+});
+
+// Setter
+productSchema.path('ordPrice').set(function(num) {
+  if (num) {
+    return num * 100;
+  }
+  return null;
+});
+
+
 
 module.exports = Product;

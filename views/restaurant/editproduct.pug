@@ -24,6 +24,10 @@ block content
           .col-sm-7
             input.form-control(type='text', name='price', id='price', value=product.price)
         .form-group
+          label(class='col-sm-3 control-label', for='price') Ord. Pris
+          .col-sm-7
+            input.form-control(type='number', step="any", name='ordPrice', id='ordPrice', required)
+        .form-group
           label.col-sm-3.control-label(for='quantity') Antal
           .col-sm-7
             input.form-control(type='text', name='quantity', id='quantity', value=product.quantity)
@@ -40,7 +44,7 @@ block content
             button.btn.btn.btn-primary(type='submit')
               i.fa.fa-pencil
               | Updatera
-          
+
   br
   .materialize-box
     .material-header

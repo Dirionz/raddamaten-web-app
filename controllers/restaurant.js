@@ -14,7 +14,7 @@ exports.getRestaurant = (req, res) => {
             req.flash('errors', err);
             return res.redirect('/');
         } else {
-            Product.find({ restaurantId: req.user.restaurantId }, null, 
+            Product.find({ restaurantId: req.user.restaurantId }, null,
             {limit: 16, sort: { enddate: 1 }}, (err, products) => {
                 if (err) {
                     //callback function return error
@@ -139,7 +139,7 @@ exports.middlewareGetResturant = (req, res, next) => {
  */
 exports.saveResturant = (req, res) => {
     const restaurant = req.restaurant;
-    restaurant.pictureURL = ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : ""), 
+    restaurant.pictureURL = ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : ""),
     restaurant.save((err) => {
         if (err) {
             req.flash('errors', err);
@@ -182,7 +182,7 @@ exports.postAddProduct = (req, res) => {
     }
 
     const startdate = new Date(req.body.startdate);
-    const enddate = new Date(req.body.enddate);    
+    const enddate = new Date(req.body.enddate);
     if (startdate > enddate) {
         req.flash('errors', {msg: '"Börjar att visas" kan inte vara före "Slutar att visas"'});
         return res.redirect('/restaurant/product');
@@ -204,12 +204,13 @@ exports.postAddProduct = (req, res) => {
                 //pictureURL: ((req.cloudinary_imgUrl) ? req.cloudinary_imgUrl : ""),
                 pictureURL: restaurant.pictureURL || "",
                 price: parseFloat(req.body.price),
+                ordPrice: ((req.body.ordPrice) ? parseFloat(req.body.ordPrice) : null),
                 quantity: parseInt(req.body.quantity),
                 startdate: startdate,
                 enddate: enddate,
                 restaurantId: req.user.restaurantId
             });
-        
+
             product.save((err) => {
                 if (err) {
                     req.flash('errors', err);
@@ -282,6 +283,7 @@ exports.postEditProduct = (req, res) => {
             product.name = req.body.name;
             product.description = req.body.description || '';
             product.price = req.body.price;
+            product.ordPrice = req.body.ordPrice;
             product.quantity = parseInt(req.body.quantity);
             product.startdate = startdate;
             product.enddate = enddate;
@@ -307,7 +309,7 @@ exports.middlewareGetProduct = (req, res, next) => {
         if (err) {
             req.flash('errors', err);
             return res.redirect('/restaurant');
-        } else {  
+        } else {
             req.product = product;
             req.cloudinary_oldImgUrl = req.product.pictureURL;
             next();
@@ -342,8 +344,8 @@ exports.postEditPictureProduct = (req, res) => {
         if (err) {
             req.flash('errors', err);
             return res.redirect('/restaurant');
-        } else {  
-            product.pictureURL = ((res.req.cloudinary_imgUrl) ? res.req.cloudinary_imgUrl : ""), 
+        } else {
+            product.pictureURL = ((res.req.cloudinary_imgUrl) ? res.req.cloudinary_imgUrl : ""),
 
             product.save((err) => {
             if (err) {
@@ -399,7 +401,7 @@ exports.postDeleteProduct = (req, res) => {
  * Orders list page.
  */
 exports.getOrders = (req, res) => {
-    
+
     var search_param = req.query.search_param;
     var search_param_date = req.query.search_param_date;
     const searchString = req.query.q;
@@ -429,7 +431,7 @@ exports.getOrders = (req, res) => {
         search_param = "ID"; // Default
         search_param_date = "Today"; // Default
         Order.find({$and: [
-            {restaurantId: req.user.restaurantId}, 
+            {restaurantId: req.user.restaurantId},
             {email: {$exists: true}},
             {price: {$exists: true}}
         ]}, null,
@@ -452,10 +454,10 @@ exports.getOrders = (req, res) => {
     }
 };
 
-// Return different search querys searching 
+// Return different search querys searching
 function getOrdersSearchQuery(searchBy, searchString, limitDate, restaurantId) {
     var queryParams = [];
-     
+
     queryParams.push({restaurantId: restaurantId});
     queryParams.push({isCheckedout: true});
     if (limitDate == 'Today') {
@@ -479,11 +481,11 @@ function getToday() {
 
     if(dd<10) {
         dd='0'+dd
-    } 
+    }
 
     if(mm<10) {
         mm='0'+mm
-    } 
+    }
 
     today = mm+'/'+dd+'/'+yyyy;
     return new Date(today);
@@ -495,7 +497,7 @@ function getToday() {
  * This function should be called by ajax or similar
  */
 exports.getMoreOrders = (req, res) => {
-    
+
     var search_param = req.query.search_param;
     var search_param_date = req.query.search_param_date;
     const searchString = req.query.q;
@@ -521,7 +523,7 @@ exports.getMoreOrders = (req, res) => {
         search_param = "ID"; // Default
         search_param_date = "Today"; // Default
         Order.find({$and: [
-            {restaurantId: req.user.restaurantId}, 
+            {restaurantId: req.user.restaurantId},
             {email: {$exists: true}},
             {price: {$exists: true}}
         ]}, null,
@@ -545,12 +547,12 @@ exports.getMoreOrders = (req, res) => {
  */
 exports.getOrder = (req, res) => {
     const orderId = req.params.orderId;
-    
+
     if (!orderId) {
         req.flash('errors', {msg: "Hittades inte"});
         return res.redirect('/restaurant/orders');
     }
-    Order.findById(orderId, (err, order) => { 
+    Order.findById(orderId, (err, order) => {
         if(err) {
             req.flash('errors', err);
             return res.redirect('/order/'+req.params.orderId);
