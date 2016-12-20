@@ -344,7 +344,7 @@ exports.postStripe = (req, res, next) => {
         Product.find({ _id: { $in: order.products } }, (err, orderProducts) => { 
             if (err) { req.flash('errors', err); done(err); }
             else {
-                const fullOrderProducts = placeDuplicates(order.products, orderProducts);
+                const fullOrderProducts = placeDuplicates(order.products, orderProducts); 
                 done(null, order, fullOrderProducts);
             }
         }); 
@@ -362,6 +362,15 @@ exports.postStripe = (req, res, next) => {
             }
         
             order.email = stripeEmail;
+            products.forEach(function(product) {
+                order.finalProducts.push({
+                    name: product.name, 
+                    description: product.description,
+                    pictureURL: product.pictureURL,
+                    price: product.price,
+                    ordPrice: product.ordPrice,
+                });
+            });
             order.save((err) => {});
             done(null, order, products);
         });

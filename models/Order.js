@@ -4,10 +4,16 @@ const orderSchema = new mongoose.Schema({
     objectId: String,
     email: String,
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
-    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+    products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
     isCheckedout: { type: Boolean, default: false },
-    price: Number
-
+    price: Number,
+    finalProducts: [{
+      name: String,
+      description: String,
+      pictureURL: String,
+      price: Number,
+      ordPrice: Number,
+    }]
 }, { timestamps: true });
 
 /**

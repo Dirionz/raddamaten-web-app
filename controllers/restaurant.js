@@ -558,27 +558,11 @@ exports.getOrder = (req, res) => {
             return res.redirect('/order/'+req.params.orderId);
         } else {
             if (!order) {req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); };
-            Product.find({ _id: { $in: order.products } }, (err, orderProducts) => {
-                if(err) {
-                    req.flash('errors', err)
-                    return res.redirect('/order/'+req.params.orderId);
-                } else {
-                    const fullOrderProducts = placeDuplicates(order.products, orderProducts);
-                    const price = getPrice(fullOrderProducts);
-                    order.price = price;
-                    order.save((err) => {
-                        if (err) {
-                            req.flash('errors', err);
-                            return res.redirect('/order/'+req.params.orderId);
-                        } else {
-                            return res.render('restaurant/order', {
-                                orderProducts: fullOrderProducts,
-                                price: price,
-                                order: order,
-                            });
-                        }
-                    });
-                }
+
+            return res.render('restaurant/order', {
+                orderProducts: order.finalProducts || [],
+                price: order.price || 0,
+                order: order,
             });
         }
     });
