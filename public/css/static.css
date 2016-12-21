@@ -142,7 +142,7 @@ footer {
 
 h1.footer-tagline, .footer-tagline {
     color: #595959;
-    font-size: 24px;
+    font-size: 18px;
     -webkit-transition-property: color, font-size;
     transition-property: color, font-size;
     -webkit-transition-duration: 0.2s;
@@ -156,12 +156,247 @@ h1.footer-tagline, .footer-tagline {
     font-weight: 500;
     -moz-osx-font-smoothing: initial;
     -webkit-font-smoothing: subpixel-antialiased;
-    margin: 0
+    margin: 0;
+    margin-bottom: 12px
 }
 @media only screen and (max-width: 540px) {
     h1.footer-tagline, .footer-tagline {
         font-size: 16px
     }
+}
+
+
+select,
+input[type=email],
+input[type=text],
+textarea,
+input[type=password] {
+    background-color: #ebebeb;
+    border: none;
+    border-radius: 0;
+    color: #525252;
+    box-sizing: border-box;
+    display: block;
+    font-size: 20px;
+    line-height: 1.3em;
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    margin: 20px 0;
+    outline: none !important;
+    padding: 14px 14px 12px;
+    width: 100%;
+    -webkit-transition: border-bottom 0.2s ease-in-out;
+    transition: border-bottom 0.2s ease-in-out
+}
+.inline-field-and-button select,
+.inline-field-and-button input[type=email],
+.inline-field-and-button input[type=text],
+.inline-field-and-button textarea,
+.inline-field-and-button input[type=password] {
+    margin: 0
+}
+
+input.error,
+input.error:focus,
+.is-invalid input,
+.is-invalid input[type=email]:focus,
+.is-invalid input[type=text]:focus {
+    background-color: #ffedeb;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out
+}
+
+a.button,
+.button,
+input[type=submit] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #2fdab8;
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 500;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    margin: 0 8px 0 0;
+    padding: 13px 20px 15px;
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+    -webkit-transition-property: background-color, padding, font-size;
+    transition-property: background-color, padding, font-size;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+label.error,
+.form-contained label.error {
+    background-color: #ff5e4d;
+    color: white;
+    display: none;
+    font-size: 16px;
+    margin: 0;
+    padding: 6px 14px 8px;
+    position: relative;
+    text-align: center
+}
+label.error.centered,
+.form-contained label.error.centered {
+    text-align: center
+}
+@media only screen and (max-width: 540px) {
+    label.error,
+    .form-contained label.error {
+        font-size: 14px
+    }
+}
+.form-contained label.error {
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out
+}
+.comment-input label.error {
+    padding-top: 4px
+}
+.inner-field-container {
+    position: relative
+}
+
+.hide-on-success {
+    display: block
+}
+.success .hide-on-success {
+    display: none
+}
+.show-on-success {
+    display: none;
+}
+.success .show-on-success {
+    display: inherit !important
+}
+.force-hide {
+    display: none !important 
+}
+
+a.button span,
+.button span,
+input[type=submit] span {
+    display: block
+}
+a.button.is-pending,
+.button.is-pending,
+input[type=submit].is-pending {
+    color: transparent
+}
+a.button.is-pending span,
+.button.is-pending span,
+input[type=submit].is-pending span {
+    visibility: hidden
+}
+a.button.is-pending:after,
+.button.is-pending:after,
+input[type=submit].is-pending:after {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw%2FeHBhY2tldCBiZWdpbj0i77u%2FIiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8%2BIDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpENUE3QkY5NzEwNDYxMUUzOERDN0ZBNzI2OEEwQUI3OCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpENUE3QkY5ODEwNDYxMUUzOERDN0ZBNzI2OEEwQUI3OCI%2BIDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU5MkJDMTAyMTAzQjExRTM4REM3RkE3MjY4QTBBQjc4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkQ1QTdCRjk2MTA0NjExRTM4REM3RkE3MjY4QTBBQjc4Ii8%2BIDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY%2BIDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8%2BT60wdQAAAWhJREFUeNrsVztuwzAMjdrZYxDvnbJm9AV6hB6isy%2BRxVlzlcL36JALtHVUIKOzKE8ACwgsFYv%2B1B1M4MGWTInPFD%2B2cc6t5pSH1cyyEPifBIwxIiA5UAI1YAFHsDTnn%2BV31v8WnwUcgk4GVEDruqUl3SzJVhcBjLfAyenFr9kOIkDGG9dfmpCEigC5XXrzC7AHCmBDKGjuEvFE1odAJWz2BqxjEe2fkQ6XSkUAyIWA8xs%2FdqWV1xFItLRnMoFScPs6NbfJE%2Fw4SslWrBA9s%2FERedykEiDdY8ee8cgELGNfaCscBWYoVrJlIu2YT%2Frq9qkksMHlgzvnL3vBF5XoH7GaZvTNxk9a6%2FCY9%2BIrGbZ0nxwDNTu%2FfV83YK0%2FZqOtA4PS8A6Z6QvRKAT6luKxCaQ2IzMJAUU7PgMvkxBQfJCcUzyh6QVhPr%2FjsgMOwHX0cpXyTRjo5pSiddAvBh2BWX7NFgJzE7gJMAC9CLbsZugDygAAAABJRU5ErkJggg%3D%3D);
+    background-image: -webkit-image-set(url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw%2FeHBhY2tldCBiZWdpbj0i77u%2FIiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8%2BIDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpENUE3QkY5NzEwNDYxMUUzOERDN0ZBNzI2OEEwQUI3OCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpENUE3QkY5ODEwNDYxMUUzOERDN0ZBNzI2OEEwQUI3OCI%2BIDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU5MkJDMTAyMTAzQjExRTM4REM3RkE3MjY4QTBBQjc4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkQ1QTdCRjk2MTA0NjExRTM4REM3RkE3MjY4QTBBQjc4Ii8%2BIDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY%2BIDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8%2BT60wdQAAAWhJREFUeNrsVztuwzAMjdrZYxDvnbJm9AV6hB6isy%2BRxVlzlcL36JALtHVUIKOzKE8ACwgsFYv%2B1B1M4MGWTInPFD%2B2cc6t5pSH1cyyEPifBIwxIiA5UAI1YAFHsDTnn%2BV31v8WnwUcgk4GVEDruqUl3SzJVhcBjLfAyenFr9kOIkDGG9dfmpCEigC5XXrzC7AHCmBDKGjuEvFE1odAJWz2BqxjEe2fkQ6XSkUAyIWA8xs%2FdqWV1xFItLRnMoFScPs6NbfJE%2Fw4SslWrBA9s%2FERedykEiDdY8ee8cgELGNfaCscBWYoVrJlIu2YT%2Frq9qkksMHlgzvnL3vBF5XoH7GaZvTNxk9a6%2FCY9%2BIrGbZ0nxwDNTu%2FfV83YK0%2FZqOtA4PS8A6Z6QvRKAT6luKxCaQ2IzMJAUU7PgMvkxBQfJCcUzyh6QVhPr%2FjsgMOwHX0cpXyTRjo5pSiddAvBh2BWX7NFgJzE7gJMAC9CLbsZugDygAAAABJRU5ErkJggg%3D%3D) 1x, url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw%2FeHBhY2tldCBiZWdpbj0i77u%2FIiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8%2BIDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpENUE3QkY5QjEwNDYxMUUzOERDN0ZBNzI2OEEwQUI3OCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpENUE3QkY5QzEwNDYxMUUzOERDN0ZBNzI2OEEwQUI3OCI%2BIDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkQ1QTdCRjk5MTA0NjExRTM4REM3RkE3MjY4QTBBQjc4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkQ1QTdCRjlBMTA0NjExRTM4REM3RkE3MjY4QTBBQjc4Ii8%2BIDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY%2BIDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8%2BSk0mOQAAAv1JREFUeNrsWzFrWzEQtkygpZnsH5HFhBSSJYES%2F4BOnuNO6W%2FI0LlzAh1TKDRbVntJFxNo8FJDS%2BnyuvUHxGRIDX0F9RNcluBaJ%2Bmk9x7Wwcczkd7p9CHdnU4vSmvdWmdpt9ZcMgGZgExAJiATkAnIBKyvbHA7KqW8B0G22cHjkLANbAFdYJO63AO3QAF8B64NMOY8YEx%2BRw48DGgDA2AElNpdSnrX6Gj7EMCalzQB6KuAIVBoOSlIp6o1AejXAz7reGJ092pJAPocAwsdX8wYx7UhgJb8mU4vZ6u2RBICaPIXujq5%2BB8J3HmF5gGnwFGFYfyIbPAWxXVwj%2FMA2ofnjuPNgDEwpZj%2FEOc7lBvsAy%2BBXUe9r2Hf%2B2R5AHl7F4d3Cew4hLAdesfFMfaS%2BADa99xQ9wvoB2RzfdLBDZEqBQFDpkE3QDd0kxsdpIsjw6gEUHpbMCf%2FTMrTGV1MEoqHtDkWAQPmsu9Ku3taCZztMIhJwIhhQD9WzCOfYJNRFALMkZZxqruMHfgZ0aEkW8UToUNG%2FeBtguTHNsYG2SpeEbIpnSEZ%2BRZ79jTGLNBWLwK2Le3jhCnwONBWLwK2LO3ThARMA231IsAW2oqEBBSBtnoRsGlpnyckYB5oa%2BPL4ndAuaK9jEHAvaW9k2r2iAQmM5us6DKJQcCtlOMRkhNgseTvC2oTJ8DmePZTzh6r4CseB8AnWvIl%2FT6gNtmCCHBqSUG%2FVOUQqEahYtcEry3tuy5VH2mfQH7BWVwJ%2BGvp86Zx8aRJx%2BEY83LNAz4w%2BnyMURCpywqopCQWdV51L4rWkYBkZfFaEkDKo16MpCSgDldjd74x3EaAuBNc8q7Etfgf4Ap43pgt8MgfSF2P%2F5YkoakfSFw1xgcsGdD4hHfA0wC7zYnuiYRP4M5LrCJE9%2FN7wE2TjgKiJTGQ8AOPF8Ar4KeHikmMiBAtClj0un4oWYkTFPMBFmNWfSpbUg3vxKmSI%2BQDlM7%2FNdbKBGQCMgGZgExAJiATkAlYS%2FknwACXxgUJR1elbQAAAABJRU5ErkJggg%3D%3D) 2x);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    content: "";
+    display: block;
+    height: 48px;
+    width: 48px;
+    margin: -24px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    -webkit-transition: top 0.2s ease-in-out;
+    transition: top 0.2s ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: spin;
+    animation-name: spin;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear
+}
+a.button:hover,
+.button:hover,
+input[type=submit]:hover {
+    background-color: #39ac95
+}
+a.button:focus,
+.button:focus,
+input[type=submit]:focus {
+    outline: none
+}
+a.button:active,
+.button:active,
+input[type=submit]:active {
+    background-color: #427067;
+    outline: none
+}
+@media only screen and (max-width: 540px) {
+    a.button,
+    .button,
+    textarea,
+    input[type=submit],
+    input[type=email],
+    input[type=text],
+    input[type=password],
+    input,
+    select {
+        font-size: 16px
+    }
+}
+
+.footer-newsletter-description {
+    color: #595959;
+    font-size: 18px;
+    -webkit-transition-property: color, font-size;
+    transition-property: color, font-size;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    font-weight: 300;
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: subpixel-antialiased;
+    margin-bottom: 24px
+}
+@media only screen and (max-width: 540px) {
+    .footer-newsletter-description {
+        font-size: 16px
+    }
+}
+
+.field-container {
+    position: relative
+}
+.field-container input,
+.field-container textarea {
+    margin-bottom: 0
+}
+
+.field-container {
+    position: relative
+}
+.field-container input,
+.field-container textarea {
+    margin-bottom: 0
 }
 
 .footer-primary-links {

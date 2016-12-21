@@ -72,7 +72,80 @@ $(document).ready(function() {
       $grid.isotope().isotope('layout');
     }, 500); // Better solution for this?
   });
+  
+  $("#mailing-list-signup").submit(function(event){
+      event.preventDefault();
+      $.ajax({
+        url: "/mailinglist/add",
+        method: "POST",
+        data: {
+            _csrf: this.csrf.value,
+            email: this.email_newsletter.value
+        },
+        
+        beforeSend: function() {
+            return $('js-newsletter-accept-success').find(".js-mailing-list-signup-button").val("Just a second...").addClass("gray")
+        },
+        statusCode: {
+          200: function() {
+            $('.hide-on-success').addClass('hide');
+            $('.show-on-success').addClass('show');
+          },
+          400: function() {
+             $(".js-mailing-list-signup-button").val("Något gick fel.")              
+          }
+        }
+     })
+  });
 
+  //  var Validator = function() {
+  //     function e() {}
+  //       return e.prototype.validate_email = function(e) {
+  //           var t, n, r;
+  //           return t = "This doesn't look like a valid email address", n = /.+@.+\..+/, r = n.test(e), r ? null : t
+  //       }, e.prototype.validate_minimum = function(e, t) {
+  //           var n, r;
+  //           return n = "This should be more than " + t + " charaters", r = !!((null != e ? e.length : void 0) >= t), r ? null : n
+  //       }, e.prototype.validate_maximum = function(e, t) {
+  //           var n, r;
+  //           return n = "This can't be longer than " + t + " charaters", r = !!((null != e ? e.length : void 0) <= t), r ? null : n
+  //       }, e.prototype.validate_presence = function(e) {
+  //           var t, n;
+  //           return t = "This is required", n = !!((null != e ? e.length : void 0) > 0), n ? null : t
+  //       }, e
+  //  }()
+
+//   var e = 13;
+//   var t, n, r;
+//   return $(document.body).on("keydown", ".js-mailing-list-signup-input", function() {
+//       return function(n) {
+//           return n.which === e ? (n.preventDefault(), t(n)) : void 0
+//       }
+//   }(this)), r = new Validator, $(document.body).on("click", ".js-mailing-list-signup-button", function() {
+//       return function(e) {
+//           return e.preventDefault(), t(e)
+//       }
+//   }(this)), t = function() {
+//       return function(e) {
+//           var t, o, i, a;
+//           return o = $(e.target).closest(".js-mailing-list-signup-form"), t = o.find(".js-mailing-list-signup-input"), i = t.val(), a = r.validate_email(i), a ? '' : n(i, o) // Give validation error instead of ''
+//       }
+//   }(this), n = function() {
+//       return function(e, t) {
+//           return $.ajax({
+//               url: "/ajax/mailing_list_signup",
+//               method: "POST",
+//               data: {
+//                   email: e
+//               },
+//               beforeSend: function() {
+//                   return t.find(".js-mailing-list-signup-button").val("Just a second...").addClass("gray")
+//               }
+//           }).done(function(e) {
+//               return e.success ? (t.closest(".js-newsletter-signup").addClass("success"), t.closest(".js-newsletter-in-footer").addClass("success")) : $(".js-mailing-list-signup-button").val("Something went wrong.")
+//           })
+//       }
+//   }(this)
 
 });
 

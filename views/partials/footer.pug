@@ -45,6 +45,32 @@ footer.u-hideForInfiniteLoad(style='opacity: 1;')
           a.footer-facebook-link(target='_blank', href='https://www.facebook.com/R%C3%A4dda-maten-Sverige-AB-180076962399603/') Facebook
           //a.footer-pinterest-link(target='_blank', href='') Pinterest
           //a.footer-flipboard-link(target='_blank', href='') Flipboard
+      .footer-right-side.js-newsletter-accept-success.js-newsletter-in-footer
+        .hide-on-success.footer-newsletter-description
+          .footer-tagline Vill du ha informartion direkt i mailen?
+          p Anmäl här.
+        .show-on-success.js-footer-newsletter-confirm-message
+          .footer-tagline Great, now just check your inbox to confirm your subscription.
+          .submit-container
+            a.no-margin.button.gray(href="javascript:$('.js-newsletter-in-footer').hide();") OK
+        .hide-on-success
+          form#mailing-list-signup.js-mailing-list-signup-form.validated-form.ajax-form(accept-charset='UTF-8', method='post')
+            input#csrf(type='hidden', name='_csrf', value=_csrf)
+            input(name='utf8', type='hidden', value='✓')
+            input(type='hidden', name='authenticity_token', value='33vsiRiPSG/VuQjZwzsRZktOqTr4xkAZPFuoupOgVwW52LE2anFDlsO24FJchQn+fK7DylLjYtOrd/axibG0VQ==')
+            .field-container
+              .inner-field-container
+                input#email_newsletter.js-mailing-list-signup-input.small-input.js-validated-field(type='email', name='email_newsletter', value='', autocomplete='on', data-validates='email=true,minimum=2', placeholder='email address' required)
+                .js-validation-status-icon.validation-status-icon
+              label.error.border-box(for='email_newsletter') Please enter a valid email address
+            .submit-container(style='margin-top: 16px')
+              input.no-margin.button.js-mailing-list-signup-button(type='submit', name='commit', value='Subscribe' style='display: inline-block;')
+              //a(style='float: right; display: inline-block;') Anmäl mobilnummer istället.
+
+
+
+
+
       //a.footer-right-side.AppPromo(href='')
         img.u-renderOnGPU(alt='Ut enim ad minima veniam, quis nostrum', height='60', src='https://res.cloudinary.com/hcu8jcnmr/image/upload/Icon-60_2x.png', width='60')
         .badge-footer

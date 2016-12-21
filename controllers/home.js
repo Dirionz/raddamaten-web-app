@@ -1,5 +1,10 @@
+var request = require('superagent');
 const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
+
+var mailchimpInstance   = process.env.MAILCHIMP_INSTANCE
+    listUniqueId        = process.env.MAILCHIMP_UID,
+    mailchimpApiKey     = process.env.MAILCHIMP_APIKEY;
 
 /**
  * GET /
@@ -54,7 +59,7 @@ exports.getProducts = (req, res) => {
 };
 
 /**
- * GET /
+ * GET /about
  * About page.
  */
 exports.about = (req, res) => {
@@ -64,7 +69,7 @@ exports.about = (req, res) => {
 };
 
 /**
- * GET /
+ * GET /terms
  * Terms page.
  */
 exports.terms = (req, res) => {
@@ -74,7 +79,7 @@ exports.terms = (req, res) => {
 };
 
 /**
- * GET /
+ * GET /press
  * Press page.
  */
 exports.press = (req, res) => {
@@ -84,7 +89,7 @@ exports.press = (req, res) => {
 };
 
 /**
- * GET /
+ * GET /faq
  * FAQ page.
  */
 exports.faq = (req, res) => {
@@ -94,11 +99,33 @@ exports.faq = (req, res) => {
 };
 
 /**
- * GET /
+ * GET /connect
  * Connect Restaurant page.
  */
 exports.connect = (req, res) => {
   return res.render('connect', {
     title: 'Anslut din restaurang',
   });
+};
+
+/**
+ * POST /addToMailingList
+ * Add to mailinglist
+ * This function should be called with ajax or similar
+ */
+exports.addToMailingList = (req, res) => {
+  request
+        .post('https://' + mailchimpInstance + '.api.mailchimp.com/3.0/lists/' + listUniqueId + '/members/')
+        .set('Content-Type', 'application/json;charset=utf-8')
+        .set('Authorization', 'Basic ' + new Buffer('any:' + mailchimpApiKey ).toString('base64'))
+        .send({
+          'email_address': req.body.email,
+          'status': 'pending'
+        }).end(function(err, response) {
+          if (response.status < 300 || (response.status === 400 && response.body.title === "Member Exists")) {
+            return res.sendStatus(200);
+          } else {
+            return res.sendStatus(400);
+          }
+      });
 };
