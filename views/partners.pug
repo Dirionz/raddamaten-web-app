@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    .faq-title.faq-title-bigger(style='margin-bottom: 36px; text-align: center') Anslutna restauranger
+    div(id='partnersframe')
+        for restaurant in restaurants
+            div.partners-container.col-xs-6.col-sm-4.col-md-3
+                a(href=restaurant.website target='_blank')
+                    //div(class='product-img' style='background-image: url(https://res.cloudinary.com/dwl3zfqeb/image/upload/v1480415391/yf9f4lnapxuk8gdawl4x.png)')
+                    div(class='product-img' style='background-image: url(' + restaurant.pictureURL + ')')
+       

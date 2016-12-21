@@ -25,6 +25,8 @@ footer.u-hideForInfiniteLoad(style='opacity: 1;')
             span Press
           a(href='/faq')
             span FAQ
+          a(href='/partners')
+            span Partners
           //a(target='_blank', href='')
             span Blog
         .footer-small-text
@@ -52,7 +54,7 @@ footer.u-hideForInfiniteLoad(style='opacity: 1;')
         .show-on-success.js-footer-newsletter-confirm-message
           .footer-tagline Great, now just check your inbox to confirm your subscription.
           .submit-container
-            a.no-margin.button.gray(href="javascript:$('.js-newsletter-in-footer').hide();") OK
+            a.no-margin.button.gray.js-newsletter-ok-btn(href="javascript:$('.js-newsletter-in-footer').hide();") OK
         .hide-on-success
           form#mailing-list-signup.js-mailing-list-signup-form.validated-form.ajax-form(accept-charset='UTF-8', method='post')
             input#csrf(type='hidden', name='_csrf', value=_csrf)

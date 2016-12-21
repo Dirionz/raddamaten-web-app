@@ -162,6 +162,14 @@ var $grid = $('#productsframe').isotope({
   }
 });
 
+var $restaurantGrid = $('#partnersframe').isotope({
+  itemSelector: '.partners-container',
+  layoutMode: 'masonry',
+  masonry: {
+    fitWidth: true
+  }
+})
+
 function addToOrder(btn) {
   var orderId = btn.data('orderid') // The order id
   var productId = btn.data('productid'); // The product to be added

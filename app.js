@@ -177,6 +177,7 @@ app.get('/terms', homeController.terms);
 app.get('/press', homeController.press); 
 app.get('/faq', homeController.faq); 
 app.get('/connect', homeController.connect); 
+app.get('/partners', homeController.getPartners); 
 app.post('/mailinglist/add', homeController.addToMailingList); 
 app.get('/products/:currentCount', homeController.getProducts);
 app.get('/order/:orderId', orderController.getOrderPage);

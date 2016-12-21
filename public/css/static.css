@@ -166,11 +166,7 @@ h1.footer-tagline, .footer-tagline {
 }
 
 
-select,
-input[type=email],
-input[type=text],
-textarea,
-input[type=password] {
+.js-mailing-list-signup-input {
     background-color: #ebebeb;
     border: none;
     border-radius: 0;
@@ -207,9 +203,7 @@ input.error:focus,
     transition: all 0.2s ease-in-out
 }
 
-a.button,
-.button,
-input[type=submit] {
+.js-mailing-list-signup-button, .js-newsletter-ok-btn {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;

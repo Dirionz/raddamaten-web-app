@@ -247,7 +247,7 @@
     .product-button {
         padding: 9px 5px !important;
     }
-    .product-container {
+    .product-container, .partners-container {
         width: 150px !important;
     }
 }
@@ -256,7 +256,7 @@
     top: 50px;
 }
 
-#productsframe {
+#productsframe, #partnersframe {
     /*
     -moz-column-width: 20em;
     -webkit-column-width: 20em;
@@ -267,7 +267,7 @@
     margin: 0 auto;
 }
 /* clear fix */
-#productsframe:after {
+#productsframe:after, #partnersframe:after {
   content: '';
   display: block;
   clear: both;
@@ -285,7 +285,7 @@
     padding: 16px;
 }
 
-.product-container {
+.product-container, .partners-container {
     font: 13px/23px "Raleway", Arial, sans-serif;
     position: relative;
     text-align: center;

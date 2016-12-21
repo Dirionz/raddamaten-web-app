@@ -109,6 +109,19 @@ exports.connect = (req, res) => {
 };
 
 /**
+ * GET /partners
+ * View Partners Restaurant page.
+ */
+exports.getPartners = (req, res) => {
+  Restaurant.find({}, (err, restaurants) => {
+    return res.render('partners', {
+      title: 'Anslutna restauranger',
+      restaurants: restaurants
+    })
+  })
+}
+
+/**
  * POST /addToMailingList
  * Add to mailinglist
  * This function should be called with ajax or similar
