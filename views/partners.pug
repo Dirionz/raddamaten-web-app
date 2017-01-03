@@ -6,6 +6,15 @@ block content
         for restaurant in restaurants
             div.partners-container.col-xs-6.col-sm-4.col-md-3
                 a(href=restaurant.website target='_blank')
-                    //div(class='product-img' style='background-image: url(https://res.cloudinary.com/dwl3zfqeb/image/upload/v1480415391/yf9f4lnapxuk8gdawl4x.png)')
                     div(class='product-img' style='background-image: url(' + restaurant.pictureURL + ')')
+                    .partners-info
+                        p(style='word-wrap: break-word') 
+                            strong Gata: 
+                            span #{restaurant.street}
+                        p(style='word-wrap: break-word') 
+                            strong Postnummer: 
+                            span #{restaurant.postalCode}
+                        p(style='word-wrap: break-word') 
+                            strong Stad: 
+                            span #{restaurant.city}
        

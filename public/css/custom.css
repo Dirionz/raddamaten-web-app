@@ -513,3 +513,21 @@
 .order-list .delete-product-btn:hover {
     text-decoration: none;
 }
+
+.partners-info h2 { /* Title */
+    padding: 5px;
+}
+
+.partners-info p { /* Description */
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.partners-container a {
+    color: black;
+    text-decoration: none;
+}
+
+.partners-container a:hover {
+    text-decoration: none;
+}
