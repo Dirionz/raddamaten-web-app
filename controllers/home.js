@@ -122,7 +122,7 @@ exports.getPartners = (req, res) => {
 }
 
 /**
- * POST /addToMailingList
+ * POST /mailinglist/add
  * Add to mailinglist
  * This function should be called with ajax or similar
  */
@@ -142,3 +142,11 @@ exports.addToMailingList = (req, res) => {
           }
       });
 };
+
+/**
+ * GET /
+ * Add to numbers (sms)
+ * This function should be called with ajax or similar
+ */
+exports.addToSmsNumber = (req, res) => {
+}

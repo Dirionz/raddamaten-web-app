@@ -98,54 +98,72 @@ $(document).ready(function() {
      })
   });
 
-  //  var Validator = function() {
-  //     function e() {}
-  //       return e.prototype.validate_email = function(e) {
-  //           var t, n, r;
-  //           return t = "This doesn't look like a valid email address", n = /.+@.+\..+/, r = n.test(e), r ? null : t
-  //       }, e.prototype.validate_minimum = function(e, t) {
-  //           var n, r;
-  //           return n = "This should be more than " + t + " charaters", r = !!((null != e ? e.length : void 0) >= t), r ? null : n
-  //       }, e.prototype.validate_maximum = function(e, t) {
-  //           var n, r;
-  //           return n = "This can't be longer than " + t + " charaters", r = !!((null != e ? e.length : void 0) <= t), r ? null : n
-  //       }, e.prototype.validate_presence = function(e) {
-  //           var t, n;
-  //           return t = "This is required", n = !!((null != e ? e.length : void 0) > 0), n ? null : t
-  //       }, e
-  //  }()
+  $('#sms-signup').click(function() {
+    const number = trimMobileNumber($('.SignupMessage-Buttons #sms-newsletter')[0].value);
+    const _csrf = $('.SignupMessage-Buttons #crf')[0].value;
 
-//   var e = 13;
-//   var t, n, r;
-//   return $(document.body).on("keydown", ".js-mailing-list-signup-input", function() {
-//       return function(n) {
-//           return n.which === e ? (n.preventDefault(), t(n)) : void 0
-//       }
-//   }(this)), r = new Validator, $(document.body).on("click", ".js-mailing-list-signup-button", function() {
-//       return function(e) {
-//           return e.preventDefault(), t(e)
-//       }
-//   }(this)), t = function() {
-//       return function(e) {
-//           var t, o, i, a;
-//           return o = $(e.target).closest(".js-mailing-list-signup-form"), t = o.find(".js-mailing-list-signup-input"), i = t.val(), a = r.validate_email(i), a ? '' : n(i, o) // Give validation error instead of ''
-//       }
-//   }(this), n = function() {
-//       return function(e, t) {
-//           return $.ajax({
-//               url: "/ajax/mailing_list_signup",
-//               method: "POST",
-//               data: {
-//                   email: e
-//               },
-//               beforeSend: function() {
-//                   return t.find(".js-mailing-list-signup-button").val("Just a second...").addClass("gray")
-//               }
-//           }).done(function(e) {
-//               return e.success ? (t.closest(".js-newsletter-signup").addClass("success"), t.closest(".js-newsletter-in-footer").addClass("success")) : $(".js-mailing-list-signup-button").val("Something went wrong.")
-//           })
-//       }
-//   }(this)
+    if (validateMobileNumber(number)) {
+      $.ajax({
+          url: "/sms/add",
+          method: "POST",
+          data: {
+              _csrf: _csrf,
+              number: number
+          },
+          
+          beforeSend: function() {
+              return $('js-newsletter-accept-success').find(".js-mailing-list-signup-button").val("Just a second...").addClass("gray")
+          },
+          statusCode: {
+            200: function() {
+              $('.hide-on-success').addClass('hide');
+              $('.show-on-success').addClass('show');
+            },
+            400: function() {
+              $(".js-mailing-list-signup-button").val("Något gick fel.")              
+            }
+          }
+      })
+    } else {
+      alert('not correkt');
+    }
+
+  });
+
+  function trimMobileNumber(number) {
+    return number.replace(/\s+/g, '').replace('-', '') 
+  }
+
+  function isNumbers(number) {
+    return number.match(/\d/g);
+  }
+
+  function validateMobileNumber(number) {
+    var match = isNumbers(number);
+    if (match) {
+      return match.length===10;
+    } else {
+      return false;
+    }
+  }
+
+  $('.SignupMessage-Buttons #sms-newsletter').on('input',function(e){
+    const input = $('.SignupMessage-Buttons #sms-newsletter');
+    const button = $('.SignupMessage-Buttons #sms-signup');
+    const number = trimMobileNumber($('.SignupMessage-Buttons #sms-newsletter')[0].value);
+    if (isNumbers(number)) {
+      if (validateMobileNumber(number)) {
+        input.css({'background-color' : '#c2f0c2'});
+        button.prop("disabled", false);
+      } else {
+        input.css({'background-color' : '#ebebeb'});
+        button.prop("disabled", true);
+      }
+    } else {
+      input.css({'background-color' : '#ffb3b3'});
+      button.prop("disabled", true);
+    }
+  });
 
 });
 
