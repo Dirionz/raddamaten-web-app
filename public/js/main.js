@@ -116,16 +116,16 @@ $(document).ready(function() {
           },
           statusCode: {
             200: function() {
-              $('.hide-on-success').addClass('hide');
-              $('.show-on-success').addClass('show');
+              $('.SignupMessage .hide-on-success').addClass('hide');
+              $('.SignupMessage .show-on-success').addClass('show');
             },
             400: function() {
-              $(".js-mailing-list-signup-button").val("Något gick fel.")              
+              alert('Något gick fel.');
             }
           }
       })
     } else {
-      alert('not correkt');
+      alert('Något gick fel.');
     }
 
   });
@@ -163,6 +163,10 @@ $(document).ready(function() {
       input.css({'background-color' : '#ffb3b3'});
       button.prop("disabled", true);
     }
+  });
+
+  $('#signup-close-btn').click(function() {
+    $('.SignupMessage').addClass('hide');
   });
 
 });

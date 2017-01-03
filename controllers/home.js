@@ -1,6 +1,7 @@
 var request = require('superagent');
 const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
+const PhoneNumber = require('../models/PhoneNumber');
 
 var mailchimpInstance   = process.env.MAILCHIMP_INSTANCE
     listUniqueId        = process.env.MAILCHIMP_UID,
@@ -149,4 +150,17 @@ exports.addToMailingList = (req, res) => {
  * This function should be called with ajax or similar
  */
 exports.addToSmsNumber = (req, res) => {
+  const number = req.body.number;
+
+  const phoneNumber = PhoneNumber({
+    number: number
+  })
+
+  phoneNumber.save((err) => {
+    if (err) {
+      return res.sendStatus(400);
+    } else {
+      return res.sendStatus(200);
+    }
+  })
 }

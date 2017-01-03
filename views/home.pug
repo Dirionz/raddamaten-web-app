@@ -5,11 +5,13 @@ block content
     .div(id='baseurl' data-internalbaseurl="/products/")
 
     .SignupMessage.SignupMessage--sliding.animated.js-signupMessage.SignupMessage--show
-        a.close-button-base.close-button-light.close-button-thin 
+        a#signup-close-btn.close-button-base.close-button-light.close-button-thin 
             .fa.fa-times
-        span
+        span.hide-on-success
             | Få information via sms.
-        .SignupMessage-Buttons
+        span.show-on-success
+            | Registrering lyckades!
+        .SignupMessage-Buttons.hide-on-success
             input#crf(type='hidden', name='_csrf', value=_csrf)
             input#sms-newsletter.js-mailing-list-signup-input.small-input.js-validated-field(type='tel', name='phone_number', value='', autocomplete='on', placeholder='07X-XXX XX XX' required)
             button#sms-signup(style='text-decoration: none;text-align: center;margin: 16px;background: none;border: none;' disabled='true')
