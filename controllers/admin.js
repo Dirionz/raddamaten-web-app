@@ -1,8 +1,10 @@
 const crypto = require('crypto');
 const async = require('async');
+const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 const Invite = require('../models/Invite');
 const Restaurant = require('../models/Restaurant');
 const Order = require('../models/Order');
+const PhoneNumber = require('../models/PhoneNumber');
 
 var json2csv = require('json2csv');
 
@@ -307,4 +309,78 @@ function addRestaurantNameToOrders(orders, restaurants) {
 function getLocalISOString(date) {
     var tzoffset = (new Date()).getTimezoneOffset() * 60000;
     return localISOTime = (new Date(date - tzoffset)).toISOString().slice(0,-1);
+}
+
+/**
+ * GET /admin/sms/new
+ * Send out sms
+ */
+exports.smsNew = (req, res) => {
+    PhoneNumber.count({}, function(err, count){
+        if (err) {
+            req.flash('errors', err); 
+            res.redirect('/admin');
+        } else {
+            res.render('admin/sendsms', {
+                title: 'Admin',
+                count: count
+            });
+        }
+    })
+}
+
+/**
+ * POST /admin/sms/new
+ * Send the sms to all phoneNumbers
+ */
+exports.sendSms = (req, res) => {
+    req.assert('text', 'Text cannot be blank.').notEmpty();
+    const errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('errors', errors);
+        return res.redirect('/admin');
+    }
+
+    const message = req.body.text;
+
+    PhoneNumber.find({}, function(err, numbers){
+        if (err) {
+            req.flash('errors', err); 
+            res.redirect('/admin');
+        } else {
+            const sendSmsTasks = [];
+            globalMessage = message;
+            for(n in numbers) {
+                numbersToSend.push(numbers[n].number);
+                sendSmsTasks.push(sendTwilio);
+            }
+            async.parallel(sendSmsTasks, function(err, result) {
+                if (err) {
+                    req.flash('errors', err);
+                    return res.redirect('/admin');
+                } else {
+                    req.flash('success', {msg: 'Meddelande skickat till alla nummer.'});
+                    res.render('admin/sendsms', {
+                        title: 'Admin',
+                        count: numbers.length
+                    });
+                }
+            });
+        }
+    });
+}
+
+var numbersToSend = [];
+var globalMessage = '';
+
+function sendTwilio(callback) {
+  const details = {
+    to: numbersToSend.pop(),
+    from: '+13472235148', // Save in config
+    body: globalMessage
+  };
+  twilio.sendMessage(details, (err, responseData) => {
+      callback(err);
+  });
 }

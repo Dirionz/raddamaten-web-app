@@ -244,6 +244,9 @@ app.post('/admin/restaurants', passportConfig.isAuthenticatedAdmin, adminControl
 app.get('/admin/export/orders', passportConfig.isAuthenticatedAdmin, adminController.getExportOrders);
 app.post('/admin/export/orders', passportConfig.isAuthenticatedAdmin, adminController.exportOrders);
 
+app.get('/admin/sms/new', passportConfig.isAuthenticatedAdmin, adminController.smsNew);
+app.post('/admin/sms/send', passportConfig.isAuthenticatedAdmin, adminController.sendSms);
+
 /**
  * API examples routes.
  */
