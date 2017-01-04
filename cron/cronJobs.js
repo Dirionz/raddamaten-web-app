@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const PhoneNumber = require('../models/PhoneNumber');
 
 exports.removeOldOrders = (req, res) => {
     var date = new Date();
@@ -32,3 +33,20 @@ exports.removeOldOrdersCheckedoutNotPayed = (req, res) => {
             }
     });
 }
+
+exports.removePhoneNumbersNotVerified = (req, res) => {
+    var date = new Date();
+    date.setDate(date.getDate() - 2); // two days old
+
+    PhoneNumber.remove({$and: [
+        {isVerified: false},
+        {createdAt: {$lte: date}}
+        ]}, (err) => {
+            if (err) {
+                console.log('There was an error when removePhoneNumbersNotVerified'+err.message)
+            } else {
+                console.log('Successfully cleaned unVerified PhoneNumbers')
+            }
+    });
+}
+

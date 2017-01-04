@@ -148,11 +148,12 @@ app.use(express.static('uploads'));
 // Start the is-master worker
 im.start();
 
-// Clean old orders (Not checkedout)
+// Clean old orders (Not checkedout) and phoneNumbers not verified.
 var job = new CronJob('00 30 2 * * *', function() { // Runs 2:30 every day.
     if (im.isMaster) {
         console.log('I am the master, cron started (daily)');
         cronJobsController.removeOldOrders();
+        cronJobsController.removePhoneNumbersNotVerified();
     }
 }, null, false, "Europe/Stockholm");
 
