@@ -101,6 +101,7 @@ $(document).ready(function() {
   $('#sms-signup').click(function() {
     const number = trimMobileNumber($('.SignupMessage-Buttons #sms-newsletter')[0].value);
     const _csrf = $('.SignupMessage-Buttons #crf')[0].value;
+    const button = $('.SignupMessage-Buttons #sms-signup');
 
     if (validateMobileNumber(number)) {
       $.ajax({
@@ -112,14 +113,17 @@ $(document).ready(function() {
           },
           
           beforeSend: function() {
-              return $('js-newsletter-accept-success').find(".js-mailing-list-signup-button").val("Just a second...").addClass("gray")
+              button.html('Vänta..');
+              button.prop("disabled", true)
           },
           statusCode: {
             200: function() {
-              $('.SignupMessage .hide-on-success').addClass('hide');
-              $('.SignupMessage .show-on-success').addClass('show');
+              $('.SignupMessage .hide-on-success-step1').addClass('hide');
+              $('.SignupMessage .show-on-success-step1').removeClass('hide');
             },
             400: function() {
+              button.html('Registrera');
+              button.prop("disabled", false);
               alert('Något gick fel.');
             }
           }
@@ -127,7 +131,6 @@ $(document).ready(function() {
     } else {
       alert('Något gick fel.');
     }
-
   });
 
   function trimMobileNumber(number) {
@@ -167,6 +170,37 @@ $(document).ready(function() {
 
   $('#signup-close-btn').click(function() {
     $('.SignupMessage').addClass('hide');
+  });
+
+  $('#sms-code-signup').click(function() {
+    const code = $('.SignupMessage-Buttons #sms-code')[0].value;
+    const _csrf = $('.SignupMessage-Buttons #crf')[0].value;
+    const button = $('.SignupMessage-Buttons #sms-code-signup');
+
+    $.ajax({
+        url: "/sms/verify",
+        method: "POST",
+        data: {
+            _csrf: _csrf,
+            code: code
+        },
+        
+        beforeSend: function() {
+            button.html('Vänta..');
+            button.prop("disabled", true)
+        },
+        statusCode: {
+          200: function() {
+            $('.SignupMessage .hide-on-success-step2').addClass('hide');
+            $('.SignupMessage .show-on-success-step2').removeClass('hide');
+          },
+          400: function() {
+            button.html('Fortsätt');
+            button.prop("disabled", false);
+            alert('Något gick fel.');
+          }
+        }
+    })
   });
 
 });

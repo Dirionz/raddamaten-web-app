@@ -268,10 +268,10 @@ label.error.centered,
 }
 
 .hide-on-success {
-    display: block
+    display: block;
 }
 .success .hide-on-success {
-    display: none
+    display: none;
 }
 .show-on-success {
     display: none;

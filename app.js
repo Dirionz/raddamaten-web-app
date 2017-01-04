@@ -180,6 +180,7 @@ app.get('/connect', homeController.connect);
 app.get('/partners', homeController.getPartners); 
 app.post('/mailinglist/add', homeController.addToMailingList); 
 app.post('/sms/add', homeController.addToSmsNumber); 
+app.post('/sms/verify', homeController.verifySmsNumber); 
 app.get('/products/:currentCount', homeController.getProducts);
 app.get('/order/:orderId', orderController.getOrderPage);
 app.post('/order/', orderController.postNewOrder);

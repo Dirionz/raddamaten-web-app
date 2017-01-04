@@ -1,4 +1,5 @@
 var request = require('superagent');
+const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 const Restaurant = require('../models/Restaurant');
 const Product = require('../models/Product');
 const PhoneNumber = require('../models/PhoneNumber');
@@ -145,7 +146,7 @@ exports.addToMailingList = (req, res) => {
 };
 
 /**
- * GET /
+ * GET /sms/add
  * Add to numbers (sms)
  * This function should be called with ajax or similar
  */
@@ -154,13 +155,54 @@ exports.addToSmsNumber = (req, res) => {
 
   const phoneNumber = PhoneNumber({
     number: number
-  })
+  });
 
-  phoneNumber.save((err) => {
-    if (err) {
-      return res.sendStatus(400);
-    } else {
-      return res.sendStatus(200);
-    }
-  })
+  PhoneNumber.find({$and: [{number: number}, {isVerified: true}] },  (err, numbers) => {
+    if (err) return res.sendStatus(400);
+    if (numbers.length != 0) return res.sendStatus(400);
+    phoneNumber.save((err) => {
+      if (err) {
+        return res.sendStatus(400);
+      } else {
+          const details = {
+            to: number,
+            from: '+463984754', // Save in config
+            body: 'Räddamaten kod: ' + phoneNumber._id.toString().substr(phoneNumber._id.toString().length - 4) + '. Gäller i 15 minuter.'
+          };
+          twilio.sendMessage(details, (err, responseData) => {
+            if (err) {
+              return res.sendStatus(400);
+            }
+            return res.sendStatus(200);
+          })
+      }
+    });
+  });
+}
+
+/**
+ * GET /sms/verify
+ * Add to numbers (sms)
+ * This function should be called with ajax or similar
+ */
+exports.verifySmsNumber = (req, res) => {
+  const code = req.body.code;
+  var date = new Date();
+  date.setMinutes(date.getMinutes() - 15);
+
+  PhoneNumber.find({$and: [
+      {objectId: new RegExp(code, "i")}, 
+      {createdAt: {$gte: date}}
+    ]}, (err, numbers) => {
+        if (err) { return res.sendStatus(400); }
+        if (numbers.length ==0) { return res.sendStatus(400); }
+        const number = numbers.pop();
+        number.isVerified = true;
+        number.save((err) => {
+          if (err) {
+            return res.sendStatus(400);
+          }
+          return res.sendStatus(200);
+        })
+  });
 }

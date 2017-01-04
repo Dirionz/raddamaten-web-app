@@ -316,7 +316,7 @@ function getLocalISOString(date) {
  * Send out sms
  */
 exports.smsNew = (req, res) => {
-    PhoneNumber.count({}, function(err, count){
+    PhoneNumber.count({ isVerified: true }, function(err, count){
         if (err) {
             req.flash('errors', err); 
             res.redirect('/admin');
@@ -344,11 +344,12 @@ exports.sendSms = (req, res) => {
 
     const message = req.body.text;
 
-    PhoneNumber.find({}, function(err, numbers){
+    PhoneNumber.find({ isVerified: true }, function(err, numbers){
         if (err) {
             req.flash('errors', err); 
             res.redirect('/admin');
         } else {
+            if (!numbers) return res.redirect('/admin');
             const sendSmsTasks = [];
             globalMessage = message;
             for(n in numbers) {
