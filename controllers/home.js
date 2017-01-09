@@ -25,7 +25,7 @@ exports.index = (req, res) => {
         title: 'Raddamaten'
       });
     } else {
-      Product.find({$and:[{startdate:{$lte:end}},{enddate:{$gte:start}}, {quantity: {$gt: 0}}]}, null,
+      Product.find({$and:[{startdate:{$lte:end}},{enddate:{$gte:start}}]}, null,
       {limit: 16, sort: { enddate: 1 }}, (err, products) => {
         if (err) {
           req.flash('errors', err);

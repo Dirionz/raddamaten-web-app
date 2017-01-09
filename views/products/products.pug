@@ -3,8 +3,7 @@
 
 - var greyedProducts = difference(products, visibleProducts);
 
-- function shouldDisplayNow(product) { return (product.startdate <= new Date() && product.enddate >= new Date()); }
-- function shouldBeGreyed(product) { return !(product.startdate <= new Date() && product.enddate >= new Date()); }
+- function shouldDisplayNow(product) { return ((product.startdate <= new Date() && product.enddate >= new Date()) && product.quantity > 0); }
 - function difference(source, toRemove) { return source.filter(function(value){ return toRemove.indexOf(value) == -1; }); }
 
 each product in visibleProducts
@@ -36,4 +35,9 @@ each product in greyedProducts
           p(style='word-wrap: break-word') Ord. pris: 
             strike #{product.ordPrice} kr
         .product-price #{product.price} kr
+        .product-greyed 
+          h2 Slut
         p
+          form.form-horizontal(method='POST' action='/shoudNotExist')
+              button.product-button(type='' disabled)
+                | Beställ
