@@ -41,6 +41,35 @@ productSchema.path('ordPrice').set(function(num) {
   return null;
 });
 
+/**
+ *  Notify admin middleware 
+ */
+productSchema.pre('save', function(next) {
+    const product = this;
+    if (product.isModified('startdate')) {
+
+      // Notify admin here.
+      var Restaurant = require('./Restaurant');
+      Restaurant.findById(product.restaurantId, (err, restaurant) => {
+        var subject, message;
+        subject = 'Ny/Uppdaterad produkt från ' + ((restaurant) ? restaurant.name : 'okänd');
+        message = 'Produkten (' 
+                + product.name
+                + ') har blivit satt till publicering den ' 
+                + getLocalISOString(product.startdate).slice(0, 16).replace('T', ' ')
+                + ' till '
+                + getLocalISOString(product.enddate).slice(0, 16).replace('T', ' ')
+        var adminNotify = require('../tools/adminNotify');
+        adminNotify.sendEmail(subject, message);
+      })
+    }
+    next();
+});
+
+function getLocalISOString(date) {
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    return localISOTime = (new Date(date - tzoffset)).toISOString().slice(0,-1);
+}
 
 
 module.exports = Product;

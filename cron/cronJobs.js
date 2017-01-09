@@ -10,7 +10,7 @@ exports.removeOldOrders = (req, res) => {
         {updatedAt: {$lte: date}}
         ]}, (err) => {
             if (err) {
-                console.log('There was an error when removeOldOrders'+err.message)
+                console.log('There was an error when removeOldOrders '+err.message)
             } else {
                 console.log('Successfully cleaned old orders (Not checkedout)')
             }
@@ -27,7 +27,7 @@ exports.removeOldOrdersCheckedoutNotPayed = (req, res) => {
         {updatedAt: {$lte: date}}
         ]}, (err) => {
             if (err) {
-                console.log('There was an error when removeOldOrders'+err.message)
+                console.log('There was an error when removeOldOrders '+err.message)
             } else {
                 console.log('Successfully cleaned old orders (Checkedout)')
             }
@@ -43,7 +43,7 @@ exports.removePhoneNumbersNotVerified = (req, res) => {
         {createdAt: {$lte: date}}
         ]}, (err) => {
             if (err) {
-                console.log('There was an error when removePhoneNumbersNotVerified'+err.message)
+                console.log('There was an error when removePhoneNumbersNotVerified '+err.message)
             } else {
                 console.log('Successfully cleaned unVerified PhoneNumbers')
             }
