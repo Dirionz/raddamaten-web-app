@@ -13,6 +13,11 @@ var mailchimpInstance   = process.env.MAILCHIMP_INSTANCE
  * Home page.
  */
 exports.index = (req, res) => {
+  var start = new Date();
+  start.setHours(0,0,0,0);
+  var end = new Date();
+  end.setHours(23,59,59,999);
+
   Restaurant.find({}, (err, restaurants) => {
     if (err) {
       req.flash('errors', err);
@@ -20,7 +25,7 @@ exports.index = (req, res) => {
         title: 'Raddamaten'
       });
     } else {
-      Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}, {quantity: {$gt: 0}}]}, null,
+      Product.find({$and:[{startdate:{$lte:end}},{enddate:{$gte:start}}, {quantity: {$gt: 0}}]}, null,
       {limit: 16, sort: { enddate: 1 }}, (err, products) => {
         if (err) {
           req.flash('errors', err);
@@ -28,15 +33,26 @@ exports.index = (req, res) => {
             title: 'Raddamaten'
           });
         } else {
-            res.render('home', {
-              title: 'Raddamaten',
-              products: products
-            });
+          var visibleProducts = [];
+          visibleProducts.push(products.find(shouldDisplayNow));
+          var greyedProducts = products.find(shouldBeGreyed);
+          res.render('home', {
+            title: 'Raddamaten',
+            products: products
+          });
         }
       });
     }
   });
 };
+
+function shouldDisplayNow(product) {
+  return (product.startdate <= new Date() && product.enddate >= new Date());
+}
+
+function shouldBeGreyed(product) {
+  return !(product.startdate <= new Date() && product.enddate >= new Date());
+}
 
 /**
  * GET /products/5
@@ -166,7 +182,7 @@ exports.addToSmsNumber = (req, res) => {
       } else {
           const details = {
             to: number,
-            from: '+463984754', // Save in config
+            from: '+', // Save in config
             body: 'Räddamaten kod: ' + phoneNumber._id.toString().substr(phoneNumber._id.toString().length - 4) + '. Gäller i 15 minuter.'
           };
           twilio.sendMessage(details, (err, responseData) => {
