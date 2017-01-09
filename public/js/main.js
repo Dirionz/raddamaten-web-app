@@ -168,10 +168,6 @@ $(document).ready(function() {
     }
   });
 
-  $('#signup-close-btn').click(function() {
-    $('.SignupMessage').addClass('hide');
-  });
-
   $('#sms-code-signup').click(function() {
     const code = $('.SignupMessage-Buttons #sms-code')[0].value;
     const _csrf = $('.SignupMessage-Buttons #crf')[0].value;
@@ -201,6 +197,21 @@ $(document).ready(function() {
           }
         }
     })
+  });
+
+  var signup_close_btn_clicked = false;
+  $('#signup-close-btn').click(function() {
+    $('.SignupMessage').addClass('hide');
+    signup_close_btn_clicked = true;
+  });
+
+  $(window).scroll(function(event){
+    var st = $(this).scrollTop();
+    if (st){
+      $('.SignupMessage').addClass('hide');
+    } else {
+      if (!signup_close_btn_clicked) $('.SignupMessage').removeClass('hide');
+    }
   });
 
 });

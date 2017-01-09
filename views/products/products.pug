@@ -1,31 +1,30 @@
 - var visibleProducts = [];
-- visibleProducts.push(products.find(shouldDisplayNow));
-
+- var prod = products.find(shouldDisplayNow);
+- if(prod) visibleProducts.push(prod);
 - var greyedProducts = difference(products, visibleProducts);
 
 - function shouldDisplayNow(product) { return ((product.startdate <= new Date() && product.enddate >= new Date()) && product.quantity > 0); }
 - function difference(source, toRemove) { return source.filter(function(value){ return toRemove.indexOf(value) == -1; }); }
 
 each product in visibleProducts
-   div.product-container.col-xs-6.col-sm-4.col-md-3
-      div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
-      .product-info
-        h2(style='word-wrap: break-word') #{product.name}
-        p(style='word-wrap: break-word') Uthämtningstid: #{product.description}
-        if(product.ordPrice)
-          p(style='word-wrap: break-word') Ord. pris: 
-            strike #{product.ordPrice} kr
-        .product-price #{product.price} kr
-        p
-          form.form-horizontal(method='POST' action='/order/')
-              input(type='hidden', name='_csrf', value=_csrf)
-              input.form-control(type='hidden', name='restaurantId', id='restaurantId', value=product.restaurantId)
-              input.form-control(type='hidden', name='productId', id='productId', value=product._id)
-              button.product-button(type='submit')
-                | Beställ
+  div.product-container.col-xs-6.col-sm-4.col-md-3
+    div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
+    .product-info
+      h2(style='word-wrap: break-word') #{product.name}
+      p(style='word-wrap: break-word') Uthämtningstid: #{product.description}
+      if(product.ordPrice)
+        p(style='word-wrap: break-word') Ord. pris: 
+          strike #{product.ordPrice} kr
+      .product-price #{product.price} kr
+      p
+        form.form-horizontal(method='POST' action='/order/')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input.form-control(type='hidden', name='restaurantId', id='restaurantId', value=product.restaurantId)
+            input.form-control(type='hidden', name='productId', id='productId', value=product._id)
+            button.product-button(type='submit')
+              | Beställ
 
 each product in greyedProducts
-
    div.product-container.col-xs-6.col-sm-4.col-md-3
       div(class='product-img' style='background-image: url(' + product.pictureURL + ')')
       .product-info

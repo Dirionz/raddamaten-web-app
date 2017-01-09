@@ -33,9 +33,6 @@ exports.index = (req, res) => {
             title: 'Raddamaten'
           });
         } else {
-          var visibleProducts = [];
-          visibleProducts.push(products.find(shouldDisplayNow));
-          var greyedProducts = products.find(shouldBeGreyed);
           res.render('home', {
             title: 'Raddamaten',
             products: products
@@ -59,9 +56,13 @@ function shouldBeGreyed(product) {
  * Products list page.
  */
 exports.getProducts = (req, res) => {
+    var start = new Date();
+    start.setHours(0,0,0,0);
+    var end = new Date();
+    end.setHours(23,59,59,999);
     const limit = parseInt(req.query.limit) || 16;
     const currentCount = parseInt(req.params.currentCount);
-    Product.find({$and:[{startdate:{$lte:new Date()}},{enddate:{$gte:new Date()}}, {quantity: {$gt: 0}}]}, null,
+    Product.find({$and:[{startdate:{$lte:end}},{enddate:{$gte:start}}]}, null,
     {limit: limit, skip: currentCount, sort: { enddate: 1 }}, (err, products) => {
         if (err) {
             //callback function return error
