@@ -62,9 +62,6 @@ exports.getProducts = (req, res) => {
             return res.sendStatus(500);
         } else {
             //successfully braunch
-
-            // filter out startdate after now
-
             res.render('products/products', {
                 title: 'Produkter',
                 products: products

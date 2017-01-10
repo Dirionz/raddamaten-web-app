@@ -28,6 +28,8 @@ $(document).ready(function() {
   $('.order-list .orders .hidden').each(function( index ) {
     decreeseProductCount($(this).text());
   });
+  // Update cart number
+  updateCartNumber();
   // Add product on order page.
   $('.add-product-btn').click(function() {
     addToOrder($(this));
@@ -260,6 +262,7 @@ function addToOrder(btn) {
         $("div.order-list-header").fadeIn(100).fadeOut(100).fadeIn(100);
       }
     decreeseProductCount(productId);
+    updateCartNumber();
     } else {
       btn.hide();
     }
@@ -291,6 +294,7 @@ function removeFromOrder(btn) {
     if (html) {
       $("div.orders").html(html); // Replace the html in order-list
       increeseProductCount(productId);
+      updateCartNumber();
     } else {
       btn.hide();
     }
@@ -300,6 +304,11 @@ function removeFromOrder(btn) {
     btn.button('reset');
   });
 
+}
+
+function updateCartNumber() {
+  var addedProducts = $('.order-list .orders .hidden').length;
+  $('.order-list .order-list-header .order-list-header-count').text(addedProducts);
 }
 
 function increeseProductCount(id) { 
