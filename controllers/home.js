@@ -62,6 +62,9 @@ exports.getProducts = (req, res) => {
             return res.sendStatus(500);
         } else {
             //successfully braunch
+
+            // filter out startdate after now
+
             res.render('products/products', {
                 title: 'Produkter',
                 products: products
@@ -80,9 +83,13 @@ function findProducts(limit, currentCount, callback) {
         if (err) {
           return callback(err);
         } else {
-          return callback(null, products);
+          return callback(null, products.filter(isEarlierThanStartDate));
         }
     });
+}
+
+function isEarlierThanStartDate(product) {
+  return product.startdate < new Date();
 }
 
 /**
