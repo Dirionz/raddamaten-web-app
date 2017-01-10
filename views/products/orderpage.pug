@@ -29,6 +29,9 @@ block content
                         .product-info-horizontal
                             h4 #{product.name}
                             .product-price-horizontal #{product.price} kr
+                            .product-quantity-horizontal 
+                                .number(id=product._id) #{product.quantity}
+                                span  kvar
                         button(class='add-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id)
                             i.fa.fa-plus
                         button(class='info-product-btn' roduct._id role='button' data-productId=product._id data-orderId=order._id)

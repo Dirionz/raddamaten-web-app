@@ -24,6 +24,10 @@ $(document).ready(function() {
   // Date inputs
   $('input#date').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD HH:mm' });
   
+  // Set count at load
+  $('.order-list .orders .hidden').each(function( index ) {
+    decreeseProductCount($(this).text());
+  });
   // Add product on order page.
   $('.add-product-btn').click(function() {
     addToOrder($(this));
@@ -255,6 +259,7 @@ function addToOrder(btn) {
       if (w < 576) {
         $("div.order-list-header").fadeIn(100).fadeOut(100).fadeIn(100);
       }
+    decreeseProductCount(productId);
     } else {
       btn.hide();
     }
@@ -285,6 +290,7 @@ function removeFromOrder(btn) {
   $.get("/order/product/delete/?productId="+ productId +"&orderId="+ orderId, function(html) {
     if (html) {
       $("div.orders").html(html); // Replace the html in order-list
+      increeseProductCount(productId);
     } else {
       btn.hide();
     }
@@ -294,6 +300,20 @@ function removeFromOrder(btn) {
     btn.button('reset');
   });
 
+}
+
+function increeseProductCount(id) { 
+  var productElement = $('.product-quantity-horizontal #'+id);
+  var number = parseInt(productElement.text());
+  number = number+1;
+  productElement.text(number);
+}
+
+function decreeseProductCount(id) { 
+  var productElement = $('.product-quantity-horizontal #'+id);
+  var number = parseInt(productElement.text());
+  number = number-1;
+  if (number >= 0) productElement.text(number);
 }
 
 // Load more products on restaurant page and on the main page

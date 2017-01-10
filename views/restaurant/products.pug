@@ -8,6 +8,7 @@ each product in products
           p(style='word-wrap: break-word') Ord. pris: 
             strike #{product.ordPrice} kr
         .product-price #{product.price} kr
+        .product-quantity #{product.quantity} kvar
         p
           a.btn.btn-default(href='/restaurant/product/edit/' + product._id, role='button') Ändra
           a.btn.btn-danger(href='/restaurant/product/delete/'+ product._id, role='button') Ta bort

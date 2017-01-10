@@ -13,6 +13,8 @@ each product in products
       if (!shouldDisplayNow(product)) 
         .product-greyed 
           h2 Slut
+      else
+        .product-quantity #{product.quantity} kvar
       p
       if (!shouldDisplayNow(product)) 
         form.form-horizontal(method='POST' action='/shoudNotExist')
