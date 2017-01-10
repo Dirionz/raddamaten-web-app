@@ -166,7 +166,7 @@ exports.addToMailingList = (req, res) => {
           'email_address': req.body.email,
           'status': 'pending'
         }).end(function(err, response) {
-          if (response.status < 300 || (response.status === 400 && response.body.title === "Member Exists")) {
+          if ((response) && (response.status < 300 || (response.status === 400 && response.body.title === "Member Exists"))) {
             return res.sendStatus(200);
           } else {
             return res.sendStatus(400);
