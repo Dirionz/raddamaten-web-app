@@ -17,38 +17,32 @@ exports.index = (req, res) => {
   start.setHours(0,0,0,0);
   var end = new Date();
   end.setHours(23,59,59,999);
-
-  Restaurant.find({}, (err, restaurants) => {
+  findProducts(16, 0, (err, products) => {
     if (err) {
       req.flash('errors', err);
-      res.render('home', {
+        res.render('home', {
         title: 'Raddamaten'
       });
     } else {
-      Product.find({$and:[{startdate:{$lte:end}},{enddate:{$gte:start}}]}, null,
-      {limit: 16, sort: { enddate: 1 }}, (err, products) => {
-        if (err) {
-          req.flash('errors', err);
-            res.render('home', {
-            title: 'Raddamaten'
-          });
-        } else {
-          res.render('home', {
-            title: 'Raddamaten',
-            products: products
-          });
-        }
+      res.render('home', {
+        title: 'Raddamaten',
+        products: products
       });
     }
   });
 };
 
-function shouldDisplayNow(product) {
-  return (product.startdate <= new Date() && product.enddate >= new Date());
-}
-
-function shouldBeGreyed(product) {
-  return !(product.startdate <= new Date() && product.enddate >= new Date());
+/**
+ * Shuffles array in place. ES6 version
+ * @param {Array} a items The array containing the items.
+ */
+function shuffle(array) {
+    var a = array;
+    for (let i = a.length; i; i--) {
+        let j = Math.floor(Math.random() * i);
+        [a[i - 1], a[j]] = [a[j], a[i - 1]];
+    }
+    return a;
 }
 
 /**
@@ -62,8 +56,7 @@ exports.getProducts = (req, res) => {
     end.setHours(23,59,59,999);
     const limit = parseInt(req.query.limit) || 16;
     const currentCount = parseInt(req.params.currentCount);
-    Product.find({$and:[{startdate:{$lte:end}},{enddate:{$gte:start}}]}, null,
-    {limit: limit, skip: currentCount, sort: { enddate: 1 }}, (err, products) => {
+    findProducts(limit, currentCount, (err, products) => {
         if (err) {
             //callback function return error
             return res.sendStatus(500);
@@ -76,6 +69,21 @@ exports.getProducts = (req, res) => {
         }
     });
 };
+
+function findProducts(limit, currentCount, callback) {
+    var start = new Date();
+    start.setHours(0,0,0,0);
+    var end = new Date();
+    end.setHours(23,59,59,999);
+    Product.find({$and:[{startdate:{$lte:end}},{enddate:{$gte:start}}]}, null,
+    {limit: limit, skip: currentCount, sort: { enddate: 1 }}, (err, products) => {
+        if (err) {
+          return callback(err);
+        } else {
+          return callback(null, products);
+        }
+    });
+}
 
 /**
  * GET /about
