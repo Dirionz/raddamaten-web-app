@@ -21,11 +21,11 @@ exports.index = (req, res) => {
     if (err) {
       req.flash('errors', err);
         res.render('home', {
-        title: 'Raddamaten'
+        title: 'Räddamaten | Billig mat i Jönköping'
       });
     } else {
       res.render('home', {
-        title: 'Raddamaten',
+        title: 'Räddamaten | Billig mat i Jönköping',
         products: products
       });
     }
@@ -220,7 +220,7 @@ exports.verifySmsNumber = (req, res) => {
   date.setMinutes(date.getMinutes() - 15);
 
   PhoneNumber.find({$and: [
-      {objectId: new RegExp(code, "i")}, 
+      {objectId: new RegExp(code, "i")},
       {createdAt: {$gte: date}}
     ]}, (err, numbers) => {
         if (err) { return res.sendStatus(400); }

@@ -65,7 +65,7 @@ const cronJobsController = require('./cron/cronJobs');
  */
 const passportConfig = require('./config/passport');
 
-/** 
+/**
  * Create Express server.
  */
 const app = express();
@@ -176,13 +176,13 @@ jobOnceAMonth.start();
 app.get('/', homeController.index);
 app.get('/about', homeController.about);
 app.get('/terms', homeController.terms);
-app.get('/press', homeController.press); 
-app.get('/faq', homeController.faq); 
-app.get('/connect', homeController.connect); 
-app.get('/partners', homeController.getPartners); 
-app.post('/mailinglist/add', homeController.addToMailingList); 
-app.post('/sms/add', homeController.addToSmsNumber); 
-app.post('/sms/verify', homeController.verifySmsNumber); 
+app.get('/press', homeController.press);
+app.get('/faq', homeController.faq);
+app.get('/connect', homeController.connect);
+app.get('/partners', homeController.getPartners);
+app.post('/mailinglist/add', homeController.addToMailingList);
+app.post('/sms/add', homeController.addToSmsNumber);
+app.post('/sms/verify', homeController.verifySmsNumber);
 app.get('/products/:currentCount', homeController.getProducts);
 app.get('/order/:orderId', orderController.getOrderPage);
 app.post('/order/', orderController.postNewOrder);
@@ -199,7 +199,7 @@ app.get('/forgot', userController.getForgot);
 app.post('/forgot', userController.postForgot);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
-//app.get('/signup', userController.getSignup); 
+//app.get('/signup', userController.getSignup);
 //app.post('/signup', userController.postSignup);
 app.get('/signup/restaurant/:token', userController.getSignupRestaurant);
 app.post('/signup/restaurant', userController.postSignupRestaurant);
@@ -215,16 +215,16 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/restaurant', passportConfig.isAuthenticatedRestaurant, restaurantController.getRestaurant);
 app.get('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditRestaurant);
 app.post('/restaurant/edit', passportConfig.isAuthenticatedRestaurant, restaurantController.postEditRestaurant);
-app.post('/restaurant/edit/picture', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, 
+app.post('/restaurant/edit/picture', passportConfig.isAuthenticatedRestaurant, multipartMiddleware,
                                      restaurantController.middlewareGetResturant,
-                                     uploadController.imgUpload, uploadController.imgRemoveOld, 
+                                     uploadController.imgUpload, uploadController.imgRemoveOld,
                                      restaurantController.saveResturant);
 app.get('/restaurant/product', passportConfig.isAuthenticatedRestaurant, restaurantController.getAddProduct);
 app.post('/restaurant/product', passportConfig.isAuthenticatedRestaurant, restaurantController.postAddProduct);
 //app.post('/restaurant/product', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, uploadController.imgUpload, restaurantController.postAddProduct);
-app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedRestaurant, multipartMiddleware, 
-                                                 restaurantController.middlewareGetProduct, 
-                                                 uploadController.imgUpload, uploadController.imgRemoveOld, 
+app.post('/restaurant/product/edit/picture/:id', passportConfig.isAuthenticatedRestaurant, multipartMiddleware,
+                                                 restaurantController.middlewareGetProduct,
+                                                 uploadController.imgUpload, uploadController.imgRemoveOld,
                                                  restaurantController.saveProduct);
 app.get('/restaurant/products/:currentCount', passportConfig.isAuthenticatedRestaurant, restaurantController.getProducts);
 app.get('/restaurant/product/edit/:id', passportConfig.isAuthenticatedRestaurant, restaurantController.getEditProduct);
