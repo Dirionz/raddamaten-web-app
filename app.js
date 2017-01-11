@@ -21,6 +21,7 @@ const sass = require('node-sass-middleware');
 const crypto = require('crypto');
 const mime = require('mime');
 var forceSsl = require('force-ssl-heroku');
+var pretenderNode = require('prerender-node');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var CronJob = require('cron').CronJob;
@@ -144,6 +145,7 @@ app.use(function(req, res, next) {
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 app.use(express.static('uploads'));
+app.use(pretenderNode);
 
 // Start the is-master worker
 im.start();
