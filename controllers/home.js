@@ -195,7 +195,7 @@ exports.addToSmsNumber = (req, res) => {
       } else {
           const details = {
             to: number,
-            from: '+', // Save in config
+            from: process.env.TWILIO_NUMBER,
             body: 'Räddamaten kod: ' + phoneNumber._id.toString().substr(phoneNumber._id.toString().length - 4) + '. Gäller i 15 minuter.'
           };
           twilio.sendMessage(details, (err, responseData) => {

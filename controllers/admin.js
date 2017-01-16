@@ -378,7 +378,7 @@ var globalMessage = '';
 function sendTwilio(callback) {
   const details = {
     to: numbersToSend.pop(),
-    from: '+13472235148', // Save in config
+    from: process.env.TWILIO_NUMBER,
     body: globalMessage
   };
   twilio.sendMessage(details, (err, responseData) => {
