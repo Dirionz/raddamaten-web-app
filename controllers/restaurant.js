@@ -100,7 +100,7 @@ exports.postEditRestaurant = (req, res) => {
             restaurant.name = req.body.name;
             restaurant.aboutUs = req.body.aboutUs || '';
             restaurant.street = req.body.street;
-            restaurant.postalcode = req.body.postalcode;
+            restaurant.postalCode = req.body.postalcode;
             restaurant.city = req.body.city;
             restaurant.website = req.body.website || '';
 
