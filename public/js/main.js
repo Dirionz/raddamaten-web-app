@@ -211,14 +211,18 @@ $(document).ready(function() {
     signup_close_btn_clicked = true;
   });
 
-  $(window).scroll(function(event){
-    var st = $(this).scrollTop();
-    if (st){
-      $('.SignupMessage').addClass('hide');
-    } else {
-      if (!signup_close_btn_clicked) $('.SignupMessage').removeClass('hide');
-    }
-  });
+  $('.bubble').click(function() {
+    $('.SignupMessage').removeClass('hide');
+    $(this).addClass('hide');
+  })
+  // $(window).scroll(function(event){
+  //   var st = $(this).scrollTop();
+  //   if (st){
+  //     $('.SignupMessage').addClass('hide');
+  //   } else {
+  //     if (!signup_close_btn_clicked) $('.SignupMessage').removeClass('hide');
+  //   }
+  // });
 
 });
 

@@ -4,11 +4,14 @@ block content
     include headers/header
     .div(id='baseurl' data-internalbaseurl="/products/")
 
-    .SignupMessage.SignupMessage--sliding.animated.js-signupMessage.SignupMessage--show
+    .bubble
+        span Du vet väl at du kan få materbjudande direkt i mobilen? Klicka här.
+
+    .SignupMessage.SignupMessage--sliding.animated.js-signupMessage.SignupMessage--show.hide
         a#signup-close-btn.close-button-base.close-button-light.close-button-thin 
             .fa.fa-times
         span.hide-on-success-step1
-            | Få information via sms.
+            | Fyll i ditt nummer här:
         span.show-on-success-step1.hide-on-success-step2.hide
             | Bekräfta med koden som skickats till dig.
         span.show-on-success-step2.hide
@@ -34,4 +37,4 @@ block content
             a.btn.pink-loadmore(id='load_more', role='button' data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Laddar") Ladda fler
     else
         .document
-            h2 Rädda Maten önskar God Jul & Gott nytt år. Vi vill tacka för all feedback och jobbar just nu för fullt med förbättringar. Snart kommer du kunna ta del av fler erbjudanden!
+            h2 Denna vecka uppdaterar vi Rädda Matens hemsida för en bättre upplevelse. Vi kör igång igen 24/1 med ännu fler restauranger, kaféer och fantastiska erbjudanden!

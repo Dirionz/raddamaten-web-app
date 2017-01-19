@@ -1125,7 +1125,7 @@ h1.header-tagline, .header-tagline {
 .SignupMessage {
     display: block;
     width: 100%;
-    background-color: #3398e1;
+    background-color: #fc459e;
     color: white;
     font-weight: 500;
     -moz-osx-font-smoothing: grayscale;
@@ -1161,7 +1161,7 @@ h1.header-tagline, .header-tagline {
     transition: -webkit-transform 0.2s ease-out;
     transition: transform 0.2s ease-out;
     transition: transform 0.2s ease-out, -webkit-transform 0.2s ease-out;
-    background-color: rgba(51, 152, 225, 0.95);
+    background-color: #fc459e;
     height: 160px
 }
 @media only screen and (max-width: 540px) {
@@ -1192,7 +1192,7 @@ h1.header-tagline, .header-tagline {
 .SignupMessage .button.Button--Dark {
     padding-right: 60px;
     padding-left: 60px;
-    background-color: #3398e1;
+    background-color: #fc459e;
     border-radius: 500px
 }
 .SignupMessage .button.Button--Dark span {
@@ -1251,4 +1251,58 @@ h1.header-tagline, .header-tagline {
 .SignupMessage.SignupMessage--show {
     -webkit-transform: translateY(0);
     transform: translateY(0)
+}
+
+.bubble 
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    color: white;
+
+    font-size: 17px;
+    padding: 5px;
+
+    position: fixed;
+    margin: 20px;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    width: 275px;
+    height: 120px;
+    padding: 0px;
+    background: #fc459e;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: #7F7F7F solid 1px;
+}
+
+.bubble:after 
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 11px 0 11px 15px;
+    border-color: transparent #fc459e;
+    display: block;
+    width: 0;
+    z-index: 1;
+    right: -15px;
+    top: 76px;
+}
+
+.bubble:before 
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 11px 0 11px 15px;
+    border-color: transparent #7F7F7F;
+    display: block;
+    width: 0;
+    z-index: 0;
+    right: -16px;
+    top: 76px;
 }
