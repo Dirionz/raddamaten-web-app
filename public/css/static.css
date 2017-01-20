@@ -1169,7 +1169,7 @@ h1.header-tagline, .header-tagline {
         display: none
     }
     .bubble {
-        display: none;
+        display: none !important;
     }
 }
 .SignupMessage.SignupMessage--DetailsPage {
