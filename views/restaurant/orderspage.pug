@@ -58,3 +58,37 @@ block content
                     tbody.orderscontainer
                         include orders
         button.btn.btn-info.orders_load_more(data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Laddar", style="display: none;") Ladda fler
+    
+  each order in orders 
+    br
+    .restaurant-container.materialize-box(style='overflow: hidden;')
+
+        .material-header
+            p Order (#{order.email})
+        .col-sm-12
+        table.table.table-hover
+            thead
+            tr
+                th Produkt
+                th.text-center Pris
+            tbody
+                each product in order.finalProducts
+                    tr
+                    td.col-sm-8.col-md-6
+                        .media
+                        div.pull-left(href='', style='width: 100px; height: 50px; ')
+                            //img.media-object(src=product.pictureURL)
+                            div(class='product-img' style='max-height: 50px; background-image: url(' + product.pictureURL + ')')
+                        .media-body
+                            h4.media-heading
+                            p #{product.name}
+                            h5.media-heading
+                            p #{product.description.substring(0, 20)}
+                    td.col-sm-1.col-md-1.text-center
+                        strong #{product.price} SEK
+            tr
+            td
+                h3 Summa
+            td.text-right
+                h3
+                strong #{order.price} SEK
