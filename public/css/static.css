@@ -1168,6 +1168,9 @@ h1.header-tagline, .header-tagline {
     .SignupMessage.SignupMessage--sliding {
         display: none
     }
+    .bubble {
+        display: none;
+    }
 }
 .SignupMessage.SignupMessage--DetailsPage {
     padding: 64px 0 68px;
