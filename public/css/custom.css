@@ -93,7 +93,7 @@
     min-width: 150px;
     width: 150px;
     height: 70px;
-    display: inline-block;    
+    display: inline-block;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -213,7 +213,7 @@
     }
 
     .xs-clear-padding {
-        padding-left:0px; 
+        padding-left:0px;
         padding-right:0px;
     }
 
@@ -263,7 +263,7 @@
     -moz-column-width: 20em;
     -webkit-column-width: 20em;
     -moz-column-gap: .5em;
-    -webkit-column-gap: .5em; 
+    -webkit-column-gap: .5em;
     text-align: center;
     */
     margin: 0 auto;
@@ -292,7 +292,7 @@
     position: relative;
     text-align: center;
     margin:  .5em;
-    padding:  0; 
+    padding:  0;
     width: 240px;
     background: #FFF;
     /*box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);*/
@@ -304,7 +304,7 @@
     font: 13px/23px "Raleway", Arial, sans-serif;
     position: relative;
     margin:  .5em;
-    padding:  0; 
+    padding:  0;
     height: 70px;
     display: flex;
     background: #FFF;
@@ -562,7 +562,7 @@
     justify-content: center;
 }
 
-.order-list-header-count { 
+.order-list-header-count {
     position: absolute;
     right: 0;
     background: rgba(71, 96, 85, 0.49);

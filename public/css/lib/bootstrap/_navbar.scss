@@ -397,6 +397,9 @@
 .navbar-default {
   background-color: $navbar-default-bg;
   border-color: $navbar-default-border;
+  font-weight: 500;
+  text-transform: none;
+
 
   .navbar-brand {
     color: $navbar-default-brand-color;

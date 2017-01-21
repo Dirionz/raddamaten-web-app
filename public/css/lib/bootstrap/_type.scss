@@ -95,7 +95,7 @@ mark,
 
 // Transformation
 .text-lowercase      { text-transform: lowercase; }
-.text-uppercase      { text-transform: uppercase; }
+.text-uppercase      { text-transform: none; }
 .text-capitalize     { text-transform: capitalize; }
 
 // Contextual colors
