@@ -13,7 +13,7 @@
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li
-          a(href='/partners', style='text-transform: none;')
+          a(href='/partners', style='text-transform: none; font-size: 18px; font-weight: 400;')
             span Restauranger
       //
         li(class=(title == 'API Examples') ? 'active' : undefined)
@@ -25,7 +25,7 @@
       ul.nav.navbar-nav.navbar-right
         li
           .GlobalNav-signupButton
-            a(href='/connect') Anslut din restaurang
+            a(href='/connect', style='font-size: 18px; font-weight: 400;') Anslut din restaurang
         if !user
           //li(class=(title == 'Login') ? 'active' : undefined)
             a(href='/login') Login
