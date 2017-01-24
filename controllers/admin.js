@@ -385,3 +385,30 @@ function sendTwilio(callback) {
       callback(err);
   });
 }
+
+/**
+ * Post /admin/sms/remove
+ * Remove sms number
+ */
+exports.removeNumber = (req, res) => {
+    PhoneNumber.findOne({$and: [{ number: req.body.number }, { isVerified: true }]}, function(err, number) {
+        if (err) {
+            req.flash('errors', err); 
+            res.redirect('/admin/sms/new');
+        } else {
+            if (!number) {
+                req.flash('errors', {msg: "Hittade inte det nummret! Kontrollera och försök igen."});
+                return res.redirect('/admin/sms/new');
+            }
+            number.remove((err) => {
+                if (err) {
+                    req.flash('errors', err); 
+                    res.redirect('/admin/sms/new');
+                } else {
+                    req.flash('success', {msg: 'Numret är borttaget!' }); 
+                    res.redirect('/admin/sms/new');
+                }
+           })
+        }
+    });
+}

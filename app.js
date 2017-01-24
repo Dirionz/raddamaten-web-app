@@ -249,6 +249,7 @@ app.post('/admin/export/orders', passportConfig.isAuthenticatedAdmin, adminContr
 
 app.get('/admin/sms/new', passportConfig.isAuthenticatedAdmin, adminController.smsNew);
 app.post('/admin/sms/send', passportConfig.isAuthenticatedAdmin, adminController.sendSms);
+app.post('/admin/sms/remove', passportConfig.isAuthenticatedAdmin, adminController.removeNumber);
 
 /**
  * API examples routes.
