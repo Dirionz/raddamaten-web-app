@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const Product = require('../models/Product');
 const PhoneNumber = require('../models/PhoneNumber');
 
 exports.removeOldOrders = (req, res) => {
@@ -17,21 +18,43 @@ exports.removeOldOrders = (req, res) => {
     });
 }
 
-exports.removeOldOrdersCheckedoutNotPayed = (req, res) => {
+exports.putProductsBackNotPayed = (req, res) => {
     var date = new Date();
-    date.setDate(date.getDate() - 15); // fifhteen days old
+    date.setMinutes(date.getMinutes() - 10) // 10 minutes old
 
-    Order.remove({$and: [
+    Order.find({$and: [
         {isCheckedout: true},
         {email: {$exists: false}},
         {updatedAt: {$lte: date}}
-        ]}, (err) => {
+        ]}, (err, orders) => {
             if (err) {
-                console.log('There was an error when removeOldOrders '+err.message)
+                console.log('There was an error when finding removeOldOrders '+err.message)
             } else {
-                console.log('Successfully cleaned old orders (Checkedout)')
+
+                orders.forEach(function(order){
+                    order.products.forEach(function(product) {
+                        addBackProduct(product);
+                    });
+                    order.remove((err) => {
+                        if (err) { 
+                            console.log('There was an error when removeOldOrders '+err.message)
+                        } else {
+                            console.log('Successfully cleaned old orders (Checkedout)')
+                        }
+                    })
+                });
             }
     });
+}
+
+function addBackProduct(productId) {
+    Product.findByIdAndUpdate(productId, { $inc: { quantity: 1 }}, null, (err) => {
+        if (err) {
+            console.log('There was an error when trying to put back a product '+err.message);
+        } else {
+            console.log('Successfully put back one product');
+        }
+    })
 }
 
 exports.removePhoneNumbersNotVerified = (req, res) => {

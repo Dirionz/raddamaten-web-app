@@ -160,11 +160,11 @@ var job = new CronJob('00 30 2 * * *', function() { // Runs 2:30 every day.
 
 job.start();
 
-// Clean old orders (checkedout but not with email)
-var jobOnceAMonth = new CronJob('00 30 5 1 * *', function() { // Runs 5:30 every month (the 1:st).
+// Clean old orders (checkedout but not with email) and put back products
+var jobOnceAMonth = new CronJob('0 */15 * * * *', function() { // Runs every 15 mins.
     if (im.isMaster) {
-        console.log('I am the master, cron started (once a month)');
-        cronJobsController.removeOldOrdersCheckedoutNotPayed();
+        console.log('I am the master, cron started (15 min run)');
+        cronJobsController.putProductsBackNotPayed();
     }
 }, null, false, "Europe/Stockholm");
 

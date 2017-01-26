@@ -335,7 +335,7 @@ exports.postStripe = (req, res, next) => {
                 req.flash('errors', err);
                 return res.redirect('/order/checkout/'+orderId);
             } else {
-                if (!order) { req.flash('errors', { msg: 'Hittades inte' }); return res.redirect('/'); }; 
+                if (!order) { req.flash('errors', { msg: 'Hittades inte!, detta kan bero på att tiden har gått ut.' }); return res.redirect('/'); }; 
                 done(null, order);
             }
           });
